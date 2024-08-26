@@ -15,7 +15,7 @@ export const publicRoutes = ["/"];
 
   export const authRoutes = ["/dashboard", "/profile"];
 */
-export const authRoutes = ["/auth/login", "/auth/register"];
+export const authRoutes = ["/auth/login", "/auth/register", "/auth/error"];
 
 /*
   Define your API authentication prefix here. This is the path that your API endpoints will be mounted under.
