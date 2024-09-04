@@ -32,6 +32,8 @@ export const RegisterForm = () => {
       email: "",
       password: "",
       name: "",
+      number: "",
+      role: "",
     },
   });
 
@@ -82,6 +84,42 @@ export const RegisterForm = () => {
                       disabled={isPending}
                       placeholder="abcd.18@example.com"
                       type="email"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="number"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Phone Number</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      placeholder="9878987690"
+                      type="number"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="role"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Occupation</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      disabled={isPending}
+                      placeholder="Farmer | Buyer"
+                      type="text"
                     />
                   </FormControl>
                   <FormMessage />

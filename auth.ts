@@ -56,6 +56,11 @@ export const {
       if (token.role && session.user) {
         session.user.role = token.role;
       }
+      if (token.number && session.user) {
+        session.user.number = token.number.toString();
+      }
+
+      // console.log(token, session);
       return session;
     },
     async jwt({ token }) {
@@ -65,6 +70,7 @@ export const {
       if (!existingUser) return token;
 
       token.role = existingUser.role;
+      token.number = existingUser.number;
 
       return token;
     },

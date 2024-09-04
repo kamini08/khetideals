@@ -30,9 +30,10 @@ model User {
   emailVerified DateTime?
   image         String?
   password      String?
-  role          UserRole @default(USER)
+  number String?
+  role          String?
   accounts      Account[]
- isTwoFactorEnabled Boolean @default(false)
+ isTwoFactorEnabled Boolean @default(true)
  twoFactorConfirmation TwoFactorConfirmation?
  
 }

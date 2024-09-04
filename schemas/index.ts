@@ -29,4 +29,10 @@ export const RegisterSchema = z.object({
   name: z.string().min(1, {
     message: "Name is required",
   }),
+  number: z.string().min(10, {
+    message: "Phone number should be at least 10 digits",
+  }),
+  role: z.string({
+    message: "Enter either Farmer or Buyer",
+  }),
 });
