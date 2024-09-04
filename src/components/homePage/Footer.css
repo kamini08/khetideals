@@ -1,0 +1,125 @@
+.footer-top {
+  background-color: #009a4e; /* Upper footer color */
+  padding: 5px 0; /* Reduced padding to decrease size */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  justify-content: space-evenly; /* Evenly spread the content */
+  flex-wrap: wrap;
+}
+
+.col {
+  flex: 1;
+  min-width: 200px;
+  margin: 10px 0;
+}
+
+.footer-logo {
+  max-width: 85%;
+  height: auto;
+  margin-left: 20px; /* Add left margin to the logo */
+}
+
+/* .footer-1 { */
+/* Add any specific styles for this section if needed */
+/* }  */
+
+.title {
+  color: #ffffff;
+  font-size: 23px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-family: "Philosopher", sans-serif;
+}
+
+.text {
+  font-size: 19px;
+  line-height: 1.5;
+  font-family: "Philosopher", sans-serif;
+  color: #ffffff;
+}
+
+/* .footer-2 { */
+/* Add any specific styles for this section if needed */
+/* } */
+
+.contact-list {
+  list-style: none;
+  padding: 0;
+}
+
+.contact-item {
+  font-size: 19px;
+  margin: 10px 0;
+  font-family: "Philosopher", sans-serif;
+  color: #ffffff;
+}
+
+.link {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.footer-3 {
+  color: #ffffff;
+}
+
+.social-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.icon-link {
+  font-size: 24px;
+  color: #ffffff;
+  background-color: #006934;
+  padding: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.3s;
+}
+
+.update-title {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 23px;
+  color: #ffffff;
+  font-family: "Philosopher", sans-serif;
+}
+
+.input {
+  padding: 8px;
+  border: none;
+  border-radius: 5px;
+  width: 80%;
+  margin-top: 10px;
+  font-size: 19px;
+  margin-right: 10px;
+}
+
+.footer-bottom {
+  color: #ffffff;
+  background-color: #016834; /* Bottom footer color */
+  border-top: 1px solid #ffffff;
+  padding-top: 20px; /* Slightly increased padding to increase size */
+  text-align: center;
+  margin-top: 0; /* Removed the top margin to avoid space between components */
+}
+
+.copyright {
+  color: #ffffff;
+  font-size: 14px;
+  margin: 0;
+  font-family: "Philosopher", sans-serif;
+}
+
+.link {
+  color: #ffffff;
+  text-decoration: underline;
+  margin: 0 5px;
+}

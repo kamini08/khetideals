@@ -1,4 +1,6 @@
+import Navbar from "@/components/homePage/Navbar";
 import "./globals.css";
+import Footer from "@/components/homePage/Footer";
 // import { Inter } from "next/font/google";
 // import "@fortawesome/fontawesome-svg-core/styles.css";
 // import { config } from "@fortawesome/fontawesome-svg-core";
@@ -35,7 +37,9 @@ export default function RootLayout({
         {/* <div */}
         {/* // className="flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip" */}
         {/* // > */}
+        {/* <Navbar /> */}
         {children}
+        {/* <Footer /> */}
         {/* </div> */}
         {/* </NextThemesProvider> */}
       </body>
