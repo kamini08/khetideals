@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 
 const buyerMarketPlaceSubSchema = new mongoose.Schema({
   mainId: {
-    type: [String],
+    type: String,
     required: true,
   },
   category: {
@@ -24,16 +24,16 @@ const buyerMarketPlaceSubSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  monthRange: {
-    startingMonth: {
-      type: String,
-      required: true,
-    },
-    endingMonth: {
-      type: String,
-      required: true,
-    },
+
+  startingMonth: {
+    type: String,
+    required: true,
   },
+  endingMonth: {
+    type: String,
+    required: true,
+  },
+
   minimumQuantity: {
     type: Number,
     required: true,

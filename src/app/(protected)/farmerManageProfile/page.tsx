@@ -65,7 +65,10 @@ const FarmerProfile = () => {
 
   return (
     <div className="form-container">
-      <h2>Fill further details</h2>
+      <div className="edit">
+        <h2>Fill further details</h2>
+        <h3>Edit</h3>
+      </div>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="category">Category</label>

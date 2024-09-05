@@ -3,6 +3,10 @@
 const mongoose = require("mongoose");
 
 const farmerMarketPlaceSubSchema = new mongoose.Schema({
+  mainId: {
+    type: String,
+    required: true,
+  },
   category: {
     type: [String],
     required: true,
@@ -15,7 +19,7 @@ const farmerMarketPlaceSubSchema = new mongoose.Schema({
   },
   location: {
     type: String,
-    // required: true,
+    required: true,
   },
   address: {
     type: String,

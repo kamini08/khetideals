@@ -690,3 +690,16 @@ body {
 .chat-now-button:hover {
   background-color: #0056b3;
 }
+.edit {
+  display: flex;
+  justify-content: space-between;
+}
+
+.edit h2 {
+  font-weight: bold;
+  font-size: 24px;
+}
+.edit h3 {
+  color: black;
+  font-weight: bold;
+}

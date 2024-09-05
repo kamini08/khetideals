@@ -1,75 +1,204 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import "../components/buyer.css";
-const buyerManageProfile = () => {
+
+const BuyerProfile = () => {
+  // State to hold form data
+  const [formData, setFormData] = useState({
+    category: "",
+    paymentTerms: "Cash", // Default to first enum value
+    location: "",
+    address: "",
+    startingMonth: "january", // Default to January
+    endingMonth: "january", // Default to January
+    minimumQuantity: "",
+    description: "",
+  });
+
+  // Handle form field changes
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  // Handle form submission
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("/api/buyerManageProfile", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit form");
+      }
+
+      const data = await response.json();
+      console.log("Form submitted successfully:", data);
+
+      // Optionally, reset form after successful submission
+      setFormData({
+        category: "",
+        paymentTerms: "Cash",
+        location: "",
+        address: "",
+        startingMonth: "january",
+        endingMonth: "january",
+        minimumQuantity: "",
+        description: "",
+      });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+    }
+  };
+
   return (
     <div className="form-container">
-      <h2>Fill further details</h2>
-      <form>
+      <div className="edit">
+        <h2>Fill further details</h2>
+        <h3>Edit</h3>
+      </div>
+
+      <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="category">Category</label>
-          <input type="text" id="category" name="category" />
+          <input
+            className="text-black"
+            type="text"
+            id="category"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            required
+          />
         </div>
 
         <div className="form-group">
-          <label htmlFor="payment-terms">Payment Terms</label>
-          <select id="payment-terms" name="payment-terms">
-            <option value="full">Full Payment</option>
-            <option value="half">Half Payment</option>
-            <option value="credit">Credit</option>
+          <label htmlFor="paymentTerms">Payment Terms</label>
+          <select
+            className="text-black"
+            id="paymentTerms"
+            name="paymentTerms"
+            value={formData.paymentTerms}
+            onChange={handleChange}
+            required
+          >
+            <option value="Cash">Cash</option>
+            <option value="Credit">Credit</option>
+            <option value="Installments">Installments</option>
           </select>
         </div>
 
         <div className="form-group">
+          <label htmlFor="location">Location</label>
+          <input
+            className="text-black"
+            type="text"
+            id="location"
+            name="location"
+            value={formData.location}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="form-group">
           <label htmlFor="address">Address</label>
-          <input type="text" id="address" name="address" />
+          <input
+            className="text-black"
+            type="text"
+            id="address"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+            required
+          />
         </div>
 
         <div className="form-group inline-group">
           <div className="form-group">
-            <label htmlFor="start-month">Start Month</label>
-            <select id="start-month" name="start-month">
+            <label htmlFor="startingMonth">Start Month</label>
+            <select
+              className="text-black"
+              id="startingMonth"
+              name="startingMonth"
+              value={formData.startingMonth}
+              onChange={handleChange}
+              required
+            >
               <option value="january">January</option>
               <option value="february">February</option>
               <option value="march">March</option>
               <option value="april">April</option>
-              <option value="May">May</option>
-              <option value="June">June</option>
-              <option value="July">July</option>
-              <option value="Agust">Agust</option>
-              <option value="September">September</option>
-              <option value="October">October</option>
-              <option value="November">November</option>
-              <option value="December">December</option>
+              <option value="may">May</option>
+              <option value="june">June</option>
+              <option value="july">July</option>
+              <option value="august">August</option>
+              <option value="september">September</option>
+              <option value="october">October</option>
+              <option value="november">November</option>
+              <option value="december">December</option>
             </select>
           </div>
 
           <div className="form-group">
-            <label htmlFor="end-month">End Month</label>
-            <select id="end-month" name="end-month">
-              <option value="January">January</option>
-              <option value="Febraury">Febraury</option>
-              <option value="March">March</option>
-              <option value="April">April</option>
-              <option value="May">May</option>
-              <option value="June">June</option>
-              <option value="July">July</option>
-              <option value="Agust">Agust</option>
-              <option value="September">Sepetember</option>
-              <option value="October">October</option>
-              <option value="November">Novemebr</option>
-              <option value="December">December</option>
+            <label htmlFor="endingMonth">End Month</label>
+            <select
+              className="text-black"
+              id="endingMonth"
+              name="endingMonth"
+              value={formData.endingMonth}
+              onChange={handleChange}
+              required
+            >
+              <option value="january">January</option>
+              <option value="february">February</option>
+              <option value="march">March</option>
+              <option value="april">April</option>
+              <option value="may">May</option>
+              <option value="june">June</option>
+              <option value="july">July</option>
+              <option value="august">August</option>
+              <option value="september">September</option>
+              <option value="october">October</option>
+              <option value="november">November</option>
+              <option value="december">December</option>
             </select>
           </div>
         </div>
-
         <div className="form-group">
           <label htmlFor="min-quantity">Minimum Quantity</label>
-          <input type="number" id="min-quantity" name="min-quantity" />
+          <input
+            className="text-black"
+            type="number"
+            id="min-quantity"
+            name="minimumQuantity"
+            value={formData.minimumQuantity}
+            onChange={handleChange}
+          />
         </div>
 
         <div className="form-group">
           <label htmlFor="description">Description</label>
-          <textarea id="description" name="description"></textarea>
+          <textarea
+            className="text-black"
+            id="description"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+          ></textarea>
         </div>
 
         <div className="form-group">
@@ -80,4 +209,4 @@ const buyerManageProfile = () => {
   );
 };
 
-export default buyerManageProfile;
+export default BuyerProfile;

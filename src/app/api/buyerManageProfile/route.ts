@@ -1,13 +1,14 @@
 import clientPromise from "@/lib/mongodb";
-import FarmerMarketPlaceSub from "@/models/farmermarketplace.js";
+import buyerMarketPlaceSub from "@/models/buyermarketplacesub.js";
 import { NextResponse } from "next/server.js";
 import { auth } from "../../../../auth";
-
 export async function POST(req: Request) {
   const session = await auth();
 
   const userID = session?.user.id;
+
   await clientPromise();
+
   try {
     const {
       category,
@@ -16,10 +17,11 @@ export async function POST(req: Request) {
       address,
       startingMonth,
       endingMonth,
+      minimumQuantity,
       description,
     } = await req.json();
 
-    const newEntry = new FarmerMarketPlaceSub({
+    const newEntry = new buyerMarketPlaceSub({
       mainId: userID,
       category,
       paymentTerms,
@@ -27,18 +29,18 @@ export async function POST(req: Request) {
       address,
       startingMonth,
       endingMonth,
+      minimumQuantity,
       description,
     });
 
     const savedEntry = await newEntry.save();
     return NextResponse.json(savedEntry, { status: 201 });
   } catch (error: any) {
-    console.log(error);
     return NextResponse.json({ message: error.message }, { status: 400 });
   }
 }
 
-export async function PUT(req: any) {
+export async function PUT(req: Request) {
   try {
     await clientPromise();
 
@@ -50,10 +52,11 @@ export async function PUT(req: any) {
       address,
       startingMonth,
       endingMonth,
+      minimumQuantity,
       description,
     } = await req.json();
 
-    const updatedEntry = await FarmerMarketPlaceSub.findByIdAndUpdate(
+    const updatedEntry = await buyerMarketPlaceSub.findByIdAndUpdate(
       id,
       {
         category,
@@ -62,6 +65,7 @@ export async function PUT(req: any) {
         address,
         startingMonth,
         endingMonth,
+        minimumQuantity,
         description,
       },
       { new: true }
