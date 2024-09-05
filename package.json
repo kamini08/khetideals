@@ -25,6 +25,8 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "leaflet": "^1.9.4",
+    "mongodb": "^6.8.0",
+    "mongoose": "^8.6.1",
     "next": "14.2.6",
     "next-auth": "^5.0.0-beta.20",
     "next-themes": "^0.3.0",

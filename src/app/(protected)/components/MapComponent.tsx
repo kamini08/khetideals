@@ -35,14 +35,16 @@ const MapComponent: React.FC = () => {
           .addTo(map)
           .bindPopup("RICE")
           .openPopup();
+
         L.marker([12.90281, 77.533475])
           .setOpacity(1)
           .addTo(map)
           .bindPopup("SMTG")
           .openPopup();
         L.marker([12.874865, 77.573279])
+
           .addTo(map)
-          .bindPopup("IDK")
+          .bindPopup("adck")
           .openPopup();
         L.marker([12.843871, 77.495581])
           .addTo(map)
