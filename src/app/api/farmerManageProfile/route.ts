@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     });
 
     const savedEntry = await newEntry.save();
-    return NextResponse.json(savedEntry, { status: 201 });
+    return NextResponse.json({ status: 201 });
   } catch (error: any) {
     console.log(error);
     return NextResponse.json({ message: error.message }, { status: 400 });
@@ -74,7 +74,9 @@ export async function PUT(req: any) {
       );
     }
 
-    return new Response(JSON.stringify(updatedEntry), { status: 200 });
+    return new Response(JSON.stringify({ message: "successful" }), {
+      status: 200,
+    });
   } catch (error: any) {
     return new Response(JSON.stringify({ message: error.message }), {
       status: 400,

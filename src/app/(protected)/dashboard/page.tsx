@@ -3,7 +3,7 @@ import "../components/buyer.css";
 // import { useRouter } from "next/navigation";
 // import FarmerDashboard from "../components/FarmerDashboard";
 import dynamic from "next/dynamic";
-import FarmerProfile from "../farmerManageProfile/page";
+// import FarmerProfile from "../farmerManageProfile/page";
 import Link from "next/link";
 
 const SettingsPage = async () => {
@@ -14,6 +14,8 @@ const SettingsPage = async () => {
   const MapWithNoSSR = dynamic(() => import("../components/MapComponent"), {
     ssr: false,
   });
+
+  // TODO form validation
 
   // const router = useRouter();
   return (
@@ -35,7 +37,7 @@ const SettingsPage = async () => {
           <div className="sidebar">
             <h2 className="farmer-profile">Farmer Profile</h2>
             {/* <FarmerDashboard onSectionClick={handleSidebarClick} /> */}
-            <Link href="/farmerManageProfile">
+            <Link href="/farmerProfile">
               <div
                 className="dashboard-box"
                 // onClick={() => onSectionClick("profile-section")}
@@ -67,7 +69,7 @@ const SettingsPage = async () => {
           <div className="main-content">
             <div className="section" id="searchection">
               <h1 className="search-profile">Search Potential Buyers</h1>
-              <div className="form-group">
+              <div className="form-group text-black">
                 <label htmlFor="category">Category:</label>
                 <select id="category" className="select2">
                   <option value="Grains">Grains</option>
@@ -75,7 +77,7 @@ const SettingsPage = async () => {
                   <option value="Fruits">Fruits</option>
                 </select>
               </div>
-              <div className="form-group">
+              <div className="form-group  text-black">
                 <label htmlFor="paymentTerms">Payment Terms:</label>
                 <select id="paymentTerms" className="select2">
                   <option value="Cash">Cash</option>
@@ -83,11 +85,11 @@ const SettingsPage = async () => {
                   <option value="Net Banking">Net Banking</option>
                 </select>
               </div>
-              <div className="form-group">
+              <div className="form-group  text-black">
                 <label htmlFor="buyerLocation">Location:</label>
                 <input type="text" id="buyerLocation" />
               </div>
-              <div className="form-group">
+              <div className="form-group  text-black">
                 <label htmlFor="minQuantity">Minimum Quantity (kg):</label>
                 <input type="number" id="minQuantity" />
               </div>
@@ -132,6 +134,12 @@ const SettingsPage = async () => {
               <Link href="/buyerManageProfile">
                 <div className="dashboard-box">
                   <h3>Manage Profile</h3>
+                  <p>Setup your profile and farming details.</p>
+                </div>
+              </Link>
+              <Link href="/buyerProfile">
+                <div className="dashboard-box">
+                  <h3>My Profile</h3>
                   <p>Update your profile and farming details.</p>
                 </div>
               </Link>
@@ -154,7 +162,7 @@ const SettingsPage = async () => {
           <div className="dashboard-content">
             <div className="farmer-finder">
               <h1 className="search-profile">Search Potential Farmers</h1>
-              <div className="form-group">
+              <div className="form-group text-black">
                 <label htmlFor="cropType">Crop Type</label>
                 <select id="cropType" className="select2">
                   <option value="wheat">Wheat</option>
@@ -164,7 +172,7 @@ const SettingsPage = async () => {
                 </select>
               </div>
 
-              <div className="form-group">
+              <div className="form-group text-black">
                 <label htmlFor="quality">Quality</label>
                 <select id="quality">
                   <option value="A">A</option>
@@ -173,11 +181,11 @@ const SettingsPage = async () => {
                 </select>
               </div>
 
-              <div className="form-group">
+              <div className="form-group text-black">
                 <label htmlFor="farmerLocation">Location</label>
                 <input type="text" id="farmerLocation" />
               </div>
-              <div className="form-group">
+              <div className="form-group text-black">
                 <label htmlFor="minQuantity">Minimum Quantity</label>
                 <input type="number" id="minQuantity" />
               </div>
