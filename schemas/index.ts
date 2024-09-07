@@ -35,4 +35,10 @@ export const RegisterSchema = z.object({
   role: z.string({
     message: "Enter either Farmer or Buyer",
   }),
+  latitude: z.string({
+    message: "Fill this text box",
+  }),
+  longitude: z.string({
+    message: "Fill this text box",
+  }),
 });

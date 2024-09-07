@@ -11,16 +11,27 @@ L.Icon.Default.mergeOptions({
   iconUrl: iconUrl.src,
   shadowUrl: shadowUrl.src,
 });
+
 const MapComponent: React.FC = () => {
   const mapRef = useRef<L.Map | null>(null);
   const [position, setPosition] = useState<[number, number] | null>(null);
 
   useEffect(() => {
-    const onLocationFound = (position: GeolocationPosition) => {
+    const fetchCoordinates = async () => {
+      try {
+        const response = await fetch("/api/dashboard");
+        const data = await response.json();
+        return data;
+      } catch (error) {
+        console.error("Error fetching coordinates:", error);
+        return [];
+      }
+    };
+
+    const onLocationFound = async (position: GeolocationPosition) => {
       const { latitude, longitude } = position.coords;
       setPosition([latitude, longitude]);
 
-      // Initialize the map only if it hasn't been initialized yet
       if (!mapRef.current) {
         const map = L.map("map").setView([latitude, longitude], 13);
         mapRef.current = map;
@@ -30,39 +41,22 @@ const MapComponent: React.FC = () => {
           attribution: "© Kethideal contributors",
         }).addTo(map);
 
-        // markers for the location from database
-        L.marker([12.925007, 77.586627])
-          .addTo(map)
-          .bindPopup("RICE")
-          .openPopup();
+        // Fetch and add markers for locations from the database
+        const coordinates = await fetchCoordinates();
+        coordinates.forEach(
+          (coord: { latitude: string; longitude: string }) => {
+            L.marker([parseFloat(coord.latitude), parseFloat(coord.longitude)])
+              .addTo(map)
+              // .bindPopup("")
+              .openPopup();
+          }
+        );
 
-        L.marker([12.90281, 77.533475])
-          .setOpacity(1)
-          .addTo(map)
-          .bindPopup("SMTG")
-          .openPopup();
-        L.marker([12.874865, 77.573279])
-
-          .addTo(map)
-          .bindPopup("adck")
-          .openPopup();
-        L.marker([12.843871, 77.495581])
-          .addTo(map)
-          .bindPopup("CORN")
-          .openPopup();
-
-        L.marker([12.954375, 77.535432])
-
-          .addTo(map)
-          .bindPopup("CORN")
-          .openPopup();
-
-        // Add marker for current location
+        // Add marker for the user's current location
         L.marker([latitude, longitude])
           .addTo(map)
-          .bindPopup("You are here!")
+          .bindPopup("i am here")
           .openPopup();
-        // Optionally add a circle to show accuracy
         L.circle([latitude, longitude], {
           color: "blue",
           fillColor: "#30f",
@@ -70,14 +64,13 @@ const MapComponent: React.FC = () => {
           radius: 5000,
         }).addTo(map);
 
-        // Add event listener to update the map view when the user clicks on a marker
+        // Update map view on marker click
         map.on("click", (event: L.LeafletMouseEvent) => {
           const latLng = event.latlng;
-          console.log(latLng);
           map.flyTo(latLng, 13);
         });
       } else {
-        // If the map is already initialized, just set the view to the new location
+        // Update map view if already initialized
         mapRef.current.setView([latitude, longitude], 13);
       }
     };
@@ -98,8 +91,8 @@ const MapComponent: React.FC = () => {
 
     return () => {
       if (mapRef.current) {
-        mapRef.current.remove(); // Clean up the map instance
-        mapRef.current = null; // Reset the map reference
+        mapRef.current.remove();
+        mapRef.current = null;
       }
     };
   }, []);
@@ -107,14 +100,13 @@ const MapComponent: React.FC = () => {
   return (
     <>
       {/* side bar */}
-
       {/* map */}
       <div
         id="map"
         style={{ height: "100vh", width: "100%" }}
         className="flex justify-center items-center"
       >
-        {!position && <p className=" font-extrabold ">Loading map...</p>}
+        {!position && <p className="font-extrabold">Loading map...</p>}
       </div>
     </>
   );

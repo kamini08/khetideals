@@ -18,3 +18,21 @@ export const getUserById = async (id: string) => {
     return null;
   }
 };
+
+export const getAllCoordinates = async () => {
+  try {
+    const locations = await db.user.findMany({
+      select: {
+        latitude: true,
+        longitude: true,
+      },
+    });
+    return locations.map((location) => ({
+      latitude: location.latitude,
+      longitude: location.longitude,
+    }));
+  } catch (error) {
+    console.error("Error fetching coordinates:", error);
+    throw error;
+  }
+};

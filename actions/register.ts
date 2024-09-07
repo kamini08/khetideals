@@ -7,17 +7,24 @@ import { RegisterSchema } from "../schemas";
 import { getUserByEmail } from "../data/user";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "../src/lib/mail";
-import { use } from "react";
-
+import { getAllCoordinates } from "../data/user";
 export const register = async (values: z.infer<typeof RegisterSchema>) => {
   const validatedFields = RegisterSchema.safeParse(values);
 
   if (!validatedFields.success) {
     return { error: "Invalid Fields" };
   }
+  // const coordinates = await getAllCoordinates();
+  // console.log(
+  //   coordinates.map((coord) => {
+  //     console.log(coord.latitude);
+  //     console.log(coord.longitude);
+  //   })
+  // );
 
-  const { email, password, name, number, role } = validatedFields.data;
-
+  const { email, password, name, number, role, latitude, longitude } =
+    validatedFields.data;
+  // console.log(validatedFields.data);
   if (
     role.toLocaleLowerCase() !== "farmer" &&
     role.toLocaleLowerCase() !== "buyer"
@@ -33,7 +40,15 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   }
 
   await db.user.create({
-    data: { email, password: hashedPassword, name, number, role },
+    data: {
+      email,
+      password: hashedPassword,
+      name,
+      number,
+      role,
+      latitude,
+      longitude,
+    },
   });
 
   const verificationToken = await generateVerificationToken(email);

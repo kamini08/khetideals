@@ -32,6 +32,9 @@ model User {
   password      String?
   number String?
   role          String?
+  latitude String?
+  longitude String?
+  
   accounts      Account[]
  isTwoFactorEnabled Boolean @default(true)
  twoFactorConfirmation TwoFactorConfirmation?

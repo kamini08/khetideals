@@ -1,4 +1,5 @@
 import { auth, signOut } from "../../../../auth";
+import { getAllCoordinates } from "../../../../data/user";
 import "../components/buyer.css";
 // import { useRouter } from "next/navigation";
 // import FarmerDashboard from "../components/FarmerDashboard";
@@ -10,6 +11,13 @@ const SettingsPage = async () => {
   const session = await auth();
 
   const user = session?.user.role.toLocaleLowerCase();
+  // const coordinates = await getAllCoordinates();
+  // console.log(
+  //   coordinates.map((coord) => {
+  //     console.log(coord.latitude);
+  //     console.log(coord.longitude);
+  //   })
+  // );
   // const user = "farmer";
   const MapWithNoSSR = dynamic(() => import("../components/MapComponent"), {
     ssr: false,
