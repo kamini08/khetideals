@@ -1,4 +1,4 @@
-////Schema for login and registeration of farmer
+//Schema for login and registeration of farmer
 
 import mongoose from "mongoose"
 

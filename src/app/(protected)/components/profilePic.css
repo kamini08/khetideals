@@ -1,0 +1,258 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    /* background-color: #cddccd;  */
+    color: #009a4e; 
+    background-color: #f0f4f3;
+    width:100%;
+    height:auto;
+}
+
+/* Profile section */
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 8px;
+    background-color: #009a4e; 
+    
+}
+
+
+.profile-details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    text-align: center;
+}
+
+.profile-pic {
+    margin-right: 20px;
+}
+
+.profile-pic img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover; 
+    margin-left: 30px;
+}
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    text-align: center;  
+}
+
+.profile-details h3,
+.profile-details p {
+    display:flex;
+    margin-left:60px;
+
+    margin: 0;
+    font-size: 28px;
+    color: black; /* Dark green for text */
+}
+
+.profile-details h3 span,
+.profile-details p span {
+    font-weight: bold;
+    color:black; /* Dark green for labels */
+}
+
+/* Form styling */
+.form-container {
+    max-width: 100%;
+    margin: 0 auto;
+    /* padding: 20px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #f0f4f3; /* Light background for the form */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+   
+}
+
+.form-container h2 {
+    text-align: center;
+    color: #009a4e; /* Dark green for form title */
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    /* width:80%; */
+
+}
+
+.form-group label {
+    display: block;
+    
+    margin-bottom: 8px;
+    color: #009a4e; /* Dark green for labels */
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 80%;
+    padding: 15px;
+    border: 1px solid #6c9e6c; /* Light green border */
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+.form-group select{
+    width:100%;
+    
+}
+#payment-terms{
+    width:80%;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #368b50; /* Dark green on focus */
+    outline: none;
+}
+
+.form-group textarea {
+    resize: vertical;
+    height: 120px;
+}
+
+.inline-group {
+    display: flex;
+    justify-content: space-between;
+    
+}
+/* .form-group .inline-group .form-group{
+    display: flex;
+    flex-direction: row;
+} */
+.inline-group .form-group {
+    flex: 1;
+    margin-right: 10px;
+   
+}
+
+.inline-group .form-group:last-child {
+    margin-right: 0;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+button {
+    width:30%;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:focus {
+    outline: none;
+}
+
+/* Chat Now button style */
+.chat-now-button {
+    background-color: #009a4e; /* Dark green background */
+    color: white;
+}
+
+.chat-now-button:hover {
+    background-color: #3f6f57; /* Lighter green on hover */
+}
+
+/* Make Proposal button style */
+.make-proposal-button {
+    background-color: #009a4e; /* Green background */
+    color: white;
+}
+
+.make-proposal-button:hover {
+    background-color: #3f6f57; /* Darker green on hover */
+}
+.form-group button{
+    background-color: #009a4e ;
+    color:white;
+}
+/* #start-month{
+    margin-left:auto;
+}
+#end-month{
+    margin-right:auto;
+} */
+.contracts-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  
+  .contract-card {
+    border: 2px solid green;
+    border-radius: 8px;
+    padding: 16px;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color:#f0f4f3;
+  }
+  
+  .contract-card h3 {
+    margin-top: 0;
+  }
+  
+  .contract-card p {
+    margin: 8px 0;
+  }
+  #landarea {
+    margin-left: 100px;
+    width:80%;
+   }
+/* #pricePerDecimal {
+    margin-right: 90px;
+    width:80%;
+} */
+
+.form-group ::placeholder{
+
+  text-align:center;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+    .profile-header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .profile-pic img {
+        width: 80px; /* Smaller image size on mobile */
+        height: 80px;
+    }
+
+    .profile-details {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    
+}

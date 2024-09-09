@@ -1,0 +1,562 @@
+/* FORM CSS */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    /* background-color: #cddccd;  */
+    color: #009a4e; 
+    background-color: #f0f4f3;
+}
+
+/* Profile section */
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 8px;
+    background-color: #009a4e; 
+    
+}
+
+
+.profile-details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center; 
+    text-align: center;
+}
+
+.profile-pic {
+    margin-right: 20px;
+}
+
+.profile-pic img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover; 
+    margin-left: 30px;
+}
+.profile-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    text-align: center;  
+}
+
+.profile-details h3,
+.profile-details p {
+    display:flex;
+    margin-left:60px;
+
+    margin: 0;
+    font-size: 28px;
+    color: black; /* Dark green for text */
+}
+
+.profile-details h3 span,
+.profile-details p span {
+    font-weight: bold;
+    color:black; /* Dark green for labels */
+}
+
+/* Form styling */
+.form-container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f0f4f3; /* Light background for the form */
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+   
+}
+
+.form-container h2 {
+    text-align: center;
+    color: #009a4e; /* Dark green for form title */
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    /* width:80%; */
+
+}
+
+.form-group label {
+    display: block;
+    
+    margin-bottom: 8px;
+    color: #009a4e; /* Dark green for labels */
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 80%;
+    padding: 15px;
+    border: 1px solid #6c9e6c; /* Light green border */
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+.form-group select{
+    width:80%;
+    
+}
+#payment-terms{
+    width:80%;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #368b50; /* Dark green on focus */
+    outline: none;
+}
+
+.form-group textarea {
+    resize: vertical;
+    height: 120px;
+}
+
+.inline-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+.inline-group .form-group {
+    flex: 1;
+    margin-right: 10px;
+}
+
+.inline-group .form-group:last-child {
+    margin-right: 0;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+button {
+    width:30%;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:focus {
+    outline: none;
+}
+
+/* Chat Now button style */
+.chat-now-button {
+    background-color: #009a4e; /* Dark green background */
+    color: white;
+}
+
+.chat-now-button:hover {
+    background-color: #3f6f57; /* Lighter green on hover */
+}
+
+/* Make Proposal button style */
+.make-proposal-button {
+    background-color: #009a4e; /* Green background */
+    color: white;
+}
+
+.make-proposal-button:hover {
+    background-color: #3f6f57; /* Darker green on hover */
+}
+.form-group button{
+    background-color: #009a4e ;
+    color:white;
+}
+#start-month{
+    margin-left:100px;
+}
+#end-month{
+    margin-right:90px;
+}
+.contracts-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  
+  .contract-card {
+    border: 2px solid green;
+    border-radius: 8px;
+    padding: 16px;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color:#f0f4f3;
+  }
+  
+  .contract-card h3 {
+    margin-top: 0;
+  }
+  
+  .contract-card p {
+    margin: 8px 0;
+  }
+  
+
+
+  /* DASHBOARD CSS */
+  
+   body {
+    width:100%;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Container Layout */
+.container {
+  width:96%;
+    display: flex;
+    flex-direction: row;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* max-width: 1200px; */
+    margin: auto;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 25%;
+    padding-right: 20px;
+    border-right: 1px solid #ddd;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+/* Main Content Area */
+.main-content {
+    width: 75%;
+    padding-left: 20px;
+}
+
+/* Farmer Dashboard Styles */
+.farmer-dashboard {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 10px;
+    background-color: #f9f9f9;
+}
+
+.dashboard-header {
+    background-color:#009a4e ;
+    padding: 10px;
+    text-align: center;
+}
+
+.dashboard-header h1 {
+    color: white;
+    margin: 0;
+}
+
+.dashboard-box {
+    width: 80%;
+    margin: 10px auto;
+    padding: 20px;
+    background-color: #f0f4f3;
+    border: 1px solid #009a4e;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+.dashboard-box h3 {
+    margin-top: 0;
+    color:#009a4e ;
+    font-size: 18px;
+}
+
+.dashboard-box p {
+    color: #666;
+    font-size: 14px;
+}
+
+/* Adjust padding on the right */
+.dashboard-box {
+    padding-right: 30px; /* Adjust this as necessary */
+    /* padding-left: 20px;  Keep left padding to balance */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .sidebar {
+        width: 100%;
+        padding-right: 0;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .main-content {
+        width: 100%;
+        padding-left: 0;
+    }
+
+    .dashboard-box {
+        width: 85%;
+        padding: 15px;
+    }
+}
+
+/* Main Content Specific Styles */
+.section {
+    margin-bottom: 20px;
+}
+
+.buyer-list {
+    margin-top: 20px;
+}
+
+.buyer-list ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.buyer-list ul li {
+    padding: 10px;
+    background-color: #f9f9f9;
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.map-container {
+    height: 300px;
+    background-color: #e0e0e0;
+    margin-top: 20px;
+}
+
+.crop-section {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+
+.form-group select,
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#searchBtn {
+    background-color: #009a4e ;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#searchBtn:hover {
+    background-color: #009a4e ;
+}
+.farmer-profile {
+  background-color: #009a4e ;
+  color: white;
+  padding: 10px;
+  border-radius: 4px; /* Optional: Adds rounded corners */
+  text-align: center; /* Optional: Centers the text */
+}
+.search-profile {
+  background-color: #009a4e ;
+  color: white;
+  padding: 10px;
+  border-radius: 2px; /*Optional: Adds rounded corners */
+  text-align: center; /* Optional: Centers the text */
+}
+
+.contracts-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.contract-card {
+  border: 2px solid green;
+  border-radius: 8px;
+  padding: 16px;
+  width: 250px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.contract-card h3 {
+  margin-top: 0;
+}
+
+.contract-card p {
+  margin: 8px 0;
+}
+
+
+ /* EPROFILE.CSS */
+ /* Container for the horizontal card */
+.profile-card {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #009a4e;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 95%;
+    height: 120px;
+    margin-left:60px;
+    color: #fff;
+    position: relative; /* For positioning the profile pic */
+    overflow: visible; /* Ensure the profile image shows outside the card */
+    transition: all 0.3s ease;
+  }
+  
+  .profile-card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Slightly elevate on hover */
+  }
+  
+  /* Circle image - half inside, half outside horizontally */
+  .profile-picc {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: absolute;
+    left: -60px; /* Move the image halfway out of the container horizontally */
+    border: 5px solid #009a4e; /* Border to match the card background */
+    transition: all 0.3s ease;
+  }
+  
+  .profile-picc img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .profile-detailss {
+    margin-left: 80px; /* Adjust left margin to create space for the profile pic */
+    margin-top: 8px;
+  }
+  
+  .profile-detailss h2 {
+    margin: 3px;
+    font-size: 26px;
+    color: #fff;
+  }
+  .profile-detailss h3 {
+    margin: 3px;
+    font-size: 20px;
+    color: #fff;
+  }
+  
+  .profile-detailss p {
+    margin: 0;
+    color: #fff;
+    font-size:18px;
+  }
+  
+  /* Social icons styling */
+  
+  /* Make the card responsive */
+  @media screen and (max-width: 768px) {
+    .profile-card {
+      flex-direction: column;
+      align-items: flex-start;
+      height: auto;
+      padding: 20px;
+    }
+  
+    .profile-picc {
+      position: static;
+      margin-bottom: 10px;
+      left: 0;
+      width: 100px;
+      height: 100px;
+      border: 4px solid #009a4e;
+    }
+  
+    .profile-details {
+      margin-left: 0;
+      text-align: center;
+      width: 100%;
+    }
+  
+    .profile-details h2 {
+      font-size: 40px;
+      font-weight: bold;
+    }
+    .profile-details h2 {
+      font-size: 25px;
+      font-weight: bold;
+      color:white;
+    }
+  
+  
+    .profile-details p {
+      font-size: 12px;
+      color:white;
+    }
+  }
+  
+  /* For smaller mobile devices */
+  @media screen and (max-width: 480px) {
+    .profile-card {
+      padding: 15px;
+    }
+  
+    .profile-pic {
+      width: 80px;
+      height: 80px;
+    }
+  
+    .profile-details h2 {
+      font-size: 18px;
+    }
+  
+    .profile-details p {
+      font-size: 12px;
+    }
+  
+    
+  }
+  .details-group {
+    background-color:#f0f4f3 ; 
+    border: 2px solid #368b50; 
+    padding: 10px; 
+    border-radius: 8px; 
+    color:#009a4e; /* Text color to contrast with background */
+    margin: 20px 0; /* Spacing around the box */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+  }
