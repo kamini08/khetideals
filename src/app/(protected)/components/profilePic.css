@@ -232,6 +232,7 @@ button:focus {
 } */
 
 .form-group ::placeholder{
+
   text-align:center;
 }
 
@@ -252,4 +253,6 @@ button:focus {
         flex-direction: column;
         align-items: center;
     }
+
+    
 }
