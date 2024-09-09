@@ -24,6 +24,12 @@ const SettingsPage = async () => {
   const MapWithNoSSR = dynamic(() => import("../components/MapComponent"), {
     ssr: false,
   });
+  const MapWithNoSSRBuyer = dynamic(
+    () => import("../components/MapComponentBuyer"),
+    {
+      ssr: false,
+    }
+  );
 
   // TODO form validation
 
@@ -142,7 +148,7 @@ const SettingsPage = async () => {
           {/* Farmer Dashboard and Search Section */}
           <div className="dashboard-content">
             <div className="farmer-finder">
-              <h1 className="search-profile">Search Potential Farmers</h1>
+              {/* <h1 className="search-profile">Search Potential Farmers</h1>
               <div className="form-group text-black">
                 <label htmlFor="cropType">Crop Type</label>
                 <select id="cropType" className="select2">
@@ -151,7 +157,7 @@ const SettingsPage = async () => {
                   <option value="barley">Barley</option>
                   <option value="corn">Corn</option>
                 </select>
-              </div>
+              </div> */}
 
               {/* <div className="form-group text-black">
                 <label htmlFor="quality">Quality</label>
@@ -162,7 +168,7 @@ const SettingsPage = async () => {
                 </select>
               </div> */}
 
-              <div className="form-group text-black">
+              {/* <div className="form-group text-black">
                 <label htmlFor="farmerLocation">Location</label>
                 <input type="text" id="farmerLocation" />
               </div>
@@ -175,7 +181,7 @@ const SettingsPage = async () => {
                 // onClick={searchFarmers}
               >
                 Search
-              </button>
+              </button> */}
 
               <div className="farmer-list">
                 <h3>Farmers List</h3>
@@ -185,7 +191,7 @@ const SettingsPage = async () => {
               </div>
 
               {/* Replace map with a simple div */}
-              <MapWithNoSSR />
+              <MapWithNoSSRBuyer />
             </div>
           </div>
         </div>
