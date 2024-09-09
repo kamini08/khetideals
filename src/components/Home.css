@@ -1,0 +1,446 @@
+.middle-section {
+  background-color: #f9f9f9;
+}
+
+.content-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.intro-text h1 {
+  font-size: 3.5rem;
+  color: #179048;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.intro-text h3 {
+  font-size: 2.5rem;
+  color: #555;
+  margin-bottom: 10px;
+}
+.intro-text p {
+  font-size: 2 rem;
+  color: black;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.features-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.features-container h3 {
+  font-size: 1.8rem;
+  margin: 20px 0 10px;
+  padding: 5px;
+  color: #179048;
+}
+.features-container p {
+  font-weight: bold;
+}
+
+.feature-card {
+  width: 30%;
+  margin: 15px 0;
+}
+
+.feature-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.platform-steps__container {
+  max-width: 1200px;
+  margin: 0 auto;
+  /* padding: 50px 20px; */
+}
+.platform-steps__content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.platform-steps__title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  color: #179048;
+  font-family: Georgia, "Times New Roman", Times, serif;
+}
+
+.platform-steps__grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.platform-steps__card {
+  width: 30%;
+
+  margin-bottom: 40px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.platform-steps__image {
+  width: 90%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.platform-steps__icon {
+  font-size: 2rem;
+  color: #3a3a3a;
+  margin-top: -20px;
+}
+
+.platform-steps__card-title {
+  font-size: 1.8rem;
+  margin: 20px 0 10px;
+  padding: 5px;
+  color: #179048;
+}
+
+.platform-steps__description {
+  font-size: 1rem;
+  color: #777;
+  padding: 0 20px 20px;
+  color: black;
+  font-weight: bold;
+}
+.testimonial-section {
+  background-color: #fff;
+  /* padding: 50px 20px; */
+  text-align: center;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+.testimonial-section .description {
+  font-size: 1rem;
+  font-weight: bold;
+  max-width: 600px;
+  margin: 0 auto 40px;
+  line-height: 1.6;
+}
+
+.testimonial-cards {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 0;
+  max-width: 300px;
+  height: 450px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  color: #333;
+}
+
+.img-card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-top: 20px;
+  z-index: 1;
+}
+
+.name {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+.role {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 15px;
+}
+
+.rating {
+  margin-bottom: 15px;
+}
+
+.fa-star.checked {
+  color: #ffc107;
+}
+
+.testimonial {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #333;
+  padding: 10px;
+  z-index: 1;
+}
+
+/* Bottom Green Section */
+.card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background-color: #179048;
+  z-index: 0;
+  border-radius: 0 0 10px 10px;
+}
+
+.card .content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .testimonial-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    max-width: 90%;
+  }
+}
+h2 {
+  text-align: center;
+}
+.feature-image {
+  width: 400px;
+  height: 240px;
+}
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 5px;
+}
+
+.col-sm-4 {
+  width: 40%;
+  margin-bottom: 20px;
+}
+
+#place {
+  margin-top: 30px;
+  background-image: url(https://timesproweb-static-backend-prod.s3.ap-south-1.amazonaws.com/Blog_page_on_Highest_Paying_Jobs_in_Agriculture_0b3bc0d384.webp);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 240px;
+}
+.place_main {
+  padding-top: 50px;
+  padding-bottom: 100px;
+  background-color: #0000009e;
+}
+.place_1 {
+  text-align: center;
+}
+.place_1 h4 {
+  color: #fff;
+  padding-bottom: 10px;
+}
+.place_1 h2 {
+  color: #fff;
+}
+.place_1 p {
+  color: #fff;
+  padding-bottom: 30px;
+}
+
+.insights_article img {
+  border-radius: 15%;
+  width: 90%;
+  height: 200px;
+  object-fit: cover;
+  border-left: 15px solid #000;
+  border-right: 15px solid #179048;
+}
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#insights {
+  padding: 8px 5px;
+}
+
+.insights_header h2 {
+  /* font-size: 28px; */
+  /* font-size: 3rem; */
+
+  text-align: center;
+  color: #179048;
+}
+
+.insights_content {
+  display: flex;
+  justify-content: space-evenly;
+}
+.insights_content p {
+  font-weight: bold;
+}
+
+.insights_article {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 10px;
+  transition: box-shadow 0.3s ease;
+}
+
+.insights_article:hover {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.insights_article h3 {
+  font-size: 20px;
+  color: #2f7a2d;
+}
+
+.insights_article p {
+  font-size: 16px;
+  color: #444;
+}
+
+.img-responsive {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.button_1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #179048;
+
+  color: white;
+  padding: 10px 20px;
+
+  border-radius: 15px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.button_1:hover {
+  background-color: #094607;
+
+  color: white;
+}
+
+.try {
+  width: 200px;
+  height: 108px;
+}
+@media screen and (max-width: 768px) {
+  .insights_article {
+    width: 100%; /* Stack articles on smaller screens */
+  }
+}
+.feature-card,
+.feature-card img {
+  border-top-left-radius: 120px;
+  border-top-right-radius: 40px;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+
+  /* width: 300px; 
+    height: 260px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);  */
+}
+.feature-card img {
+  border: 5px solid #179048;
+}
+
+@media (min-width: 1441px) {
+  .feature-card {
+    width: 30%;
+  }
+}
+
+/* Medium screens (14-inch laptops, tablets, max-width: 1440px) */
+@media (max-width: 1440px) {
+  .feature-card {
+    width: 45%;
+  }
+
+  .testimonial-cards {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
+/* Tablets and smaller devices (max-width: 1024px) */
+@media (max-width: 1024px) {
+  .feature-card {
+    width: 90%;
+  }
+
+  .testimonial-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    max-width: 90%;
+  }
+
+  .platform-steps__card {
+    width: 90%;
+  }
+}
+
+/* Mobile phones (max-width: 576px) */
+@media (max-width: 576px) {
+  .feature-card {
+    width: 100%;
+  }
+
+  .testimonial-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    max-width: 100%;
+  }
+
+  .platform-steps__card {
+    width: 100%;
+  }
+
+  .intro-text h1 {
+    font-size: 2rem;
+  }
+
+  .intro-text h3 {
+    font-size: 1.5rem;
+  }
+
+  .intro-text p {
+    font-size: 1rem;
+  }
+
+  .platform-steps__title {
+    font-size: 2rem;
+  }
+}

@@ -57,10 +57,10 @@ const BuyerDashboard: React.FC<FarmerDashboardProps> = ({
     <div>
       <form onSubmit={handleSubmit} className="text-black">
         <div className="section" id="searchection">
-          <h1 className="search-profile">Search Potential Buyers</h1>
+          <h1 className="search-profile">Search Potential Farmers</h1>
           <div className="form-group text-black">
             <label htmlFor="category">Category:</label>
-            <select
+            {/* <select
               id="category"
               name="category" // Added name attribute
               className="select2"
@@ -70,7 +70,14 @@ const BuyerDashboard: React.FC<FarmerDashboardProps> = ({
               <option value="Vegetables">Vegetables</option>
               <option value="Fruits">Fruits</option>
               <option value="Wheat">Wheat</option>
-            </select>
+            </select> */}
+            <input
+              type="text"
+              id="category"
+              onChange={handleChange}
+              name="category" // Added name attribute
+              placeholder="Search by Crop name"
+            />
           </div>
           <div className="form-group  text-black">
             <label htmlFor="paymentTerms">Payment Terms:</label>

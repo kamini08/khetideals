@@ -61,7 +61,14 @@ const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
           <h1 className="search-profile">Search Potential Buyers</h1>
           <div className="form-group text-black">
             <label htmlFor="category">Category:</label>
-            <select
+            <input
+              type="text"
+              id="category"
+              onChange={handleChange}
+              name="category" // Added name attribute
+              placeholder="Search by Crop name"
+            />
+            {/* <select
               id="category"
               name="category" // Added name attribute
               className="select2"
@@ -71,7 +78,7 @@ const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
               <option value="Vegetables">Vegetables</option>
               <option value="Fruits">Fruits</option>
               <option value="Wheat">Wheat</option>
-            </select>
+            </select> */}
           </div>
           <div className="form-group  text-black">
             <label htmlFor="paymentTerms">Payment Terms:</label>

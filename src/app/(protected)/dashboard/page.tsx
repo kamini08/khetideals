@@ -6,9 +6,13 @@ import "../components/buyer.css";
 import dynamic from "next/dynamic";
 // import FarmerProfile from "../farmerManageProfile/page";
 import Link from "next/link";
-import FarmerDashboard from "../components/FarmerDashboard";
+// import FarmerDashboard from "../components/FarmerDashboard";
+import { GetServerSideProps } from "next";
 
-const SettingsPage = async () => {
+type Props = {
+  hasDocument: boolean;
+};
+const SettingsPage = async ({ hasDocument }: Props) => {
   const session = await auth();
 
   const user = session?.user.role.toLocaleLowerCase();
@@ -142,6 +146,15 @@ const SettingsPage = async () => {
                 <h3>Make a Payment</h3>
                 <p>Initiate and process payments securely.</p>
               </div>
+              <Link href="">
+                <div className="dashboard-box">
+                  <h3>Be a Landlord???</h3>
+                  <p>
+                    Register yourself as a Landlord and make sharecroppers work
+                    on the land.
+                  </p>
+                </div>
+              </Link>
             </div>
           </div>
 

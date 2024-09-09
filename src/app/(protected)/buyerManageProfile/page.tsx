@@ -69,7 +69,7 @@ const BuyerProfile = () => {
     <div className="form-container">
       <div className="edit">
         <h2>Fill further details</h2>
-        <h3>Edit</h3>
+        {/* <h3>Edit</h3> */}
       </div>
 
       <form onSubmit={handleSubmit}>

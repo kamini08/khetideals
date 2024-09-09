@@ -2,17 +2,25 @@ import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import clientPromise from "@/lib/mongodb";
 import buyermarketplacesub from "@/models/buyermarketplacesub";
-// import buyerMarketPlaceSub from "@/models/buyermarketplacesub.js";
+import buyerMarketPlaceSub from "@/models/buyermarketplacesub.js";
 // import { NextResponse } from "next/server.js";
 // import { auth } from "../../../../auth";
 export async function GET() {
+  // const session = await auth();
+
+  // const userID = session?.user.id;
   try {
     const locations = await db.user.findMany({
       select: {
         latitude: true,
         longitude: true,
+        id: true,
       },
     });
+    // console.log(locations);
+    // const document = await buyerMarketPlaceSub.findOne({ mainId: userID });
+    // console.log(document);
+
     return NextResponse.json(locations, { status: 200 });
   } catch (error) {
     console.error("Error fetching coordinates:", error);

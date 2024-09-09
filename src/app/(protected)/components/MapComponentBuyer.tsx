@@ -17,6 +17,7 @@ L.Icon.Default.mergeOptions({
 interface Coordinate {
   latitude: string;
   longitude: string;
+  id: string;
 }
 
 const MapComponent: React.FC = () => {
@@ -31,7 +32,10 @@ const MapComponent: React.FC = () => {
       data.forEach((coord) => {
         L.marker([parseFloat(coord.latitude), parseFloat(coord.longitude)])
           .addTo(mapRef.current!)
-          .openPopup();
+          .openPopup()
+          .on("click", () => {
+            window.location.href = `/users/${coord.id}`;
+          });
       });
     }
   };
