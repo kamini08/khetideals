@@ -1,11 +1,12 @@
 import { auth, signOut } from "../../../../auth";
-import { getAllCoordinates } from "../../../../data/user";
+// import { getAllCoordinates } from "../../../../data/user";
 import "../components/buyer.css";
 // import { useRouter } from "next/navigation";
 // import FarmerDashboard from "../components/FarmerDashboard";
 import dynamic from "next/dynamic";
 // import FarmerProfile from "../farmerManageProfile/page";
 import Link from "next/link";
+import FarmerDashboard from "../components/FarmerDashboard";
 
 const SettingsPage = async () => {
   const session = await auth();
@@ -19,6 +20,7 @@ const SettingsPage = async () => {
   //   })
   // );
   // const user = "farmer";
+
   const MapWithNoSSR = dynamic(() => import("../components/MapComponent"), {
     ssr: false,
   });
@@ -75,41 +77,12 @@ const SettingsPage = async () => {
             </div>
           </div>
           <div className="main-content">
-            <div className="section" id="searchection">
-              <h1 className="search-profile">Search Potential Buyers</h1>
-              <div className="form-group text-black">
-                <label htmlFor="category">Category:</label>
-                <select id="category" className="select2">
-                  <option value="Grains">Grains</option>
-                  <option value="Vegetables">Vegetables</option>
-                  <option value="Fruits">Fruits</option>
-                </select>
-              </div>
-              <div className="form-group  text-black">
-                <label htmlFor="paymentTerms">Payment Terms:</label>
-                <select id="paymentTerms" className="select2">
-                  <option value="Cash">Cash</option>
-                  <option value="UPI">UPI</option>
-                  <option value="Net Banking">Net Banking</option>
-                </select>
-              </div>
-              <div className="form-group  text-black">
-                <label htmlFor="buyerLocation">Location:</label>
-                <input type="text" id="buyerLocation" />
-              </div>
-              <div className="form-group  text-black">
-                <label htmlFor="minQuantity">Minimum Quantity (kg):</label>
-                <input type="number" id="minQuantity" />
-              </div>
-              {/* <button id="searchBtn" onClick={searchBuyers}>
-                Search
-              </button> */}
-            </div>
+            {/* <FarmerDashboard /> */}
 
-            <div className="section buyer-list">
+            {/* <div className="section buyer-list text-black">
               <h3>Buyer List</h3>
               <ul id="buyerList"></ul>
-            </div>
+            </div> */}
 
             <div className="section placeholder-container">
               {/* Placeholder for map or other content */}
@@ -180,14 +153,14 @@ const SettingsPage = async () => {
                 </select>
               </div>
 
-              <div className="form-group text-black">
+              {/* <div className="form-group text-black">
                 <label htmlFor="quality">Quality</label>
                 <select id="quality">
                   <option value="A">A</option>
                   <option value="B">B</option>
                   <option value="C">C</option>
                 </select>
-              </div>
+              </div> */}
 
               <div className="form-group text-black">
                 <label htmlFor="farmerLocation">Location</label>
@@ -197,9 +170,12 @@ const SettingsPage = async () => {
                 <label htmlFor="minQuantity">Minimum Quantity</label>
                 <input type="number" id="minQuantity" />
               </div>
-              {/* <button id="searchBtn" onClick={searchFarmers}>
+              <button
+                id="searchBtn"
+                // onClick={searchFarmers}
+              >
                 Search
-              </button> */}
+              </button>
 
               <div className="farmer-list">
                 <h3>Farmers List</h3>

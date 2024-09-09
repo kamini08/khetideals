@@ -24,9 +24,9 @@ export default function Home() {
             font.className
           )}
         >
-          🔐 Auth
+          🔐 KETHIDEAL
         </h1>
-        <p className="text-white text-lg">A Simple Authentication service</p>
+        {/* <p className="text-white text-lg">A Simple Authentication service</p> */}
         <div>
           <LoginButton>
             <Button variant="secondary" size="lg">
