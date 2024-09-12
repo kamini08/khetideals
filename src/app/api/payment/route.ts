@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import Stripe from "stripe";
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 
 // Initialize Stripe
 const stripe = new Stripe(
