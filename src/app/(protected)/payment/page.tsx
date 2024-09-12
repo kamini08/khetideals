@@ -99,16 +99,24 @@
 
 // export default Payment;
 
-
-import { useState, useEffect } from 'react';
-import { loadStripe } from '@stripe/stripe-js';
+import { useState, useEffect } from "react";
+import { loadStripe } from "@stripe/stripe-js";
 // import { Elements, CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import {Elements, CardNumberElement, CardExpiryElement, CardCvcElement, useElements, useStripe } from '@stripe/react-stripe-js';
-import '@/components/styles/payment.css';
+import {
+  Elements,
+  CardNumberElement,
+  CardExpiryElement,
+  CardCvcElement,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js";
+import "@/components/styles/payment.css";
 // import dotenv from "dotenv"
 
 // Load Stripe
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+const stripePromise = loadStripe(
+  "pk_test_51PdxcLRoQg51LGuWG0n0LEZxTh3YhLaqj3y8gRpS8BQLsQLydXycX10pfzgAa3NCke8gkKofe28q3vLGu3cENrKK00VK3BJ4MF"
+);
 
 function CheckoutForm() {
   const stripe = useStripe();
@@ -124,21 +132,21 @@ function CheckoutForm() {
     }
 
     // const amount = parseFloat(document.getElementById('amount').value);
-    const amountInput = document.getElementById('amount') as HTMLInputElement;
-const amount: number = parseFloat(amountInput.value);
+    const amountInput = document.getElementById("amount") as HTMLInputElement;
+    const amount: number = parseFloat(amountInput.value);
 
     if (isNaN(amount) || amount <= 0) {
-      alert('Please enter a valid amount.');
+      alert("Please enter a valid amount.");
       return;
     }
 
     setLoading(true);
 
     // Call your backend to create a PaymentIntent
-    const res = await fetch('/api/payment', {
-      method: 'POST',
+    const res = await fetch("/api/payment", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ amount }),
     });
@@ -146,16 +154,19 @@ const amount: number = parseFloat(amountInput.value);
     const { clientSecret } = await res.json();
 
     // Confirm the card payment
-    const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: elements.getElement(CardNumberElement),
-      },
-    });
+    const { error, paymentIntent } = await stripe.confirmCardPayment(
+      clientSecret,
+      {
+        payment_method: {
+          card: elements.getElement(CardNumberElement),
+        },
+      }
+    );
 
     if (error) {
-      alert('Payment failed: ' + error.message);
-    } else if (paymentIntent.status === 'succeeded') {
-      alert('Payment successful! Payment ID: ' + paymentIntent.id);
+      alert("Payment failed: " + error.message);
+    } else if (paymentIntent.status === "succeeded") {
+      alert("Payment successful! Payment ID: " + paymentIntent.id);
     }
 
     setLoading(false);
@@ -166,7 +177,6 @@ const amount: number = parseFloat(amountInput.value);
       <label>
         Amount (INR):
         <input
-
           type="number"
           id="amount"
           placeholder="Enter amount"
@@ -180,10 +190,7 @@ const amount: number = parseFloat(amountInput.value);
         <CardElement id="card-element" className="card-element" />
       </div> */}
 
-      
-
-
-<div className="card-details-box">
+      <div className="card-details-box text-black">
         <label htmlFor="card-number">Card Number:</label>
         <CardNumberElement id="card-number" className="card-element" />
 
@@ -195,7 +202,7 @@ const amount: number = parseFloat(amountInput.value);
       </div>
 
       <button type="submit" disabled={loading}>
-        {loading ? 'Processing...' : 'Pay Now'}
+        {loading ? "Processing..." : "Pay Now"}
       </button>
     </form>
   );
@@ -215,15 +222,17 @@ export default function Payment() {
         </div> */}
 
         <div className="payment-container">
-          <h1><strong>Make a Payment</strong></h1>
+          <h1>
+            <strong>Make a Payment</strong>
+          </h1>
           <Elements stripe={stripePromise}>
             <CheckoutForm />
           </Elements>
-          <p aria-live="polite">Your payment will be processed securely via Stripe.</p>
+          <p aria-live="polite">
+            Your payment will be processed securely via Stripe.
+          </p>
         </div>
       </div>
     </div>
   );
 }
-
-
