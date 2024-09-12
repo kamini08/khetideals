@@ -43,7 +43,8 @@ const UserDetailPage = () => {
         <strong>Address:</strong> {userData.address}
       </p>
       <p>
-        <strong>Category:</strong> {userData.category.join(", ")}
+        <strong>Category:</strong>
+        {userData.category && userData.category.join(", ")}
       </p>
       <p>
         <strong>Description:</strong> {userData.description}
