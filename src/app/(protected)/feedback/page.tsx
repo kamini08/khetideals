@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
-import '../components/feedback.css'; // Ensure this path is correct for your CSS
+"use client";
+import React, { useState } from "react";
+import "../components/feedback.css"; // Ensure this path is correct for your CSS
 
 const FeedbackForm = () => {
   const [formData, setFormData] = useState({
-    farmerName: '',
-    farmerEmail: '',
-    timeliness: '',
-    cropQuality: '',
-    communication: '',
-    landlordName: '',
-    landlordEmail: '',
-    feedback: '',
+    farmerName: "",
+    farmerEmail: "",
+    timeliness: "",
+    cropQuality: "",
+    communication: "",
+    landlordName: "",
+    landlordEmail: "",
+    feedback: "",
   });
 
   const handleChange = (e: any) => {
@@ -23,7 +24,7 @@ const FeedbackForm = () => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    alert('Feedback submitted successfully!');
+    alert("Feedback submitted successfully!");
     // You can handle form submission here (e.g., send data to server)
   };
 
@@ -72,7 +73,7 @@ const FeedbackForm = () => {
                   checked={formData.timeliness === num.toString()}
                   onChange={handleChange}
                   required
-                />{' '}
+                />{" "}
                 {num}
               </label>
             ))}
@@ -92,7 +93,7 @@ const FeedbackForm = () => {
                   checked={formData.cropQuality === num.toString()}
                   onChange={handleChange}
                   required
-                />{' '}
+                />{" "}
                 {num}
               </label>
             ))}
@@ -112,7 +113,7 @@ const FeedbackForm = () => {
                   checked={formData.communication === num.toString()}
                   onChange={handleChange}
                   required
-                />{' '}
+                />{" "}
                 {num}
               </label>
             ))}
