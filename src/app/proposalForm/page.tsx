@@ -1,11 +1,16 @@
 "use client";
-import generateContractPdf from "../../lib/clientUtils/generatePDF";
+import generateContractPdf from "@/lib/clientUtils/generatePDF";
 
 import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import "../css/contract.css"; // Assuming you're linking to the stylesheet
+import { auth } from "../../../auth";
 export default function Contract() {
-
+  let buyerId;
+  let sellerId;
+  let user1Id: any;
+  let user2Id: any;
+  let userRole: any;
   const onSubmitform = async (data: any) => {
     
     console.log(data);
@@ -30,6 +35,25 @@ export default function Contract() {
       alert('Error creating contract');
     }
 
+    
+    async function getData() {
+      const session = await auth();
+      user1Id = session?.user.id;
+      userRole = session?.user.role;
+      const pathParts = window.location.pathname.split('/');
+      user2Id = pathParts[pathParts.length - 1];
+      
+      }
+
+      if (userRole === 'buyer') {
+        buyerId = user1Id;
+        sellerId = user2Id;
+      } else if (userRole === 'seller') {
+        sellerId = user1Id;
+        buyerId = user2Id;
+      }
+    
+
 
 
   };
@@ -40,6 +64,7 @@ export default function Contract() {
           buyer: {
               name: "",
               email: "",
+              id: buyerId,
               phoneNumber: "",
               address: '',
               Account: '',
@@ -48,6 +73,7 @@ export default function Contract() {
           seller: {
               name: '',
               email: '',
+              id: sellerId,
               phoneNumber: '',
               address: '',
               Account: '',

@@ -9,6 +9,7 @@ const contractSchema = new mongoose.Schema({
     buyer: {
         name: { type: String, required: true },
         email: { type: String, required: true },
+        id: { type: String, required: true },
         phoneNumber: { type: String, required: true },
         address: { type: String, required: true },
         Account: { type: Number, required: true },
@@ -16,6 +17,7 @@ const contractSchema = new mongoose.Schema({
     seller: {
         name: { type: String, required: true },
         email: { type: String, required: true },
+        id: { type: String, required: true },
         phoneNumber: { type: String, required: true },
         address: { type: String, required: true },
         Account: { type: Number, required: true },

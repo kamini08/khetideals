@@ -1,14 +1,15 @@
 "use client";
 import React, { useEffect } from "react";
 import { useState } from 'react';
-import Pdf from "@/components/PDFImage";
+import Pdf from "@/components/contract/PDFImage";
 import { useRouter } from "next/navigation";
 import clientPromise from "@/lib/mongodb";
-import buyer from "../../../models/buyermodel";
-import farmers from "models/farmermodel";
-import Contract from "models/contractmodel";
-import  presignedUrl  from ".serverUtils/presignedUrl";
+import buyer from "@/models/buyermodel";
+import farmers from "@/models/farmermodel";
+import Contract from "@/models/contractmodel";
+import  presignedUrl  from "@/lib/serverUtils/presignedUrl";
 import { NextResponse } from "next/server";
+import { auth } from "../../../../../auth";
 
 function getS3KeyFromUrl(s3Url: string): string | null {
   try {
@@ -35,8 +36,14 @@ const ContractPdf = async () => {
   const [loading, setLoading] = useState(false);
   const [isFarmerSigned, setFarmerSigned] = useState(false);
   const [isBuyerSigned, setBuyerSigned] = useState(false);
-  const [contractId, setContractId] = useState(null);
-  const [user, setUser] = useState(null);
+  const [contractId, setContractId] = useState("");
+  const [user, setUser] = useState({
+    name: "",
+    address: "",
+    email: "",
+    phone: "",
+    id: "",
+  });
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -49,11 +56,11 @@ const ContractPdf = async () => {
 
   const router = useRouter();
 
-  //const session = await auth();
+  const session = await auth();
 
-  // const user = session?.user.role.toLocaleLowerCase();
-  // const userId = session?.user.mainId.;
-  const userId = "987654";
+  // const role = session?.user.role.toLocaleLowerCase();
+  // const userId = session?.user.id;
+  const userId = "123456";
   const role = "farmer";
   try {
     await clientPromise();
@@ -64,7 +71,7 @@ const ContractPdf = async () => {
     }) : farmers.findOne({
       mainId: userId
     })
-    setUser(user);
+    setUser(await user);
    
   } catch(err) {
     console.log(err);
@@ -90,7 +97,7 @@ const ContractPdf = async () => {
 
     const key = getS3KeyFromUrl(s3Url);
     const response = await presignedUrl( key );
-    const presignedURL = response.noClientUrl;
+    const presignedURL = response?.noClientUrl;
     console.log(presignedURL);
     role=="farmer"? setFarmerSigned(contract.isFarmerSigned): setBuyerSigned(contract.isBuyerSigned);
     
@@ -124,7 +131,7 @@ const ContractPdf = async () => {
     }
   };
 
-  if(user.email==contract.buyer.email || user.email==contract.seller.email) {
+  if(user && (user.id ==contract.buyer.id || user.id ==contract.seller.id)) {
   return (
     <div className="p-8 mx-auto">
       <iframe
@@ -133,7 +140,7 @@ const ContractPdf = async () => {
         height="600px"
       ></iframe>
       <div>
-      {user=="farmer"? isFarmerSigned && (<button
+      {role=="farmer"? isFarmerSigned && (<button
       className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mx-auto my-3"
         onClick={() => signContract(contractId)}
         disabled={loading}
@@ -148,7 +155,9 @@ const ContractPdf = async () => {
       </button>) }
     </div>
     </div>
-  );}
+  );} else {
+    return (<div>You are not authorized to view this contract.</div>);
+  }
 };
 
 export default ContractPdf;

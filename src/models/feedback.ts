@@ -1,6 +1,10 @@
 import mongoose from "mongoose"
 
 const FeedbackSchema = new mongoose.Schema({
+  mainId:{
+type: String,
+required: true
+  },
   farmerName: {
     type: String,
     required: true,
@@ -8,6 +12,12 @@ const FeedbackSchema = new mongoose.Schema({
   farmerEmail: {
     type: String,
     required: true,
+  },
+  rating: {
+    type: Number,
+    required: true,
+    min: 1,
+    max: 5, // Assuming rating between 1 and 5
   },
   timeliness: {
     type: Number,
@@ -41,4 +51,5 @@ const FeedbackSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.models.Feedback|| mongoose.model('Feedback', FeedbackSchema);
+const Feedback= mongoose.models.Feedback|| mongoose.model('Feedback', FeedbackSchema);
+export default Feedback;
