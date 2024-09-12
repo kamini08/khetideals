@@ -90,8 +90,8 @@ const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
               value={formData.paymentTerms}
             >
               <option value="Cash">Cash</option>
-              <option value="UPI">UPI</option>
-              <option value="Net Banking">Net Banking</option>
+              <option value="Credit">Credit</option>
+              <option value="Installments">Installments</option>
             </select>
           </div>
           <div className="form-group  text-black">
@@ -101,6 +101,7 @@ const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
               id="location"
               name="location" // Added name attribute
               onChange={handleChange}
+              placeholder="Enter your city"
             />
           </div>
           <div className="form-group  text-black">
@@ -112,9 +113,11 @@ const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
               onChange={handleChange}
             />
           </div>
-          <button id="searchBtn" type="submit">
+          <div className="cls text-certer">
+          <button  id="searchBtn" type="submit">
             Search
           </button>
+          </div>
         </div>
       </form>
     </div>

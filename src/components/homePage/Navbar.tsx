@@ -5,7 +5,7 @@ const Navbar = () => {
       <nav className="navbar">
         <div className="container">
           <div className="navbar-header">
-            {/* <img src={logo} alt="Logo" className="logo" /> */}
+             <img src="/images/logo27.jpg" alt="Logo" className="logo" />
 
             <a href="index.html" className="brand">
               KHETIDEALS

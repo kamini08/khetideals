@@ -1,13 +1,18 @@
+import React from "react";
 import "./Footer.css";
-
-const Footer = () => {
+// import logo from "../../../logo27.jpg"
+interface LogoProps {
+  logo?: string;
+}
+const Footer: React.FC<LogoProps> = () => {
+ 
   return (
     <div>
       <div className="footer-top">
         <div className="row">
           <div className="col">
             <div className="footer-1">
-              {/* <img src={logo} alt="KhetiDeals Logo" className="footer-logo" /> */}
+              <img src="/images/logo27.jpg" alt="KhetiDeals Logo" className="footer-logo" />
             </div>
           </div>
           <div className="col">

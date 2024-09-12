@@ -1,0 +1,310 @@
+/* Base styles for the profile card */
+.profile-card {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #009a4e;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 95%;
+    height: 120px;
+    margin-left: 60px;
+    color: #fff;
+    position: relative;
+    overflow: visible;
+    transition: all 0.3s ease;
+  }
+  
+  .profile-card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Profile picture styling */
+  .profile-picc {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: absolute;
+    left: -60px; /* Moves the image halfway out of the container horizontally */
+    border: 5px solid #009a4e;
+    transition: all 0.3s ease;
+  }
+  
+  .profile-picc img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  /* Profile details styling */
+  .profile-detailss {
+    margin-left: 80px; /* Adjusts left margin to create space for the profile pic */
+    margin-top: 8px;
+  }
+  
+  .profile-detailss h2 {
+    margin: 3px;
+    font-size: 26px;
+    color: #fff;
+  }
+  
+  .profile-detailss h3 {
+    margin: 3px;
+    font-size: 20px;
+    color: #fff;
+  }
+  
+  .profile-detailss p {
+    margin: 0;
+    color: #fff;
+    font-size: 18px;
+  }
+  
+  /* Responsive styling for screens up to 1024px wide */
+  @media screen and (max-width: 1024px) {
+    .profile-card {
+      flex-direction: column;
+      align-items: center;
+      height: auto;
+      padding: 20px;
+      margin-left: 0;
+      text-align: center;
+    }
+  
+    .profile-picc {
+      position: static;
+      margin-bottom: 10px;
+      left: 0;
+      width: 100px;
+      height: 100px;
+      border: 4px solid #009a4e;
+    }
+  
+    .profile-detailss {
+      margin-left: 0;
+      text-align: center;
+      width: 100%;
+    }
+  
+    .profile-detailss h2 {
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+    }
+  
+    .profile-detailss p {
+      font-size: 16px;
+      color: white;
+    }
+  }
+  
+  /* Responsive styling for tablets */
+  @media screen and (max-width: 768px) {
+    .profile-card {
+      flex-direction: column;
+      align-items: center;
+      height: auto;
+      padding: 20px;
+      margin-left: 0;
+      text-align: center;
+    }
+  
+    .profile-picc {
+      position: static;
+      margin-bottom: 10px;
+      left: 0;
+      width: 100px;
+      height: 100px;
+      border: 4px solid #009a4e;
+    }
+  
+    .profile-detailss {
+      margin-left: 0;
+      text-align: center;
+      width: 100%;
+    }
+  
+    .profile-detailss h2 {
+      font-size: 22px;
+      font-weight: bold;
+      color: white;
+    }
+  
+    .profile-detailss p {
+      font-size: 14px;
+      color: white;
+    }
+  }
+  
+  /* Responsive styling for mobile devices */
+  @media screen and (max-width: 480px) {
+    .profile-card {
+      padding: 15px;
+    }
+  
+    .profile-picc {
+      width: 80px;
+      height: 80px;
+    }
+  
+    .profile-detailss h2 {
+      font-size: 20px;
+    }
+  
+    .profile-detailss p {
+      font-size: 12px;
+    }
+  }
+  
+  /* Styling for details group */
+  .details-group {
+    background-color: #f0f4f3;
+    border: 2px solid #368b50;
+    padding: 10px;
+    border-radius: 8px;
+    color: #009a4e;
+    margin: 20px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Contract container styling */
+  .contracts-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  
+  /* Media queries for smaller screens */
+  @media screen and (max-width: 768px) {
+    .contracts-container {
+      flex-direction: column; /* Stack contracts vertically on smaller screens */
+      align-items: center;
+    }
+  }
+  /* CARD STYLING */
+  
+  .plot-card {
+    background-color: #e3f9e5;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 300px; /* Maximum width for larger screens */
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: #009a4e;
+    transition: all 0.3s ease;
+    min-height: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .plot-section h2{
+   color:#009a4e;
+  }
+  .plot-card-header {
+    width: 100%;
+    height: 80px;
+    padding-bottom: 30%;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    overflow: hidden;
+    position: relative;
+   
+  }
+  
+  
+  .Name {
+   padding:0px;
+   margin:0px;
+   font-size:1.5rem;
+   font-weight: bold;
+   color:#009a4e;
+   text-align:center;
+  
+  }
+  
+  .plot-card-header img {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    object-fit: cover;
+  }
+  
+  .plot-card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 80px;
+    padding: 0;
+    margin-top: 15px;
+  }
+  
+  .plot-card-description {
+    margin: 0;
+    padding: 2px 0;
+    line-height: 1.5;
+    font-weight: bold;
+  }
+  
+  .plot-card-button {
+    background-color: #009a4e;
+    color: #fff;
+    border: none;
+    width:50%;
+    border-radius: 20px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .plot-card-button:hover {
+    background-color: #1b5e20;
+  }
+  
+  /* Make the card responsive for small screens */
+  @media (max-width: 600px) {
+    .plot-card {
+      width: 100%; /* Full width on small screens */
+      max-width: none; /* Remove max-width for small screens */
+      min-height: auto; /* Allow height to adjust with content */
+      flex-direction: column; /* Ensure content stacks vertically */
+    }
+  
+    .plot-card-header {
+      padding-bottom: 50%; /* Make the image take more space on smaller screens */
+    }
+  
+    .plot-card-body {
+      margin-top: 10px;
+    }
+  
+    .plot-card-description {
+      font-size: 14px; /* Adjust text size for smaller screens */
+    }
+  }
+  
+  /* Make the card layout flexible for larger screens */
+  @media (min-width: 600px) and (max-width: 900px) {
+    .plot-card {
+      max-width: 250px; /* Slightly larger width for medium screens */
+    }
+  }
+  
+  @media (min-width: 900px) {
+    .plot-card {
+      max-width: 300px; /* Larger width for larger screens */
+    }
+  
+    .plot-card-description {
+      font-size: 16px; /* Slightly bigger text for larger screens */
+    }
+  }
+  .plot-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+  }

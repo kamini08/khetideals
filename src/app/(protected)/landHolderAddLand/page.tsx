@@ -1,8 +1,10 @@
 "use client"
 import React, { useState } from "react";
-import "../components/buyer.css";
-import "../components/profilePic.css";
-import "../components/shareCropperSidebar"
+import "@/components/styles/p2a.css";
+import "@/components/styles/p2b.css";
+// import "../components/profilePic.css";
+import LDash from "../components/LDash";
+// import "../components/shareCropperSidebar"
 
 // Define the types for profile data
 interface ProfileData {
@@ -90,29 +92,9 @@ const SharecropperManageProfile: React.FC = () => {
   return (
     <div className="container">
       <div className="sidebar">
-        <h2 className="farmer-profile">LandLord Profile</h2>
-        {/* <BuyerDashboard onSectionClick={handleSidebarClick} /> */}
-        <div className="farmer-dashboard">
-      <div className="dashboard-box">
-        <h3>My Profile</h3>
-        <p>Review your profile.</p>
-      </div>
-
-      <div className="dashboard-box">
-        <h3>Add Land Requirement</h3>
-        <p>Specify your land needs and get offers.</p>
-      </div>
-
-      <div className="dashboard-box">
-        <h3>Status of Work</h3>
-        <p>Track the progress of sowing, growing, and harvesting.</p>
-      </div>
-
-      <div className="dashboard-box" >
-        <h3>Fill Feedback</h3>
-        <p>Provide feedback on your farming operations.</p>
-      </div>
-      </div>
+        <h2 className="farmer-profile"><strong>LandLord Profile</strong></h2>
+        <LDash />
+       
       </div>
 
       <div className="main-content form-background">
@@ -133,9 +115,9 @@ const SharecropperManageProfile: React.FC = () => {
 
         {/* Form for further details */}
         <div className="form-container">
-          <h2>Add land requirements</h2>
+          <h2><strong>Add land requirements</strong></h2>
           <form onSubmit={handleSubmit}>
-            <div className="form-group">
+            <div className="form-group text-center">
               <label htmlFor="areaOfLand">Area of land</label>
               <input
                className="text-black"
@@ -148,7 +130,7 @@ const SharecropperManageProfile: React.FC = () => {
               />
             </div>
 
-            <div className="form-group">
+            <div className="form-group text-center">
               <label htmlFor="location">City</label>
               <input
                className="text-black"
@@ -161,7 +143,7 @@ const SharecropperManageProfile: React.FC = () => {
               />
             </div>
 
-            <div className="form-group">
+            <div className="form-group text-center">
               <label htmlFor="adress">Adress</label>
               <input
                className="text-black"
@@ -174,7 +156,7 @@ const SharecropperManageProfile: React.FC = () => {
               />
             </div>
 
-            <div className="form-group">
+            <div className="form-group text-center">
               <label htmlFor="cropToGrow">Crop To Grow</label>
               <input
                className="text-black"
@@ -187,7 +169,7 @@ const SharecropperManageProfile: React.FC = () => {
               />
             </div>
 
-            <div className="form-group">
+            <div className="form-group text-center">
               <label htmlFor="soilType">Soil Type</label>
               <input
                className="text-black"
@@ -201,7 +183,7 @@ const SharecropperManageProfile: React.FC = () => {
             </div>
 
             <div className="form-group inline-group">
-              <div className="form-group">
+              <div className="form-group text-center">
                 <label htmlFor="startingMonth">Start Month</label>
                 <select
                  className="text-black"
@@ -215,7 +197,7 @@ const SharecropperManageProfile: React.FC = () => {
                 </select>
               </div>
 
-              <div className="form-group">
+              <div className="form-group text-center">
                 <label htmlFor="endingMonth">End Month</label>
                 <select
                  className="text-black"
@@ -230,7 +212,7 @@ const SharecropperManageProfile: React.FC = () => {
               </div>
             </div>
 
-            <div className="form-group">
+            <div className="form-group text-center">
               <label htmlFor="pricePerDecimal">Price per Decimal</label>
               <input
                className="text-black"
@@ -243,7 +225,7 @@ const SharecropperManageProfile: React.FC = () => {
               />
             </div>
 
-            <div className="form-group">
+            <div className="form-group text-center">
               <button type="submit">Submit</button>
             </div>
           </form>

@@ -1,8 +1,6 @@
 import { auth, signOut } from "../../../../auth";
 // import { getAllCoordinates } from "../../../../data/user";
 import "../components/buyer.css";
-// import { useRouter } from "next/navigation";
-// import FarmerDashboard from "../components/FarmerDashboard";
 import dynamic from "next/dynamic";
 // import FarmerProfile from "../farmerManageProfile/page";
 import Link from "next/link";
@@ -36,6 +34,7 @@ const SettingsPage = async ({ hasDocument }: Props) => {
   );
 
   // TODO form validation
+  
 
   // const router = useRouter();
   return (
@@ -56,35 +55,35 @@ const SettingsPage = async ({ hasDocument }: Props) => {
         <div className="container">
           <div className="sidebar">
             <h2 className="farmer-profile">Farmer Profile</h2>
-            {/* <FarmerDashboard onSectionClick={handleSidebarClick} /> */}
-            <Link href="/farmerProfile">
-              <div
-                className="dashboard-box"
-                // onClick={() => onSectionClick("profile-section")}
-              >
+            <Link href="/farmerManageProfile">
+              <div className="dashboard-box" >
                 <h3>Manage Profile</h3>
                 <p>Update your profile and farming details.</p>
               </div>
             </Link>
-            <div
-              className="dashboard-box"
-              // onClick={() => router.push("/farmerManageProfile")}
-            >
-              <h3>Current Contracts</h3>
+            <Link href="/farmerProfile">
+              <div className="dashboard-box" >
+                <h3>My Profile</h3>
+                <p>View your profile and farming details.</p>
+              </div>
+            </Link>
+            <Link href="/dashboard">
+              <div
+                className="dashboard-box" >
+                <h3>Search Potential Buyers</h3>
+                <p>Explore new farming opportunities and buyers.</p>
+              </div>
+            </Link>
+            <div className="dashboard-box">
+              <h3>My Contracts</h3>
               <p>View and manage your current contracts.</p>
             </div>
-            <div
-              className="dashboard-box"
-              // onClick={() => onSectionClick("search-section")}
-            >
-              <h3>Search Potential Buyers</h3>
-              <p>Explore new farming opportunities and buyers.</p>
+            <Link href="/ShareCropperDashboard">
+            <div className="dashboard-box" >
+              <h3>Be a Sharecropper???</h3>
+              <p>Register yourself if you want to work on the fields of landlord and get paid.</p>
             </div>
-
-            <div className="dashboard-box">
-              <h3>Transaction History</h3>
-              <p>Review your past transactions and earnings.</p>
-            </div>
+            </Link>
           </div>
           <div className="main-content">
             {/* <FarmerDashboard /> */}
@@ -142,9 +141,16 @@ const SettingsPage = async ({ hasDocument }: Props) => {
                 <h3>Available Farmers </h3>
                 <p>Browse and contact available farmeres.</p>
               </div>
+              <Link href="/payment">
+                <div className="dashboard-box">
+                  <h3>Make a Payment</h3>
+                  <p>Initiate and process payments securely.</p>
+                </div>
+              </Link>
+              
               <div className="dashboard-box">
-                <h3>Make a Payment</h3>
-                <p>Initiate and process payments securely.</p>
+                <h3>My contracts</h3>
+                <p>Review your ongoing and previous contracts</p>
               </div>
               <Link href="">
                 <div className="dashboard-box">

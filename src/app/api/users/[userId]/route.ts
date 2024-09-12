@@ -8,6 +8,7 @@ export async function GET(
 ) {
   try {
     const { userId } = params;
+    console.log('Received userId:', userId);
     await clientPromise(); // Ensure MongoDB connection
 
     // Fetch the document based on `mainId`

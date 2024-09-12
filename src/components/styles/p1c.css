@@ -1,0 +1,235 @@
+/* Container for the horizontal card */
+.profile-card {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #009a4e;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 95%;
+    height: 120px;
+    margin-left: 60px;
+    color: #fff;
+    position: relative; /* For positioning the profile pic */
+    overflow: visible; /* Ensure the profile image shows outside the card */
+    transition: all 0.3s ease;
+  }
+  
+  .profile-card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Slightly elevate on hover */
+  }
+  
+  /* Circle image - half inside, half outside horizontally */
+  .profile-picc {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: absolute;
+    left: -60px; /* Move the image halfway out of the container horizontally */
+    border: 5px solid #009a4e; /* Border to match the card background */
+    transition: all 0.3s ease;
+  }
+  
+  .profile-picc img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .profile-detailss {
+    margin-left: 80px; /* Adjust left margin to create space for the profile pic */
+    margin-top: 8px;
+  }
+  
+  .profile-detailss h2 {
+    margin: 3px;
+    font-size: 26px;
+    color: #fff;
+  }
+  
+  .profile-detailss h3 {
+    margin: 3px;
+    font-size: 20px;
+    color: #fff;
+  }
+  
+  .profile-detailss p {
+    margin: 0;
+    color: #fff;
+    font-size: 18px;
+  }
+  
+  /* Social icons styling */
+  
+  /* Make the card responsive */
+  @media screen and (max-width: 1024px) {
+    .profile-card {
+      flex-direction: column;
+      align-items: flex-start;
+      height: auto;
+      padding: 20px;
+      margin-left: 0; /* Remove left margin for larger tablets and small laptops */
+    }
+  
+    .profile-picc {
+      position: static;
+      margin-bottom: 10px;
+      left: 0;
+      width: 100px;
+      height: 100px;
+      border: 4px solid #009a4e;
+    }
+  
+    .profile-detailss {
+      margin-left: 0;
+      text-align: center;
+      width: 100%;
+    }
+  
+    .profile-detailss h2 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+  
+    .profile-detailss h3 {
+      font-size: 18px;
+    }
+  
+    .profile-detailss p {
+      font-size: 14px;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .profile-card {
+      flex-direction: column;
+      align-items: center;
+      height: auto;
+      padding: 15px;
+      margin-left: 0; /* Remove left margin */
+    }
+  
+    .profile-picc {
+      width: 100px;
+      height: 100px;
+      border: 4px solid #009a4e;
+    }
+  
+    .profile-detailss {
+      margin-left: 0;
+      text-align: center;
+      width: 100%;
+    }
+  
+    .profile-detailss h2 {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  
+    .profile-detailss h3 {
+      font-size: 16px;
+    }
+  
+    .profile-detailss p {
+      font-size: 12px;
+    }
+  }
+  /* Container for past purchases */
+  .purchases-container {
+    display: flex !important;
+    flex-wrap: wrap !important; /* Allows items to wrap on smaller screens */
+    gap: 16px !important; /* Space between each card */
+    justify-content: center !important; /* Center the cards on the page */
+    padding: 20px !important;
+  }
+  
+  /* Individual purchase card */
+  .purchase-card  {
+    border: 2px solid #009a4e !important; /* Green border color */
+    border-radius: 8px !important; /* Rounded corners */
+    padding: 16px !important; /* Internal padding */
+    width: 100% !important; /* Full width on smaller screens */
+    max-width: 250px !important; /* Limit max width on larger screens */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1)  !important; /* Subtle shadow */
+    background-color: #f0f4f3 !important; /* Light background color */
+    transition: transform 0.2s ease !important; /* Smooth transition for hover effects */
+  }
+  
+  .purchase-card:hover {
+    transform: scale(1.02); /* Slightly enlarge on hover */
+  }
+  
+  /* Responsive styles for devices with width <= 1024px */
+  @media screen and (max-width: 1024px) {
+    .purchase-card {
+        max-width: 220px; /* Adjust width for better fit */
+        padding: 14px; /* Reduce padding slightly */
+    }
+  }
+  
+  /* Responsive styles for devices with width <= 768px */
+  @media screen and (max-width: 768px) {
+    .purchase-card {
+        max-width: 200px; /* Smaller max width on tablets */
+        padding: 12px; /* Reduce padding */
+    }
+  }
+  
+  /* Responsive styles for devices with width <= 480px */
+  @media screen and (max-width: 480px) {
+    .purchase-card {
+        max-width: 100%; /* Full width on smaller devices */
+        padding: 10px; /* Reduce padding further */
+        margin-bottom: 10px; /* Add spacing between cards */
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .profile-card {
+      padding: 10px;
+      margin-left: 0; /* Remove left margin */
+    }
+  
+    .profile-picc {
+      width: 80px;
+      height: 80px;
+    }
+  
+    .profile-detailss h2 {
+      font-size: 18px;
+    }
+  
+    .profile-detailss h3 {
+      font-size: 14px;
+    }
+  
+    .profile-detailss p {
+      font-size: 10px;
+    }
+  }
+  
+  .details-group {
+    background-color: #f0f4f3; 
+    border: 2px solid #368b50; 
+    padding: 10px; 
+    border-radius: 8px; 
+    color: #009a4e; /* Text color to contrast with background */
+    margin: 20px 0; /* Spacing around the box */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
+  }
+  
+  /* Responsive styling for details-group */
+  @media screen and (max-width: 768px) {
+    .details-group {
+      padding: 8px;
+      margin: 15px 0;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .details-group {
+      padding: 6px;
+      margin: 10px 0;
+    }
+  }

@@ -1,8 +1,12 @@
 "use client"
 import React, { useState } from "react";
-import "../components/buyer.css";
-import "../components/profilePic.css";
-import "../components/shareCropperSidebar"
+import "@/components/styles/p2a.css"
+import "@/components/styles/p2b.css"
+import "@/components/styles/p2c.css"
+// import "../components/buyer.css";
+// import "../components/profilePic.css";
+// import "../components/shareCropperSidebar"
+import SDash from "../components/SDash";
 
 // Define the types for profile data
 interface ProfileData {
@@ -81,36 +85,29 @@ const SharecropperManageProfile: React.FC = () => {
     <div className="container">
       <div className="sidebar">
         <h2 className="farmer-profile">Sharecropper Profile</h2>
+        <SDash />
         {/* <shareCropperSidebar onSectionClick=({handleSidebarClick} /> */}
-        <div className="farmer-dashboard">
-      <div className="dashboard-box" 
-      // onClick={() => onSectionClick('profile-section')}
-      >
+        {/* <div className="farmer-dashboard">
+      <div className="dashboard-box">
         <h3>My Profile</h3>
         <p>Review your profile.</p>
       </div>
-      <div className="dashboard-box" 
-      // onClick={() => onSectionClick('service-history')}
-        >
+      <div className="dashboard-box">
   <h3>Service History</h3>
   <p>View and review your service history.</p>
 </div>
 
-<div className="dashboard-box" 
-// onClick={() => onSectionClick('review-section')}
->
+<div className="dashboard-box">
   <h3>Review</h3>
   <p>Provide and view reviews of your services.</p>
 </div>
 
-<div className="dashboard-box"
-//  onClick={() => onSectionClick('status-of-work')}
->
+<div className="dashboard-box">
   <h3>Status of Work</h3>
   <p>Track the progress of sowing, growing, and harvesting.</p>
 </div>
 
-    </div>
+</div> */}
       </div>
 
       <div className="main-content form-background">
@@ -221,7 +218,7 @@ const SharecropperManageProfile: React.FC = () => {
               />
             </div>
 
-            <div className="form-group">
+            <div className="form-group text-center">
               <button type="submit">Submit</button>
             </div>
           </form>

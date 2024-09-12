@@ -2,7 +2,7 @@ import clientPromise from "@/lib/mongodb";
 import SharecropperModel from "@/models/shareCropper";
 import { NextResponse } from "next/server.js";
 import { auth } from "../../../../auth";
-import shareCropper from "@/app/(protected)/components/shareCropperSidebar";
+
 
 export async function POST(req: Request) {
   const session = await auth();

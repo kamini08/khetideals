@@ -1,8 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import "../components/buyer.css";
-import "../components/profilePic.css"
+// import "../components/buyer.css";
+// import "../components/profilePic.css"
+import SDash from "../components/SDash";
+import "@/components/styles/p2a.css"
+import "@/components/styles/p2b.css"
 
 const FarmerProfile = () => {
   // State to hold form data
@@ -68,35 +71,7 @@ const FarmerProfile = () => {
     <div className="container">
       <div className="sidebar">
         <h2 className="farmer-profile">Sharecropper Profile</h2>
-        {/* <shareCropperSidebar onSectionClick=({handleSidebarClick} /> */}
-        <div className="farmer-dashboard">
-          <div className="dashboard-box"
-          // onClick={() => onSectionClick('profile-section')}
-          >
-            <h3>My Profile</h3>
-            <p>Review your profile.</p>
-          </div>
-          <div className="dashboard-box"
-          // onClick={() => onSectionClick('service-history')}
-          >
-            <h3>Service History</h3>
-            <p>View and review your service history.</p>
-          </div>
-
-          <div className="dashboard-box"
-          // onClick={() => onSectionClick('review-section')}
-          >
-            <h3>Review</h3>
-            <p>Provide and view reviews of your services.</p>
-          </div>
-
-          <div className="dashboard-box"
-          //  onClick={() => onSectionClick('status-of-work')}
-          >
-            <h3>Status of Work</h3>
-            <p>Track the progress of sowing, growing, and harvesting.</p>
-          </div>
-        </div>
+        <SDash />
       </div>
 
       <div className="main-content form-background">

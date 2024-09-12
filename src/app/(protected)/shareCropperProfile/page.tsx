@@ -3,6 +3,8 @@
 import "../components/eProfile.css";
 
 import React, { useState, useEffect } from "react";
+import SDash from "../components/SDash";
+import Link from "next/link";
 
 const ShareCropperProfile: React.FC = () => {
   // State to hold form data
@@ -59,24 +61,7 @@ const ShareCropperProfile: React.FC = () => {
     <div className="container">
       <div className="sidebar">
         <h2 className="farmer-profile">Sharecropper Profile</h2>
-        <div className="farmer-dashboard">
-          <div className="dashboard-box">
-            <h3>My Profile</h3>
-            <p>Review your profile.</p>
-          </div>
-          <div className="dashboard-box">
-            <h3>Service History</h3>
-            <p>View and review your service history.</p>
-          </div>
-          <div className="dashboard-box">
-            <h3>Review</h3>
-            <p>Provide and view reviews of your services.</p>
-          </div>
-          <div className="dashboard-box">
-            <h3>Status of Work</h3>
-            <p>Track the progress of sowing, growing, and harvesting.</p>
-          </div>
-        </div>
+        <SDash />
       </div>
 
       <div className="main-content form-background">
@@ -108,7 +93,11 @@ const ShareCropperProfile: React.FC = () => {
             <strong>End Month:</strong> {profileData.endingMonth}
           </p>
         </div>
-
+        <Link href="/updateShareCropperProfile">
+      <div className="form-group text-center">
+              <button type="submit" className="text-white">Edit</button>
+            </div>
+            </Link>
         {/* Reviews Section */}
         <div className="contracts-section" id="reviews-section">
           <h2>Reviews</h2>
