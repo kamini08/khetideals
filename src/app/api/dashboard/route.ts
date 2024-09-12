@@ -1,14 +1,16 @@
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
 import clientPromise from "@/lib/mongodb";
-import buyermarketplacesub from "@/models/buyermarketplacesub";
+import BuyerMarketPlaceSub from "@/models/buyermarketplacesub.js";
+import FarmerMarketPlaceSub from "@/models/farmermarketplace";
 import buyerMarketPlaceSub from "@/models/buyermarketplacesub.js";
-// import { NextResponse } from "next/server.js";
-// import { auth } from "../../../../auth";
-export async function GET() {
-  // const session = await auth();
 
-  // const userID = session?.user.id;
+// import { NextResponse } from "next/server.js";
+import { auth } from "../../../../auth";
+export async function GET() {
+  const session = await auth();
+
+  const userID = session?.user.id;
   try {
     const locations = await db.user.findMany({
       select: {
@@ -18,8 +20,6 @@ export async function GET() {
       },
     });
     // console.log(locations);
-    // const document = await buyerMarketPlaceSub.findOne({ mainId: userID });
-    // console.log(document);
 
     return NextResponse.json(locations, { status: 200 });
   } catch (error) {
@@ -31,7 +31,7 @@ export async function GET() {
   }
 }
 export async function POST(req: Request) {
-  // console.log("hello");
+  console.log("hello");
 
   await clientPromise();
   // console.log("hello");
@@ -41,6 +41,7 @@ export async function POST(req: Request) {
       paymentTerms?: string;
       category?: string;
       minimumQuantity?: number;
+      userType?: string;
     }
 
     // Define a type for the query object
@@ -49,6 +50,7 @@ export async function POST(req: Request) {
       paymentTerms?: string;
       category?: string;
       minimumQuantity?: number;
+      userType?: string;
     };
 
     const details: Details = await req.json();
@@ -69,10 +71,17 @@ export async function POST(req: Request) {
     if (details.minimumQuantity) {
       query.minimumQuantity = details.minimumQuantity;
     }
+    if (details.userType) {
+      query.userType = details.userType;
+    }
 
     // Execute the query with the constructed query object
-    const document = await buyermarketplacesub.find(query);
-
+    const collection =
+      query.userType === "farmer" ? FarmerMarketPlaceSub : BuyerMarketPlaceSub;
+    console.log("Collection", collection);
+    // Execute the query with the selected collection
+    const document = await collection.find(query);
+    console.log("casccsdcs", document);
     // Proceed if the document is found and has results
     if (document.length > 0) {
       const locations = await db.user.findMany({

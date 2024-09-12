@@ -49,11 +49,13 @@ const UserDetailPage = () => {
   }
 
   return (
+
     <div className="container">
       <div className="sidebar">
         <h2 className="buyer-profile">Buyer Profile</h2>
         <BDash />
       </div>
+
 
       <div className="main-content form-background">
         {/* Profile Section */}

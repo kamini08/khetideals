@@ -1,35 +1,37 @@
-"use client"
-import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
+"use client";
+
+import Link from "next/link";
+// import "./buyer.css";
 import "@/components/styles/p1a.css"
+import { useEffect, useState } from "react";
 
-const BDash = () => {
-
-    const [profile, setProfile] = useState<boolean>(false);
-    useEffect(() => {
-      const fetchDocument = async () => {
-        try {
-          const response = await fetch("/api/buyerProfile");
-          if (!response.ok) {
-            throw new Error("Failed to fetch document");
-          }
-          const data = await response.json();
-          if (data) {
-            setProfile(true);
-          } else {
-            setProfile(false);
-          }
-        } catch (error: any) {
-          // setError(error.message);
+const BuyerSidebar = () => {
+  const [profile, setProfile] = useState<boolean>(false);
+  useEffect(() => {
+    const fetchDocument = async () => {
+      try {
+        const response = await fetch("/api/buyerProfile");
+        if (!response.ok) {
+          throw new Error("Failed to fetch document");
         }
-      };
+        const data = await response.json();
+        if (data) {
+          setProfile(true);
+        } else {
+          setProfile(false);
+        }
+      } catch (error: any) {
+        // setError(error.message);
+      }
+    };
 
-      fetchDocument();
-    }, []);
-    return (
-      <div>
-        {/* <BuyerDashboard /> */}
-        <div className="farmer-dashboard">
+    fetchDocument();
+  }, []);
+
+  return (
+    <div className="sidebar">
+      <h2 className="farmer-profile">Buyer Profile</h2>
+      <div className="farmer-dashboard">
         {!profile ? (
           <Link href="/buyerManageProfile">
             <div className="dashboard-box">
@@ -37,7 +39,7 @@ const BDash = () => {
               <p>Setup your profile and farming details.</p>
             </div>
           </Link>
-        ):(
+        ) : (
           <Link href="/buyerProfile">
             <div className="dashboard-box">
               <h3><strong>My Profile</strong></h3>
@@ -45,8 +47,12 @@ const BDash = () => {
             </div>
           </Link>
         )}
-          
-          <Link href="/dashboard">
+
+        {/* <div className="dashboard-box">
+<h3>Signed Contracts</h3>
+<p>View and manage your signed contracts.</p>
+</div> */}
+        <Link href="/dashboard">
             <div className="dashboard-box">
               <h3><strong>Available Farmers</strong></h3>
               <p>Browse and contact available farmers.</p>
@@ -71,9 +77,10 @@ const BDash = () => {
               </p>
             </div>
           </Link>
-        </div>
+        
       </div>
-    );
-  
-}
-export default BDash;
+    </div>
+  );
+};
+
+export default BuyerSidebar;

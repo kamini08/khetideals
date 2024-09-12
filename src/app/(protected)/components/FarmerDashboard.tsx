@@ -26,6 +26,10 @@ const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
       [name]: value,
     });
   };
+  const payload = {
+    ...formData,
+    userType: "farmer",
+  };
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
@@ -34,7 +38,7 @@ const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
     try {
       const response = await fetch("/api/dashboard", {
         method: "POST",
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
         headers: {
           "Content-Type": "application/json",
         },
