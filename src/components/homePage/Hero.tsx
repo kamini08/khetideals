@@ -3,18 +3,18 @@ import React from "react";
 import "../Home.css";
 
 // Import images
-import mid1 from "../images/mid1.jpg";
-// import mid2 from "../images/mid2.png";
+// import mid1 from "../images/mid1.jpg";
+// // import mid2 from "../images/mid2.png";
 // import mid3 from "../images/mid3.avif";
-import mid4 from "../images/mid4.jpg";
-import mid5 from "../images/mid5.jpg";
-import mid6 from "../images/mid6.jpg";
-import step1 from "../images/steps1.jpg";
-import step2 from "../images/steps2.jpg";
-import step3 from "../images/steps3.jpg";
-import step4 from "../images/steps4.jpg";
-import step5 from "../images/steps5.jpg";
-import step6 from "../images/steps6.jpg";
+// import mid4 from "../images/mid4.jpg";
+// import mid5 from "../images/mid5.jpg";
+// import mid6 from "../images/mid6.jpg";
+// import step1 from "../images/steps1.jpg";
+// import step2 from "../images/steps2.jpg";
+// import step3 from "../images/steps3.jpg";
+// import step4 from "../images/steps4.jpg";
+// import step5 from "../images/steps5.jpg";
+// import step6 from "../images/steps6.jpg";
 
 import {
   FaUserPlus,
@@ -50,37 +50,37 @@ type Testimonial = {
 const Hero: React.FC = () => {
   const features: Feature[] = [
     {
-      image: mid1,
+      image: "/images/mid1.jpg",
       title: "Secure Contracts",
       description:
         "Protect your interests with legally binding agreements that ensure fair terms and secure payments for your produce.",
     },
-    // {
-    //   image: mid2,
-    //   title: "Market Access",
-    //   description:
-    //     "Connect directly with buyers and secure a guaranteed market for your crops, minimizing risk and maximizing profits.",
-    // },
-    // {
-    //   image: mid3,
-    //   title: "Comprehensive Support",
-    //   description:
-    //     "Receive expert guidance, from crop planning to harvest, ensuring you achieve the best results every season.",
-    // },
     {
-      image: mid4,
+      image: "/images/mid2.avif",
+      title: "Market Access",
+      description:
+        "Connect directly with buyers and secure a guaranteed market for your crops, minimizing risk and maximizing profits.",
+    },
+    {
+      image: "/images/mid3.avif",
+      title: "Comprehensive Support",
+      description:
+        "Receive expert guidance, from crop planning to harvest, ensuring you achieve the best results every season.",
+    },
+    {
+      image: "/images/mid4.jpg",
       title: "Collaboration",
       description:
         "Join a network of farmers and buyers for shared growth and knowledge exchange, fostering a strong community.",
     },
     {
-      image: mid5,
+      image: "/images/mid5.jpg",
       title: "Risk Mitigation",
       description:
         "Mitigate risks through flexible contracts that adapt to changing conditions.",
     },
     {
-      image: mid6,
+      image: "/images/mid6.jpg",
       title: "Fair Trade Practices",
       description:
         "Engage in ethical, transparent trading that ensures fair pricing and mutual respect in every transaction.",
@@ -92,42 +92,42 @@ const Hero: React.FC = () => {
       title: "Sign Up",
       description:
         "Create your profile and specify your needs. Get started by providing essential details about your farming operations or buying requirements.",
-      imgSrc: step1,
+      imgSrc: "/images/steps1.jpg",
       icon: "FaUserPlus",
     },
     {
       title: "Search Farmer & Buyer",
       description:
         "Find farmers and buyers near your location or search by crop type. Connect with trusted producers who meet your needs and ensure quality produce.",
-      imgSrc: step2,
+      imgSrc: "/images/steps2.jpg",
       icon: "FaMapMarkerAlt",
     },
     {
       title: "Forums & Discussions",
       description:
         "Connect with other farmers and buyers through our interactive forums and discussion groups. Exchange ideas, seek advice, and build a strong community.",
-      imgSrc: step3,
+      imgSrc: "/images/steps3.jpg",
       icon: "FaComments",
     },
     {
       title: "Create or Join a Contract",
       description:
         "Connect with buyers or farmers and set up terms for your contract. Customize agreements to suit your needs and ensure mutual satisfaction.",
-      imgSrc: step4,
+      imgSrc: "/images/steps4.jpg",
       icon: "FaBook",
     },
     {
       title: "Fulfill the Contract",
       description:
         "Deliver the crop and receive payment as per the agreement. Ensure timely delivery and secure payments to complete the contract successfully.",
-      imgSrc: step5,
+      imgSrc: "/images/steps5.jpg",
       icon: "FaTruck",
     },
     {
       title: "Payment Details",
       description:
         "Secure your transactions with detailed payment options. Ensure smooth and transparent financial exchanges through our platform.",
-      imgSrc: step6,
+      imgSrc: "/images/steps6.jpg",
       icon: "FaCreditCard",
     },
   ];
