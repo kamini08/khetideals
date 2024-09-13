@@ -6,7 +6,14 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import BuyerSidebar from "../components/BuyerSidebar";
 import BDash from "../components/BDash";
-import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, Key } from "react";
+import {
+  ReactElement,
+  JSXElementConstructor,
+  ReactNode,
+  ReactPortal,
+  AwaitedReactNode,
+  Key,
+} from "react";
 import { GetServerSideProps } from "next";
 // import FarmerDashboard from "../components/FarmerDashboard";
 // import { GetServerSideProps } from "next";
@@ -15,11 +22,10 @@ import { GetServerSideProps } from "next";
 //   hasDocument: boolean;
 // };
 
-
 const SettingsPage = async () => {
   const session = await auth();
 
-  const user = session?.user.role.toLocaleLowerCase();
+  const user = session?.user.role?.toLocaleLowerCase();
   // const coordinates = await getAllCoordinates();
   // console.log(
   //   coordinates.map((coord) => {
@@ -40,12 +46,7 @@ const SettingsPage = async () => {
   );
 
 
-
-
-
-
   // TODO form validation
-
 
   // const router = useRouter();
   return (
@@ -67,21 +68,20 @@ const SettingsPage = async () => {
           <div className="sidebar">
             <h2 className="farmer-profile">Farmer Profile</h2>
             <Link href="/farmerManageProfile">
-              <div className="dashboard-box" >
+              <div className="dashboard-box">
                 <h3>Manage Profile</h3>
                 <p>Update your profile and farming details.</p>
               </div>
             </Link>
 
             <Link href="/farmerProfile">
-              <div className="dashboard-box" >
+              <div className="dashboard-box">
                 <h3>My Profile</h3>
                 <p>View your profile and farming details.</p>
               </div>
             </Link>
             <Link href="/dashboard">
-              <div
-                className="dashboard-box" >
+              <div className="dashboard-box">
                 <h3>Search Potential Buyers</h3>
                 <p>Explore new farming opportunities and buyers.</p>
               </div>
@@ -89,19 +89,21 @@ const SettingsPage = async () => {
             <div className="dashboard-box">
               <h3>My Contracts</h3>
 
-
               <div
                 className="dashboard-box"
-              // onClick={() => router.push("/farmerManageProfile")}
+                // onClick={() => router.push("/farmerManageProfile")}
               >
                 <h3>Current Contracts</h3>
 
                 <p>View and manage your current contracts.</p>
               </div>
               <Link href="/ShareCropperDashboard">
-                <div className="dashboard-box" >
+                <div className="dashboard-box">
                   <h3>Be a Sharecropper???</h3>
-                  <p>Register yourself if you want to work on the fields of landlord and get paid.</p>
+                  <p>
+                    Register yourself if you want to work on the fields of
+                    landlord and get paid.
+                  </p>
                 </div>
               </Link>
             </div>
@@ -125,15 +127,10 @@ const SettingsPage = async () => {
             </div>
           </div>
         </div>
-
       ) : (
         <div className="container">
-
-
-
           <BuyerSidebar />
           {/* <BDash /> */}
-
 
           {/* Farmer Dashboard and Search Section */}
           <div className="dashboard-content">
@@ -181,7 +178,10 @@ const SettingsPage = async () => {
               </div>
               <div className="section" id="contracts-section">
                 <h2>Current Contracts</h2>
+
                 
+
+
               </div>
               {/* Replace map with a simple div */}
               <MapWithNoSSRBuyer />
@@ -190,7 +190,6 @@ const SettingsPage = async () => {
         </div>
       )}
     </div>
-
   );
 };
 

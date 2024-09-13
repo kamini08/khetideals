@@ -31,7 +31,7 @@ model User {
   image         String?
   password      String?
   number String?
-  role          String?
+  role          String? 
   latitude String?
   longitude String?
   

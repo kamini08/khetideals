@@ -69,7 +69,7 @@ export const {
       const existingUser = await getUserById(token.sub);
       if (!existingUser) return token;
 
-      token.role = existingUser.role;
+      token.role = existingUser.role as "ADMIN" | "USER" | undefined;
       token.number = existingUser.number;
 
       return token;

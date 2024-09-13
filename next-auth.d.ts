@@ -1,8 +1,8 @@
 import NextAuth, { type DefaultSession } from "next-auth";
 
 export type ExtendedUser = DefaultSession["user"] & {
-  role: "ADMIN" | "USER";
-  number: string;
+  role?: "ADMIN" | "USER";
+  number?: string;
 };
 
 declare module "next-auth" {
