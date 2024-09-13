@@ -4,6 +4,7 @@ import LDash from '../components/LDash';
 import "@/components/styles/p2a.css";
 import "@/components/styles/p2b.css";
 import "@/components/styles/p2c.css";
+import Link from "next/link";
 
 // Define types for Buyers, Land Details, and Work Status
 interface Buyer {
@@ -42,6 +43,74 @@ const  LandlordProfile: React.FC = () => {
     { buyerName: "Buyer 1", area: 5, location: "Location 1", statusOfWork: "Sowing" }, // Default value
     { buyerName: "Buyer 2", area: 10, location: "Location 2", statusOfWork: "Sowing" },
   ]);
+  const [ongoingContracts, setOngoingContracts] = useState([]);
+
+  const [completedContracts, setCompletedContracts] = useState([]);
+  const [dloading, setDLoading] = useState(false);
+  const [cloading, setCLoading] = useState(false);
+
+  
+  const downloadPdf = async (fileName: string) => {
+    setDLoading(true);
+    try {
+      // Fetch the presigned URL from your backend API
+      const response = await fetch(`/api/contract/download/${fileName}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const res = await response.json();
+
+      if (!res) {
+        console.error(res);
+        return;
+      }
+      console.log(res);
+      console.log(res.presignedUrl);
+      const presignedUrl = res.presignedUrl;
+
+      console.log(presignedUrl);
+      if (presignedUrl) {
+        // Create a temporary link to trigger the download
+        const link = document.createElement("a");
+        link.href = presignedUrl;
+        link.setAttribute("download", fileName); // Set the 'download' attribute for the filename
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link); // Clean up
+      }
+    } catch (error) {
+      console.error("Error downloading PDF:", error);
+    } finally {
+      setDLoading(false);
+    }
+  };
+  const cancelContract = async (fileName: string) => {
+    setCLoading(true);
+    try {
+      // Fetch the presigned URL from your backend API
+      const response = await fetch(`/api/contract/cancel/${fileName}`, {
+        method: "POST",
+        
+      });
+
+      const res = await response.json();
+
+      console.log(res.message);
+      
+      
+    } catch (error) {
+      console.error("Error cancelling contract:", error);
+    } finally {
+      setCLoading(false);
+    }
+  };
+
+
 
   useEffect(() => {
     // Fetch landholder details from the backend
@@ -69,7 +138,7 @@ const  LandlordProfile: React.FC = () => {
   return (
     <div className="container">
       <div className="sidebar">
-        <h2 className="farmer-profile">ShareCropper Profile</h2>
+        <h2 className="farmer-profile">Landlord Profile</h2>
        <LDash />
       </div>
       <div className="main-content">
@@ -107,6 +176,83 @@ const  LandlordProfile: React.FC = () => {
           </div>
         </div>
       </div>
+      <div className="contracts-section text-center" id="ongoing-contracts-section">
+          <h2><strong>Ongoing Contracts</strong></h2>
+          <div className="contracts-container">
+            {ongoingContracts && (ongoingContracts.length > 0 ? (
+              ongoingContracts.map((contract: any, index: React.Key | null | undefined) => (
+                <div className="contract-card" key={index}>
+                  <h3 className="mb-4">SharedCropper: {contract.seller.name}</h3>
+                  <p className="mb-4">Crop Type: {contract.product.name}</p>
+                  <p className="mb-4">Quantity: {contract.product.quantity} kg</p>
+                  <p className="mb-4">Price: ${contract.product.totalPrice}</p>
+                  <p className="mb-4">Status: {contract.contractStatus}</p>
+                  <Link href={`/contracts/${contract.contractId}`}>
+                  <button className="btn purchase-card">View Details</button>
+                  </Link>
+                    <button
+                    className="btn purchase-card"
+                      onClick={() => downloadPdf(contract.contractId)}
+                      disabled={dloading}
+                    >
+                      {dloading ? "Downloading..." : "Download PDF"}
+                    </button>
+                  
+                  <button
+                  className="btn purchase-card"
+                      onClick={() => cancelContract(contract.contractId)}
+                      disabled={cloading}
+                    >
+                      {cloading ? "Canceling contract..." : "Cancel contract"}
+                    </button>
+                
+                </div>
+              ))
+            ) : (
+              <p>No ongoing contracts.</p>
+            ))}
+          </div>
+        </div>
+
+        {/* Completed Contracts Section */}
+        <div className="contracts-section text-center" id="completed-contracts-section">
+          <h2><strong>Completed Contracts</strong></h2>
+          <div className="contracts-container">
+            {completedContracts && (completedContracts.length > 0 ? (
+              completedContracts.map((contract: any, index: React.Key | null | undefined) => (
+                <div className="contract-card" key={index}>
+                  <h3 className="mb-4">Farmer: {contract.seller.name}</h3>
+                  <p className="mb-4">Crop Type: {contract.product.name}</p>
+                  <p className="mb-4">Quantity: {contract.product.quantity} kg</p>
+                  <p className="mb-4">Price: ${contract.product.totalPrice}</p>
+                  <p className="mb-4">Status: {contract.contractStatus}</p>
+                  <Link href={`/contracts/${contract.contractId}`}>
+                    <button className="btn purchase-card ">View Details</button>
+                  </Link>
+                    <button
+                    className="btn purchase-card"
+                      onClick={() => downloadPdf(contract.contractId)}
+                      disabled={dloading}
+                    >
+                      {dloading ? "Downloading..." : "Download PDF"}
+                    </button>
+                 
+                  <button
+                  className="btn purchase-card"
+                      onClick={() => cancelContract(contract.contractId)}
+                      disabled={cloading}
+                    >
+                      {cloading ? "Canceling contract..." : "Cancel contract"}
+                    </button>
+                 
+                </div>
+              ))
+            ) : (
+              <p>No completed contracts.</p>
+            ))}
+          </div>
+        </div>
+     
     </div>
   );
 };

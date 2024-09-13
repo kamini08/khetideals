@@ -2,15 +2,15 @@
 import generateContractPdf from "@/lib/clientUtils/generatePDF";
 
 import { useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
-import "../css/contract.css"; // Assuming you're linking to the stylesheet
+import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
+import "@/components/styles/contract.css"; // Assuming you're linking to the stylesheet
 import { auth } from "../../../auth";
 export default function Contract() {
-  let buyerId;
-  let sellerId;
-  let user1Id: any;
-  let user2Id: any;
-  let userRole: any;
+  const [buyerId, setBuyerId] = useState("");
+  const [sellerId, setSellerId] = useState("");
+  const [user1Id, setUser1Id] = useState("");
+  const [user2Id, setUser2Id] = useState("");
+  const [role, setRole] = useState("");
   const onSubmitform = async (data: any) => {
     console.log(data);
     try {
@@ -34,7 +34,6 @@ export default function Contract() {
     }
   };
   
-  let role;
   const getData = async () => {
     try {
       const response = await fetch("/api/dashboard", {
@@ -42,9 +41,10 @@ export default function Contract() {
       });
       const result = await response.json();
       if (response.ok) {
-        console.log(result.id);
-        user1Id = result.id;
-        role = result.role;
+        console.log(result.userID);
+        setUser1Id(result.userID);
+        setRole(result.session?.user.role);
+        console.log(result);
       } else {
         console.error(result.message);
       }
@@ -53,16 +53,41 @@ export default function Contract() {
     }
   };
 
-  if (role == "farmer") {
-    sellerId = user1Id;
-    buyerId = user2Id;
-  } else {
-    buyerId = user1Id;
-    sellerId = user2Id;
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await fetch("/api/dashboard", {
+          method: "GET",
+        });
+        const result = await response.json();
+        if (response.ok) {
+          console.log(result.id);
+          setUser1Id(result.id);
+          setRole(result.role);
+        } else {
+          console.error(result.message);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    const setIds = () => {
+      if(role === 'farmer') {
+        setBuyerId(user2Id);
+        setSellerId(user1Id);
+      } else if(role === 'buyer') {
+        setBuyerId(user1Id);
+        setSellerId(user2Id);
+  
+    }
   }
-
+    setIds();
+    getData();
+  }, [role, user1Id, user2Id]);
+ 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -70,7 +95,6 @@ export default function Contract() {
       buyer: {
         name: "",
         email: "",
-        id: buyerId,
         phoneNumber: "",
         address: "",
         Account: "",
@@ -79,7 +103,6 @@ export default function Contract() {
       seller: {
         name: "",
         email: "",
-        id: sellerId,
         phoneNumber: "",
         address: "",
         Account: "",
@@ -105,6 +128,10 @@ export default function Contract() {
     },
   });
 
+  console.log(buyerId);
+  console.log(sellerId);
+
+ 
   const test = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     onsubmit;
@@ -351,6 +378,7 @@ export default function Contract() {
                     </p>
                   )}
                 </div>
+                
               </>
             )}
 

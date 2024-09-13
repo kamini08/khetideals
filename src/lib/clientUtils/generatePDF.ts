@@ -5,7 +5,9 @@ import { PutObjectRequest } from "@aws-sdk/client-s3";
 import { S3 } from "aws-sdk";
 import { Buffer } from "buffer";
 import { NextResponse } from "next/server";
-import axios from "axios";
+import Contract from "@/models/contractmodel";
+import clientPromise from "../mongodb";
+
 
 // AWS S3 Setup
 const s3 = new S3({
@@ -266,12 +268,14 @@ export default async function generateContractPDF(contract: {
   const pdfBuffer = Buffer.from(doc.output("arraybuffer"));
 
   // Upload to AWS S3
-  const uploadParams: PutObjectRequest = {
+  const uploadParams: any = {
     Bucket: process.env.S3_BUCKET_NAME,
     Key: `contracts/${contract.id}.pdf`, // Unique file name
     Body: Buffer.from(pdfBuffer),
     ContentType: "application/pdf",
   };
+
+ 
 
   try {
     const data = await s3.upload(uploadParams).promise();
@@ -279,19 +283,33 @@ export default async function generateContractPDF(contract: {
     const contractId = contract.id;
     const contractUrl = data.Location;
     const contractData = { contractId, contractUrl };
+    const client = await clientPromise();
+
+    const result = await Contract.findByIdAndUpdate(
+        contractId,
+        { contractUrl }, // Add new key-value pair here
+        { new: true, runValidators: true }
+      );
+
+    return NextResponse.json(
+      { message: "Contract updated successfully" },
+      { status: 200 }
+    );
+
+    /* API call not mandatory
     try {
       const response = await fetch(
         process.env.URL + "/api/contract/addContractUrl",
         {
           method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
           body: JSON.stringify(contractData),
         }
+
       );
+      
 
       const result = await response.json();
+      console.log(result);
       if (response.ok) {
         return NextResponse.json({
           status: 200,
@@ -314,6 +332,8 @@ export default async function generateContractPDF(contract: {
         },
       });
     }
+      */
+
   } catch (error) {
     console.error(`Error uploading PDF: ${error}`);
     throw error;

@@ -10,7 +10,7 @@ import farmers from "@/models/farmermodel";
 import Contract from "@/models/contractmodel";
 import presignedUrl from "@/lib/serverUtils/presignedUrl";
 import { NextResponse } from "next/server";
-import { auth } from "../../../../../auth";
+import { auth } from "../../../../auth";
 
 function getS3KeyFromUrl(s3Url: string): string | null {
   try {
@@ -56,12 +56,11 @@ const ContractPdf = async () => {
   }, []);
 
   const router = useRouter();
-  // const session = await auth();
+  const session = await auth();
 
-  // const role = session?.user.role.toLocaleLowerCase();
-  // const userId = session?.user.id;
-  const userId = "123456";
-  const role = "farmer";
+  const role = session?.user.role.toLocaleLowerCase();
+  const userId = session?.user.id;
+ 
   try {
     await clientPromise();
     const user = await buyer.findOne({
@@ -130,7 +129,7 @@ const ContractPdf = async () => {
 
   if (
     user &&
-    (user["id"] == contract.buyer.id || user["id"] == contract.seller.id)
+    (user["email"] == contract.buyer.email || user["email"] == contract.seller.email)
   ) {
     return (
       <div className="p-8 mx-auto">

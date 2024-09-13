@@ -87,7 +87,7 @@ const LandHolderDashboard: React.FC = () => {
                 
                 />
               </div>
-              <div className="text-center text-center">
+              <div className="text-center">
                 <button id="searchBtn" type="submit">
                   Search
                 </button>

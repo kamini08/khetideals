@@ -1,6 +1,6 @@
-import Contract from "../../../../models/contractmodel";
+import Contract from "@/models/contractmodel";
 import { NextRequest, NextResponse } from "next/server";
-import clientPromise from "../../../../lib/mongodb";
+import clientPromise from "@/lib/mongodb";
 import { redirect } from "next/dist/server/api-utils";
 import { contractValidate } from "../../../../lib/serverUtils/validate";
 import generateContractPdf from "../../../../lib/clientUtils/generatePDF";

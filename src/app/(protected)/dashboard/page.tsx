@@ -6,12 +6,16 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import BuyerSidebar from "../components/BuyerSidebar";
 import BDash from "../components/BDash";
+import { ReactElement, JSXElementConstructor, ReactNode, ReactPortal, AwaitedReactNode, Key } from "react";
+import { GetServerSideProps } from "next";
 // import FarmerDashboard from "../components/FarmerDashboard";
 // import { GetServerSideProps } from "next";
 
 // type Props = {
 //   hasDocument: boolean;
 // };
+
+
 const SettingsPage = async () => {
   const session = await auth();
 
@@ -34,6 +38,33 @@ const SettingsPage = async () => {
       ssr: false,
     }
   );
+
+  // fetch contracts from database
+  let contracts;
+  /*
+  try {
+      const response = await fetch('/api/contract/getContracts', {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch reviews");
+      }
+       
+    const data = await response.json();
+    contracts = data;
+    console.log(contracts);
+  } catch (err) {
+    console.error(err);
+  }
+    */
+
+
+
+
 
   // TODO form validation
 
@@ -112,34 +143,56 @@ const SettingsPage = async () => {
                 </div>
               </div>
 
-              <div className="section" id="contracts-section">
+              {/* <div className="section" id="contracts-section">
                 <h2>Current Contracts</h2>
-                {/* <div className="contracts-container">
-                {contracts.map((contract, index) => (
+                <div className="contracts-container">
+                {contracts?['pendingContracts']?.map((contract: any, index: Key | null | undefined) => (
+                  <Link href={`/contracts/${contract.id}`} >
                   <div className="contract-card" key={index}>
-                    <h3>Buyer: {contract.buyerName}</h3>
-                    <p>Crop Type: {contract.cropType}</p>
+                    <h3>Buyer: {contract.seller.name}</h3>
+                    <p>Crop Type: {contract.cropcropType}</p>
                     <p>Quantity: {contract.quantity} kg</p>
+                    <p>Status: {contract.contractStatus} kg</p>
+                    <button>Download</button>
+                    <button>Cancel</button>
                   </div>
-                ))}
-              </div> */}
+                  </Link>
+                )) : (
+                  <p>No contracts found.</p>
+                )}
+                {contracts?['signedContracts']?.map((contract: any, index: Key | null | undefined) => (
+                  <Link href={`/contracts/${contract.id}`} >
+                  <div className="contract-card" key={index}>
+                    <h3>Buyer: {contract.seller.name}</h3>
+                    <p>Crop Type: {contract.cropcropType}</p>
+                    <p>Quantity: {contract.quantity} kg</p>
+                    <p>Status: {contract.contractStatus} kg</p>
+                    <button>Download</button>
+                    <button>Cancel</button>
+                  </div>
+                  </Link>
+                )) :
+                (<p>No contracts found.</p>)
+              }
               </div>
+              */}
             </div>
           </div>
-          </div>
-          ) : (
-          <div className="container">
+        </div>
 
-           
+      ) : (
+        <div className="container">
 
-            <BuyerSidebar />
-            {/* <BDash /> */}
-     
 
-            {/* Farmer Dashboard and Search Section */}
-            <div className="dashboard-content">
-              <div className="farmer-finder">
-                {/* <h1 className="search-profile">Search Potential Farmers</h1>
+
+          <BuyerSidebar />
+          {/* <BDash /> */}
+
+
+          {/* Farmer Dashboard and Search Section */}
+          <div className="dashboard-content">
+            <div className="farmer-finder">
+              {/* <h1 className="search-profile">Search Potential Farmers</h1>
               <div className="form-group text-black">
                 <label htmlFor="cropType">Crop Type</label>
                 <select id="cropType" className="select2">
@@ -150,7 +203,7 @@ const SettingsPage = async () => {
                 </select>
               </div> */}
 
-                {/* <div className="form-group text-black">
+              {/* <div className="form-group text-black">
                 <label htmlFor="quality">Quality</label>
                 <select id="quality">
                   <option value="A">A</option>
@@ -159,7 +212,7 @@ const SettingsPage = async () => {
                 </select>
               </div> */}
 
-                {/* <div className="form-group text-black">
+              {/* <div className="form-group text-black">
                 <label htmlFor="farmerLocation">Location</label>
                 <input type="text" id="farmerLocation" />
               </div>
@@ -174,22 +227,58 @@ const SettingsPage = async () => {
                 Search
               </button> */}
 
-                <div className="farmer-list">
-                  <h3>Farmers List</h3>
-                  <ul id="farmerList">
-                    {/* Farmers will be dynamically inserted here */}
-                  </ul>
-                </div>
-
-                {/* Replace map with a simple div */}
-                <MapWithNoSSRBuyer />
+              <div className="farmer-list">
+                <h3>Farmers List</h3>
+                <ul id="farmerList">
+                  {/* Farmers will be dynamically inserted here */}
+                </ul>
               </div>
+              <div className="section" id="contracts-section">
+                <h2>Current Contracts</h2>
+                { /* <div className="contracts-container">
+
+                  {contracts ? ['pendingContracts']?.map((contract: any, index: Key | null | undefined) => (
+                    <Link href={`/contracts/${contract.id}`} >
+                      <div className="contract-card" key={index}>
+                        <h3>Farmer: {contract.seller.name}</h3>
+                        <p>Crop Type: {contract.cropcropType}</p>
+                        <p>Quantity: {contract.quantity} kg</p>
+                        <p>Status: {contract.contractStatus} kg</p>
+                        <button>Download</button>
+                        <button>Cancel</button>
+                      </div>
+                    </Link>
+
+                  )) : (
+                    <p>No contracts found.</p>
+                  )}
+
+                  {contracts ? ['signedContracts']?.map((contract: any, index: Key | null | undefined) => (
+                    <Link href={`/contracts/${contract.id}`} >
+                      <div className="contract-card" key={index}>
+                        <h3>Farmer: {contract.seller.name}</h3>
+                        <p>Crop Type: {contract.cropcropType}</p>
+                        <p>Quantity: {contract.quantity} kg</p>
+                        <p>Status: {contract.contractStatus} kg</p>
+                        <button>Download</button>
+                        <button>Cancel</button>
+                      </div>
+                    </Link>
+
+                  )) : (
+                    <p>No contracts found.</p>
+                  )}
+                </div> */}
+              </div>
+              {/* Replace map with a simple div */}
+              <MapWithNoSSRBuyer />
             </div>
           </div>
-      )}
         </div>
+      )}
+    </div>
 
-      );
+  );
 };
 
-      export default SettingsPage;
+export default SettingsPage;

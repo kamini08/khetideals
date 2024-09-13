@@ -5,6 +5,9 @@ import { redirect } from "next/dist/server/api-utils";
 import { contractValidate } from "../../../../lib/serverUtils/validate";
 import generateContractPdf from "../../../../lib/clientUtils/generatePDF";
 import { AnyAaaaRecord } from "dns";
+import { auth } from "../../../../../auth";
+import Farmer from "../../../../models/farmermodel";
+import Buyer from "../../../../models/buyermodel";
 
 
 export async function POST(request: Request) {
@@ -28,8 +31,12 @@ export async function POST(request: Request) {
       const req = await request.json();
       
       const { buyer, seller, product, terms } = req;
+      const session = await auth();
+      const role = session?.user.id?.toLocaleLowerCase();
+      const user1Id = session?.user.id;
+
       
-      
+
     /*  const { buyer, seller, product, terms } = {
         buyer: {
           name: "John Doe",
