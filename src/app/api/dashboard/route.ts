@@ -31,7 +31,7 @@ export async function GET() {
   }
 }
 export async function POST(req: Request) {
-  console.log("hello");
+  // console.log("hello");
   await clientPromise();
   // console.log("hello");
   try {
@@ -77,10 +77,10 @@ export async function POST(req: Request) {
     // Execute the query with the constructed query object
     const collection =
       query.userType === "farmer" ? FarmerMarketPlaceSub : BuyerMarketPlaceSub;
-    console.log("Collection", collection);
+    // console.log("Collection", collection);
     // Execute the query with the selected collection
     const document = await collection.find(query);
-    console.log("casccsdcs", document);
+    // console.log("casccsdcs", document);
     // Proceed if the document is found and has results
     if (document.length > 0) {
       const locations = await db.user.findMany({
