@@ -26,11 +26,12 @@ const LDash = () => {
         <h3><strong>Status of Work</strong></h3>
         <p>Track the progress of sowing, growing, and harvesting.</p>
       </div>
-
+<Link href="/feedback">
       <div className="dashboard-box" >
         <h3><strong>Fill Feedback</strong></h3>
         <p>Provide feedback on your farming operations.</p>
       </div>
+      </Link>
       <div className="dashboard-box">
           <h3><strong>My Contracts</strong></h3>
           <p>Review your ongoing and previous contracts</p>

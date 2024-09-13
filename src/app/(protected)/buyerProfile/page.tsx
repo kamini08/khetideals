@@ -26,13 +26,74 @@ const BuyerProfile = () => {
 
   const [error, setError] = useState<string | undefined>("");
   const [isLoading, setIsLoading] = useState(true);
-  const [pastPurchases, setPastPurchases] = useState([
-    {
-      farmerName: 'Sample Farmer',
-      cropType: 'Wheat',
-      quantityTaken: 500,
-      totalAmount: 2500,
-},]);
+  const [pastPurchases, setPastPurchases] = useState([]);
+const [contracts, setContracts] = useState(null);
+const [ongoingContracts, setOngoingContracts] = useState([]);
+
+  const [completedContracts, setCompletedContracts] = useState([]);
+  const [dloading, setDLoading] = useState(false);
+  const [cloading, setCLoading] = useState(false);
+
+  const downloadPdf = async (fileName: string) => {
+    setDLoading(true);
+    try {
+      // Fetch the presigned URL from your backend API
+      const response = await fetch(`/api/contract/download/${fileName}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const res = await response.json();
+
+      if (!res) {
+        console.error(res);
+        return;
+      }
+      console.log(res);
+      console.log(res.presignedUrl);
+      const presignedUrl = res.presignedUrl;
+
+      console.log(presignedUrl);
+      if (presignedUrl) {
+        // Create a temporary link to trigger the download
+        const link = document.createElement("a");
+        link.href = presignedUrl;
+        link.setAttribute("download", fileName); // Set the 'download' attribute for the filename
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link); // Clean up
+      }
+    } catch (error) {
+      console.error("Error downloading PDF:", error);
+    } finally {
+      setDLoading(false);
+    }
+  };
+  const cancelContract = async (fileName: string) => {
+    setCLoading(true);
+    try {
+      // Fetch the presigned URL from your backend API
+      const response = await fetch(`/api/contract/cancel/${fileName}`, {
+        method: "POST",
+        
+      });
+
+      const res = await response.json();
+
+      console.log(res.message);
+      
+      
+    } catch (error) {
+      console.error("Error cancelling contract:", error);
+    } finally {
+      setCLoading(false);
+    }
+  };
+
 
   useEffect(() => {
     const fetchDocument = async () => {
@@ -60,7 +121,37 @@ const BuyerProfile = () => {
       }
     };
 
+    const fetchContracts = async () => {
+      const response = await fetch('/api/contract/getContracts', {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch reviews");
+      }
+       
+    const data = await response.json();
+    const pastData = data.contracts.completedContracts;
+    setContracts(data.contracts);
+    setPastPurchases(pastData);
+    setOngoingContracts(data.contracts.pendingContracts);
+      setCompletedContracts(data.contracts.completedContracts);
+      console.log(data.contracts);
+      console.log(pastPurchases);
+      console.log(ongoingContracts);
+      console.log(completedContracts);
+
+    console.log(contracts);
+  }
+
+
+
+
     fetchDocument();
+    fetchContracts();
   }, []);
 
   const handleChange = (
@@ -132,23 +223,101 @@ const BuyerProfile = () => {
         <p className="mb-6"><strong>Start Month:</strong> {formData.startingMonth}</p> {/* Added start month */}
         <p className="mb-6"><strong>End Month:</strong> {formData.endingMonth}</p> {/* Added end month */}
       </div>
+      
+        {/* Ongoing Contracts Section */}
+        <div className="contracts-section text-center" id="ongoing-contracts-section">
+          <h2><strong>Ongoing Contracts</strong></h2>
+          <div className="contracts-container">
+            {ongoingContracts && (ongoingContracts.length > 0 ? (
+              ongoingContracts.map((contract: any, index: React.Key | null | undefined) => (
+                <div className="contract-card" key={index}>
+                  <h3 className="mb-4">Farmer: {contract.seller.name}</h3>
+                  <p className="mb-4">Crop Type: {contract.product.name}</p>
+                  <p className="mb-4">Quantity: {contract.product.quantity} kg</p>
+                  <p className="mb-4">Price: ${contract.product.totalPrice}</p>
+                  <p className="mb-4">Status: {contract.contractStatus}</p>
+                  <Link href={`/contracts/${contract.contractId}`}>
+                  <button className="btn purchase-card">View Details</button>
+                  </Link>
+                    <button
+                    className="btn purchase-card"
+                      onClick={() => downloadPdf(contract.contractId)}
+                      disabled={dloading}
+                    >
+                      {dloading ? "Downloading..." : "Download PDF"}
+                    </button>
+                  
+                  <button
+                  className="btn purchase-card"
+                      onClick={() => cancelContract(contract.contractId)}
+                      disabled={cloading}
+                    >
+                      {cloading ? "Canceling contract..." : "Cancel contract"}
+                    </button>
+                
+                </div>
+              ))
+            ) : (
+              <p>No ongoing contracts.</p>
+            ))}
+          </div>
+        </div>
+
+        {/* Completed Contracts Section */}
+        <div className="contracts-section text-center" id="completed-contracts-section">
+          <h2><strong>Completed Contracts</strong></h2>
+          <div className="contracts-container">
+            {completedContracts && (completedContracts.length > 0 ? (
+              completedContracts.map((contract: any, index: React.Key | null | undefined) => (
+                <div className="contract-card" key={index}>
+                  <h3 className="mb-4">Farmer: {contract.seller.name}</h3>
+                  <p className="mb-4">Crop Type: {contract.product.name}</p>
+                  <p className="mb-4">Quantity: {contract.product.quantity} kg</p>
+                  <p className="mb-4">Price: ${contract.product.totalPrice}</p>
+                  <p className="mb-4">Status: {contract.contractStatus}</p>
+                  <Link href={`/contracts/${contract.contractId}`}>
+                    <button className="btn purchase-card ">View Details</button>
+                  </Link>
+                    <button
+                    className="btn purchase-card"
+                      onClick={() => downloadPdf(contract.contractId)}
+                      disabled={dloading}
+                    >
+                      {dloading ? "Downloading..." : "Download PDF"}
+                    </button>
+                 
+                  <button
+                  className="btn purchase-card"
+                      onClick={() => cancelContract(contract.contractId)}
+                      disabled={cloading}
+                    >
+                      {cloading ? "Canceling contract..." : "Cancel contract"}
+                    </button>
+                 
+                </div>
+              ))
+            ) : (
+              <p>No completed contracts.</p>
+            ))}
+          </div>
+        </div>
      
       {/* Past Purchases Section */}
       <div className="purchases-section text-center" id="past-purchases-section">
         <h2 className="font-bold">Past Purchases</h2>
         <div className="purchases-container">
-          {pastPurchases.length > 0 ? (
-            pastPurchases.map((purchase, index) => (
+          {pastPurchases && (pastPurchases.length > 0 ? (
+            pastPurchases.map((purchase: any, index: React.Key | null | undefined) => (
               <div className="purchase-card " key={index}>
-                <h3 className="mb-4">Farmer: {purchase.farmerName}</h3>
-                <p className="mb-4">Crop Type: {purchase.cropType}</p>
-                <p className="mb-4">Quantity Taken: {purchase.quantityTaken} kg</p>
-                <p className="mb-4">Total Amount: Rs:{purchase.totalAmount}</p>
+                <h3 className="mb-4">Farmer: {purchase.seller.name}</h3>
+                <p className="mb-4">Crop Type: {purchase.product.name}</p>
+                <p className="mb-4">Quantity Taken: {purchase.product.quantity} kg</p>
+                <p className="mb-4">Total Amount: Rs:{purchase.product.totalPrice}</p>
               </div>
             ))
           ) : (
             <p>No past purchases available.</p>
-          )}
+          ))}
         </div>
       </div>
       <Link href={"/updateBuyerProfile"}>

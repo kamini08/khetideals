@@ -26,6 +26,7 @@ const ShareCropperProfile: React.FC = () => {
   const [workStatus, setWorkStatus] = useState<any[]>([]);
 
   useEffect(() => {
+    // Fetch profile data
     const fetchDocument = async () => {
       try {
         const response = await fetch("/api/shareCropperProfile");
@@ -50,7 +51,24 @@ const ShareCropperProfile: React.FC = () => {
       }
     };
 
+    // Fetch reviews data
+    const fetchReviews = async () => {
+      try {
+        const response = await fetch("/api/reviews"); // Adjust API endpoint as needed
+        if (!response.ok) {
+          throw new Error("Failed to fetch reviews");
+        }
+        const data = await response.json();
+       
+        setReviews(data.document); 
+        console.log("Fetched reviews:", JSON.stringify(data.document));// Assuming the API returns an array of reviews
+      } catch (error: any) {
+        setError(error.message);
+      }
+    };
+
     fetchDocument();
+    fetchReviews();
   }, []);
 
   if (isLoading) {
@@ -93,23 +111,26 @@ const ShareCropperProfile: React.FC = () => {
             <strong>End Month:</strong> {profileData.endingMonth}
           </p>
         </div>
+
         <Link href="/updateShareCropperProfile">
-      <div className="form-group text-center">
-              <button type="submit" className="text-white">Edit</button>
-            </div>
-            </Link>
+          <div className="form-group text-center">
+            <button type="submit" className="text-white">Edit</button>
+          </div>
+        </Link>
+
         {/* Reviews Section */}
         <div className="contracts-section" id="reviews-section">
           <h2>Reviews</h2>
           <div className="contracts-container">
-            {reviews.length > 0 ? (
+            {reviews && reviews.length > 0 ? (
               reviews.map((review, index) => (
                 <div className="contract-card" key={index}>
                   <h3>Landlord: {review.landlordName}</h3>
-                  <p>Work Performance: {review.workPerformance}/5</p>
-                  <p>Punctuality: {review.punctuality}/5</p>
+                  <p>Work Performance: {review.rating}/5</p>
+                  <p>Punctuality: {review.timeliness}/5</p>
                   <p>Communication Skills: {review.communicationSkills}/5</p>
                   <p>Crop Quality: {review.cropQuality}/5</p>
+                  <p>Feedback: {review.feedback}/5</p>
                 </div>
               ))
             ) : (

@@ -26,25 +26,69 @@ const BuyerProfile = () => {
 
   const [error, setError] = useState<string | undefined>("");
   const [isLoading, setIsLoading] = useState(true);
-  const [ongoingContracts, setOngoingContracts] = useState([
-    {
-      buyerName: 'Default Buyer',
-      cropType: 'Wheat',
-      quantity: 1000,
-      price: 2000,
-      status: 'ongoing',
-    }
-  ]);
+  const [contracts, setContracts] = useState([]);
+  const [ongoingContracts, setOngoingContracts] = useState([]);
 
-  const [completedContracts, setCompletedContracts] = useState([
-    {
-      buyerName: 'Previous Buyer',
-      cropType: 'Corn',
-      quantity: 500,
-      price: 1500,
-      status: 'completed',
+  const [completedContracts, setCompletedContracts] = useState([]);
+  const [dloading, setDLoading] = useState(false);
+  const [cloading, setCLoading] = useState(false);
+
+  const downloadPdf = async (fileName: string) => {
+    setDLoading(true);
+    try {
+      console.log(`Downloading ${fileName}`);
+      // Fetch the presigned URL from your backend API
+      const response = await fetch(`/api/contract/download/${fileName}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+      });
+
+      const res = await response.json();
+
+      const presignedUrl = JSON.parse(JSON.stringify(res)).presignedUrl;
+
+      console.log(presignedUrl);
+      if (presignedUrl) {
+        // Create a temporary link to trigger the download
+        const link = document.createElement("a");
+        link.href = presignedUrl;
+        link.setAttribute("download", fileName); // Set the 'download' attribute for the filename
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link); // Clean up
+      }
+    } catch (error) {
+      console.error("Error downloading PDF:", error);
+    } finally {
+      setDLoading(false);
     }
-  ]);
+  };
+  const cancelContract = async (fileName: string) => {
+    setCLoading(true);
+    try {
+      // Fetch the presigned URL from your backend API
+      const response = await fetch(`/api/contract/cancel/${fileName}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ fileName }),
+      });
+
+      const res = await response.json();
+
+      console.log(res.message);
+      
+      
+    } catch (error) {
+      console.error("Error canceling contract:", error);
+    } finally {
+      setCLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchDocument = async () => {
@@ -75,7 +119,33 @@ const BuyerProfile = () => {
       }
     };
 
+    const fetchContracts = async () => {
+      const response = await fetch('/api/contract/getContracts', {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch reviews");
+      }
+
+      const data = await response.json();
+
+      setOngoingContracts(data.contracts.pendingContracts + data.contracts.signedContracts);
+      setCompletedContracts(data.contracts.completedContracts);
+      setContracts(data.contracts);
+
+
+      console.log(contracts);
+    }
+
+
+
+
     fetchDocument();
+    fetchContracts();
   }, []);
 
   const handleChange = (
@@ -124,7 +194,7 @@ const BuyerProfile = () => {
   return (
     <div className="container">
       <div className="sidebar">
-       <FDash />
+        <FDash />
       </div>
 
       <div className="main-content form-background">
@@ -155,19 +225,38 @@ const BuyerProfile = () => {
         <div className="contracts-section text-center" id="ongoing-contracts-section">
           <h2><strong>Ongoing Contracts</strong></h2>
           <div className="contracts-container">
-            {ongoingContracts.length > 0 ? (
-              ongoingContracts.map((contract, index) => (
+            {ongoingContracts && (ongoingContracts.length > 0 ? (
+              ongoingContracts.map((contract: any, index: React.Key | null | undefined) => (
                 <div className="contract-card" key={index}>
-                  <h3 className="mb-4">Buyer: {contract.buyerName}</h3>
-                  <p className="mb-4">Crop Type: {contract.cropType}</p>
-                  <p className="mb-4">Quantity: {contract.quantity} kg</p>
-                  <p className="mb-4">Price: ${contract.price}</p>
-                  <p className="mb-4">Status: {contract.status}</p>
+                  <h3 className="mb-4">Buyer: {contract.buyer.name}</h3>
+                  <p className="mb-4">Crop Type: {contract.product.name}</p>
+                  <p className="mb-4">Quantity: {contract.product.quantity} kg</p>
+                  <p className="mb-4">Price: ${contract.product.totalPrice}</p>
+                  <p className="mb-4">Status: {contract.contractStatus}</p>
+                  <Link href={`/contracts/${contract.contractId}`}>
+                  <button className="btn purchase-card">View Details</button>
+                  </Link>
+                    <button
+                    className="btn purchase-card"
+                      onClick={() => downloadPdf(contract.contractId)}
+                      disabled={dloading}
+                    >
+                      {dloading ? "Downloading..." : "Download PDF"}
+                    </button>
+                  
+                  <button
+                  className="btn purchase-card"
+                      onClick={() => cancelContract(contract.contractId)}
+                      disabled={cloading}
+                    >
+                      {cloading ? "Canceling contract..." : "Cancel contract"}
+                    </button>
+            
                 </div>
               ))
             ) : (
               <p>No ongoing contracts.</p>
-            )}
+            ))}
           </div>
         </div>
 
@@ -175,26 +264,46 @@ const BuyerProfile = () => {
         <div className="contracts-section text-center" id="completed-contracts-section">
           <h2><strong>Completed Contracts</strong></h2>
           <div className="contracts-container">
-            {completedContracts.length > 0 ? (
-              completedContracts.map((contract, index) => (
+            {completedContracts && (completedContracts.length > 0 ? (
+              completedContracts.map((contract: any, index: React.Key | null | undefined) => (
                 <div className="contract-card" key={index}>
-                  <h3>Buyer: {contract.buyerName}</h3>
-                  <p>Crop Type: {contract.cropType}</p>
-                  <p>Quantity: {contract.quantity} kg</p>
-                  <p>Price: ${contract.price}</p>
-                  <p>Status: {contract.status}</p>
+                  <h3 className="mb-4">Buyer: {contract.buyer.name}</h3>
+                  <p className="mb-4">Crop Type: {contract.product.name}</p>
+                  <p className="mb-4">Quantity: {contract.product.quantity} kg</p>
+                  <p className="mb-4">Price: ${contract.product.totalPrice}</p>
+                  <p className="mb-4">Status: {contract.contractStatus}</p>
+                  <Link href={`/contracts/${contract.contractId}`}>
+                  <button className="btn purchase-card">View Details</button>
+                  </Link>
+                    <button
+                    className="btn purchase-card"
+                      onClick={() => {downloadPdf(contract.contractId)
+                      }}
+                      disabled={dloading}
+                    >
+                      {dloading ? "Downloading..." : "Download PDF"}
+                    </button>
+                  
+                  <button
+                  className="btn purchase-card"
+                      onClick={() => cancelContract(contract.contractId)}
+                      disabled={cloading}
+                    >
+                      {cloading ? "Canceling contract..." : "Cancel contract"}
+                    </button>
+                  
                 </div>
               ))
             ) : (
               <p>No completed contracts.</p>
-            )}
+            ))}
           </div>
         </div>
         <Link href="/updateFarmerProfile">
-      <div className="form-group text-center">
-              <button type="submit" className="text-white">Edit</button>
-            </div>
-            </Link>
+          <div className="form-group text-center">
+            <button type="submit" className="text-white">Edit</button>
+          </div>
+        </Link>
       </div>
     </div>
   );

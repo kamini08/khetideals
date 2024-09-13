@@ -25,7 +25,7 @@ const contractSchema = new mongoose.Schema({
   buyer: {
     name: { type: String, required: true },
     email: { type: String, required: true },
-    id: { type: String, required: true },
+    id: { type: String},
     phoneNumber: { type: String, required: true },
     address: { type: String, required: true },
     Account: { type: Number, required: true },
@@ -34,7 +34,7 @@ const contractSchema = new mongoose.Schema({
   seller: {
     name: { type: String, required: true },
     email: { type: String, required: true },
-    id: { type: String, required: true },
+    id: { type: String },
     phoneNumber: { type: String, required: true },
     address: { type: String, required: true },
     Account: { type: Number, required: true },
@@ -53,11 +53,6 @@ const contractSchema = new mongoose.Schema({
     deliveryLocation: { type: String, required: true },
     returnPolicy: { type: String }, // E.g., "No returns after 30 days"
     additionalTerms: { type: String }, // Any other terms agreed upon
-  },
-  status: {
-    type: String,
-    enum: ["Pending", "Completed", "Cancelled", "ongoing"],
-    default: "Pending",
   },
   createdAt: {
     type: Date,

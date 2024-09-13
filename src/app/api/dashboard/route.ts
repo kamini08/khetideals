@@ -32,7 +32,6 @@ export async function GET() {
 }
 export async function POST(req: Request) {
   console.log("hello");
-
   await clientPromise();
   // console.log("hello");
   try {

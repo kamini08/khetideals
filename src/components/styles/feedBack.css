@@ -1,0 +1,197 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #009a4e; 
+    background-color: #f0f4f3;
+}
+
+/* Profile section */
+.profile-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 8px;
+    background-color: #009a4e;
+    flex-wrap: wrap;
+}
+
+.profile-pic {
+    margin-right: 20px;
+    margin-bottom: 10px; /* Adjusts for smaller screens */
+}
+
+.profile-pic img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 10px;
+}
+
+.profile-details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.profile-details h3,
+.profile-details p {
+    margin: 0;
+    font-size: 22px; /* Adjusted for smaller screens */
+    color: black;
+}
+
+.profile-details h3 span,
+.profile-details p span {
+    font-weight: bold;
+    color: black;
+}
+
+/* Form styling */
+.form-container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f0f4f3;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+    text-align: center;
+    color: #009a4e;
+    margin-bottom: 20px;
+    font-size: 1.5rem; /* Adjusted for responsiveness */
+}
+
+.form-group {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #009a4e;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #6c9e6c;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group textarea {
+    resize: vertical;
+    height: 120px;
+}
+
+.inline-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.inline-group .form-group {
+    flex: 1;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+button {
+    width: 45%;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight:bold;
+    cursor: pointer;
+    background-color: #009a4e;
+    transition: background-color 0.3s ease;
+}
+
+.chat-now-button,
+.make-proposal-button {
+    background-color: #009a4e;
+    color: white;
+}
+
+.chat-now-button:hover,
+.make-proposal-button:hover {
+    background-color: #3f6f57;
+}
+
+.contracts-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.contract-card {
+    border: 2px solid green;
+    border-radius: 8px;
+    padding: 16px;
+    width: 100%;
+    max-width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f0f4f3;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 1024px) { /* Tablets and smaller desktops */
+    .profile-header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-details h3,
+    .profile-details p {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 768px) { /* Mobile devices */
+    .form-container {
+        padding: 10px;
+    }
+
+    button {
+        width: 100%;
+    }
+
+    .contract-card {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) { /* Small mobile devices */
+    .profile-header {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-pic img {
+        width: 60px;
+        height: 60px;
+    }
+
+    .profile-details h3,
+    .profile-details p {
+        font-size: 18px;
+    }
+}

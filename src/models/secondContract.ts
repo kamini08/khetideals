@@ -23,7 +23,7 @@ const contractSchema: Schema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Sharecropper',
       required: true
-    }
+    } 
   },
   landDetails: {
     location: { type: String, required: true },
@@ -39,11 +39,6 @@ const contractSchema: Schema = new Schema({
     pricePerDecimal: { type: Number, required: true },
     totalCost: { type: Number, required: true },
     paymentTerms: { type: String, required: true }
-  },
-  status: {
-    type: String,
-    enum: ['Pending', 'Ongoing', 'Completed', 'Cancelled'],
-    default: 'Pending'
   },
   createdAt: {
     type: Date,
