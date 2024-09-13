@@ -76,7 +76,8 @@ export async function POST(req: Request) {
 
     // Execute the query with the constructed query object
     const collection =
-      query.userType === "farmer" ? FarmerMarketPlaceSub : BuyerMarketPlaceSub;
+      query.userType === "farmer" ? BuyerMarketPlaceSub :FarmerMarketPlaceSub ;
+      console.log("Query", query);
     console.log("Collection", collection);
     // Execute the query with the selected collection
     const document = await collection.find(query);

@@ -18,6 +18,7 @@ interface Buyer {
 }
 
 interface LandDetail {
+  _id: string;
   mainId: string;
   areaOfLand: number;
   location: string;
@@ -133,7 +134,29 @@ const  LandlordProfile: React.FC = () => {
     setWorkStatus(updatedStatus);
   };
 
-  
+  //Function to delete a land detail
+  const deleteLandDetail = async (landId:any) => {
+    try {
+      const response = await fetch(`/api/deleteLand?mainId=${landId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        console.log("Contract deleted successfully:", data.message);
+        // Optionally refresh the list of contracts or remove the deleted one from the UI
+        setLandDetails((prevland) =>
+          prevland.filter((land) => land._id !== landId)
+        );
+      } else {
+        console.error("Error deleting contract:", data.message);
+      }
+    } catch (error) {
+      console.error("Error in delete request:", error);
+    }
+  };
  
   return (
     <div className="container">
@@ -165,7 +188,7 @@ const  LandlordProfile: React.FC = () => {
                       <p className="plot-card-description">Start Month: {land.startingMonth}</p>
                       <p className="plot-card-description">End Month: {land.endingMonth}</p>
                       <p className="plot-card-description">Price per Decimal: {land.pricePerDecimal}</p>
-                      <button  className="but"type="submit">Delete</button>
+                      <button className="but"type="submit" onClick ={()=>deleteLandDetail(land._id)}>Delete</button>
                     </div>
                   </div>
                 ))

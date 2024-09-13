@@ -39,28 +39,6 @@ const SettingsPage = async () => {
     }
   );
 
-  // fetch contracts from database
-  let contracts;
-  /*
-  try {
-      const response = await fetch('/api/contract/getContracts', {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
-      if (!response.ok) {
-        throw new Error("Failed to fetch reviews");
-      }
-       
-    const data = await response.json();
-    contracts = data;
-    console.log(contracts);
-  } catch (err) {
-    console.error(err);
-  }
-    */
 
 
 
@@ -143,39 +121,7 @@ const SettingsPage = async () => {
                 </div>
               </div>
 
-              {/* <div className="section" id="contracts-section">
-                <h2>Current Contracts</h2>
-                <div className="contracts-container">
-                {contracts?['pendingContracts']?.map((contract: any, index: Key | null | undefined) => (
-                  <Link href={`/contracts/${contract.id}`} >
-                  <div className="contract-card" key={index}>
-                    <h3>Buyer: {contract.seller.name}</h3>
-                    <p>Crop Type: {contract.cropcropType}</p>
-                    <p>Quantity: {contract.quantity} kg</p>
-                    <p>Status: {contract.contractStatus} kg</p>
-                    <button>Download</button>
-                    <button>Cancel</button>
-                  </div>
-                  </Link>
-                )) : (
-                  <p>No contracts found.</p>
-                )}
-                {contracts?['signedContracts']?.map((contract: any, index: Key | null | undefined) => (
-                  <Link href={`/contracts/${contract.id}`} >
-                  <div className="contract-card" key={index}>
-                    <h3>Buyer: {contract.seller.name}</h3>
-                    <p>Crop Type: {contract.cropcropType}</p>
-                    <p>Quantity: {contract.quantity} kg</p>
-                    <p>Status: {contract.contractStatus} kg</p>
-                    <button>Download</button>
-                    <button>Cancel</button>
-                  </div>
-                  </Link>
-                )) :
-                (<p>No contracts found.</p>)
-              }
-              </div>
-              */}
+             
             </div>
           </div>
         </div>
@@ -235,40 +181,7 @@ const SettingsPage = async () => {
               </div>
               <div className="section" id="contracts-section">
                 <h2>Current Contracts</h2>
-                { /* <div className="contracts-container">
-
-                  {contracts ? ['pendingContracts']?.map((contract: any, index: Key | null | undefined) => (
-                    <Link href={`/contracts/${contract.id}`} >
-                      <div className="contract-card" key={index}>
-                        <h3>Farmer: {contract.seller.name}</h3>
-                        <p>Crop Type: {contract.cropcropType}</p>
-                        <p>Quantity: {contract.quantity} kg</p>
-                        <p>Status: {contract.contractStatus} kg</p>
-                        <button>Download</button>
-                        <button>Cancel</button>
-                      </div>
-                    </Link>
-
-                  )) : (
-                    <p>No contracts found.</p>
-                  )}
-
-                  {contracts ? ['signedContracts']?.map((contract: any, index: Key | null | undefined) => (
-                    <Link href={`/contracts/${contract.id}`} >
-                      <div className="contract-card" key={index}>
-                        <h3>Farmer: {contract.seller.name}</h3>
-                        <p>Crop Type: {contract.cropcropType}</p>
-                        <p>Quantity: {contract.quantity} kg</p>
-                        <p>Status: {contract.contractStatus} kg</p>
-                        <button>Download</button>
-                        <button>Cancel</button>
-                      </div>
-                    </Link>
-
-                  )) : (
-                    <p>No contracts found.</p>
-                  )}
-                </div> */}
+                
               </div>
               {/* Replace map with a simple div */}
               <MapWithNoSSRBuyer />
