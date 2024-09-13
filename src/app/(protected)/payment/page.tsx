@@ -158,7 +158,7 @@ function CheckoutForm() {
       clientSecret,
       {
         payment_method: {
-          card: elements.getElement(CardNumberElement),
+          card: elements.getElement(CardNumberElement)!, // Add '!' to assert non-null assertion
         },
       }
     );
