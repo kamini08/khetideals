@@ -1,8 +1,6 @@
 import Contract from "../../../../models/contractmodel";
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "../../../../lib/mongodb";
-import { contractValidate } from "../../../../lib/serverUtils/validate";
-import generateContractPdf from "../../../../lib/clientUtils/generatePDF";
 
 export async function PUT(req: Request) {
   // Handle PATCH requests to update a contract
@@ -20,13 +18,13 @@ export async function PUT(req: Request) {
         await Contract.findByIdAndUpdate(
           contractId,
           { isFarmerSigned }, // Add new key-value pair here
-          { new: false, runValidators: true }
+          { new: true, runValidators: true }
         );
       } else if(isBuyerSigned) {
         await Contract.findByIdAndUpdate(
           contractId,
           { isBuyerSigned }, // Add new key-value pair here
-          { new: false, runValidators: true }
+          { new: true, runValidators: true }
         );
       }
 
@@ -37,7 +35,7 @@ export async function PUT(req: Request) {
         await Contract.findByIdAndUpdate(
           contractId,
           { contractStatus }, // Add new key-value pair here
-          { new: false, runValidators: true }
+          { new: true, runValidators: true }
         );
       }
 

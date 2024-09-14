@@ -2,16 +2,35 @@ import mongoose, { Schema, HookNextFunction } from 'mongoose';
 
 // Define the schema
 const contractSchema: Schema = new Schema({
-  contractId: { type: String, required: true, unique: true },
+  
+  contract2Id: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  contract2Url: {
+    type: String,
+  },
+  isCropperSigned: {
+    type: Boolean,
+    default: false,
+  },
+  isLandLordSigned: {
+    type: Boolean,
+    default: false,
+  },
+  contract2Status: {
+    type: String,
+    enum: ["pending", "signed", "completed"],
+    default: "pending",
+  },
   landholder: {
     name: { type: String, required: true },
     email: { type: String, required: true },
     phoneNumber: { type: String, required: true },
     address: { type: String, required: true },
     landholderId: {
-      type: Schema.Types.ObjectId,
-      ref: 'Landholder',
-      required: true
+      type: String,
     }
   },
   sharecropper: {
@@ -19,11 +38,7 @@ const contractSchema: Schema = new Schema({
     email: { type: String, required: true },
     phoneNumber: { type: String, required: true },
     address: { type: String, required: true },
-    sharecropperId: {
-      type: Schema.Types.ObjectId,
-      ref: 'Sharecropper',
-      required: true
-    } 
+    sharecropperId: {type: String,} 
   },
   landDetails: {
     location: { type: String, required: true },
@@ -56,6 +71,6 @@ contractSchema.pre('save', function (next: HookNextFunction) {
   next();
 });
 
-const ContractModel = mongoose.models.Contract || mongoose.model('Contract', contractSchema);
+const ContractModel = mongoose.models.Contract2 || mongoose.model('Contract2', contractSchema);
 
 export default ContractModel;

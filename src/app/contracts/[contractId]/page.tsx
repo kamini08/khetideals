@@ -1,6 +1,7 @@
 "use client";
+import { db } from "@/lib/db";
 import React, { useEffect } from "react";
-
+import { useParams, usePathname } from "next/navigation";
 import { useState } from "react";
 import Pdf from "@/components/contract/PDFImage";
 import { useRouter } from "next/navigation";
@@ -11,6 +12,7 @@ import Contract from "@/models/contractmodel";
 import presignedUrl from "@/lib/serverUtils/presignedUrl";
 import { NextResponse } from "next/server";
 import { auth } from "../../../../auth";
+import { getId } from "@/lib/serverUtils/getId";
 
 function getS3KeyFromUrl(s3Url: string): string | null {
   try {
@@ -33,91 +35,130 @@ function getS3KeyFromUrl(s3Url: string): string | null {
     return null;
   }
 }
-const ContractPdf = async () => {
-  const [loading, setLoading] = useState(false);
+const ContractPdf = () => {
   const [isFarmerSigned, setFarmerSigned] = useState(false);
   const [isBuyerSigned, setBuyerSigned] = useState(false);
-  const [contractId, setContractId] = useState("");
-  const [user, setUser] = useState(null);
+  
+  const [contract, setContract] = useState<any>();
+  const [role, setRole] = useState<string | undefined>();
+  const [email, setEmail] = useState<any>();
+  const[presignedURL, setPresignedURL] = useState<string | undefined>();
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const pathParts = window.location.pathname.split("/");
-      const dynamicId = pathParts[pathParts.length - 1];
-      setContractId(dynamicId);
-      console.log(dynamicId);
-    }
-  }, []);
 
-  const router = useRouter();
-  const session = await auth();
-
-  const role = session?.user.role.toLocaleLowerCase();
-  const userId = session?.user.id;
-  const email = session?.user.email
-  try {
-    await clientPromise();
-    const user = await buyer.findOne({
-      mainId: userId
-    })? buyer.findOne({
-      mainId: userId
-    }) : farmers.findOne({
-      mainId: userId
-    })
-    setUser(await user);
+    const {contractId} : any = useParams();
+    
    
-  } catch(err) {
+useEffect(() => {
+  const fetchDetails = async() => {
+
+  
+  const detail = await getId();
+
+  const userrole = detail?.role;
+  setRole(userrole);
+  const userId = detail?.id;
+
+  const useremail: any = detail?.email;
+  setEmail(useremail);
+  console.log(email);
+  }
+  
+  const fetchContract = async() => {
+
+  try {
+    const client = await clientPromise();
+    if (!client) {
+      console.error("No client found");
+    }
+    
+    const contractData = await Contract.findOne({ contractId: contractId });
+    if (!contract) {
+      console.log("No contract found");
+      return NextResponse.json(
+        {
+          message: "No contract found",
+        },
+        {
+          status: 404,
+        }
+      );
+    }
+    console.log(contractData);
+    setContract(contractData);
+  } catch  (err) {
     console.log(err);
   }
+} 
 
-  const contract = await Contract.findOne({ contractId: contractId });
-  if (!contract) {
-    console.log("No contract found");
-    return NextResponse.json(
-      {
-        message: "No contract found",
-      },
-      {
-        status: 404,
-      }
-    );
-  }
+const fetchUrl = async() => {
+
+try {
 
   const s3Url = contract.contractUrl;
 
   console.log(s3Url);
 
-    const key = getS3KeyFromUrl(s3Url);
-    const response = await presignedUrl( key );
-    const presignedURL = response?.noClientUrl;
-    console.log(presignedURL);
-    role=="farmer"? setFarmerSigned(contract.isFarmerSigned): setBuyerSigned(contract.isBuyerSigned);
-    
+  const key = getS3KeyFromUrl(s3Url);
+  const response = await presignedUrl(key);
+  setPresignedURL(response?.noClientUrl);
+  console.log(presignedURL);
+  (role == "farmer")
+    ? setFarmerSigned(contract.isFarmerSigned)
+    : setBuyerSigned(contract.isBuyerSigned);
 
-  const signContract = async (fileId: string) => {
-    setLoading(true);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+fetchContract();
+fetchDetails();
+fetchUrl();
+
+}, []);
+
+ 
+  const signContract = async (fileId: string | undefined) => {
     try {
       // Fetch the presigned URL from your backend API
+      
+
 
       if (role == "farmer") {
         setFarmerSigned(true);
+        const farmerSigned = await Contract.updateOne(
+          { contractId: contractId },
+          {
+            $set: {
+              farmerSigned: true,
+            },
+          }
+        );
+        console.log(farmerSigned);
       } else if (role == "buyer") {
         setBuyerSigned(true);
+        const buyerSigned = await Contract.updateOne(
+          { contractId: contractId },
+          {
+            $set: {
+              buyerSigned: true,
+            },
+          }
+        );
+        console.log(buyerSigned);
       }
       const response = await fetch(`/api/contract/signContract/${fileId}`, {
         method: "PUT",
-        body: JSON.stringify({ user, isFarmerSigned, isBuyerSigned }),
+        body: JSON.stringify({ isFarmerSigned, isBuyerSigned }),
       });
 
       if (!response.ok) {
         throw new Error("Error signing contract");
       }
-      setLoading(false);
-      router.push("/contracts");
+
     } catch (error) {
       console.error("Error signing contract:", error);
     } finally {
-      setLoading(false);
     }
   };
 
@@ -138,18 +179,16 @@ const ContractPdf = async () => {
                 <button
                   className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mx-auto my-3"
                   onClick={() => signContract(contractId)}
-                  disabled={loading}
                 >
-                  {loading ? "Signing Contract..." : "I Agree"}
+                  {"I Agree"}
                 </button>
               )
             : isBuyerSigned && (
                 <button
                   className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mx-auto my-3"
                   onClick={() => signContract(contractId)}
-                  disabled={loading}
                 >
-                  {loading ? "Signing Contract..." : "I Agree"}
+                  {"I Agree"}
                 </button>
               )}
         </div>
@@ -162,7 +201,6 @@ const ContractPdf = async () => {
         <p>You do not have permission to view this contract.</p>
       </div>
     );
-  
   }
 };
 

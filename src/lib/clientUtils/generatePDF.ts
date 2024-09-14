@@ -18,232 +18,114 @@ const s3 = new S3({
 
 export default async function generateContractPDF(contract: {
   seller: { name: any; address: any; phoneNumber: any; email: any };
-  buyer: { name: any; address: any };
+  buyer: { name: any; address: any; phoneNumber: any; email: any };
   product: {
-    name: string | number | boolean | string[] | CellDef | null;
+    name: string;
     description: string;
-    quantity: {
-      toString: () => string | number | boolean | string[] | CellDef | null;
-    };
+    quantity: number;
     price: number;
+    totalPrice: number;
   };
   terms: {
-    deliveryDate: string | number | boolean | string[] | CellDef | null;
-    deliveryMethod: string | number | boolean | string[] | CellDef | null;
+    deliveryDate: string;
+    deliveryLocation: string;
+    paymentTerms: string;
     returnPolicy: string;
     additionalTerms: string;
-    paymentTerms: string;
   };
   id: any;
 }) {
   const doc = new jsPDF("landscape");
   const margin = { top: 20, left: 20, right: 20, bottom: 30 };
-  const pageWidth =
-    doc.internal.pageSize.getWidth() - margin.left - margin.right;
+  const pageWidth = doc.internal.pageSize.getWidth() - margin.left - margin.right;
 
-  const currentDate = new Date().toLocaleString("en-US", {
+  const currentDate = new Date().toLocaleDateString("en-US", {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
   });
 
-  // Add title heading
+  // Title
   doc.setFontSize(20);
   doc.setFont("helvetica", "bold");
-  doc.text(
-    "Contract Farming Agreement",
-    pageWidth / 2 + margin.left,
-    margin.top,
-    { align: "center" }
-  );
+  doc.text("Contract Farming Agreement", pageWidth / 2 + margin.left, margin.top, { align: "center" });
 
-  // Add introductory text
+  // Date and introduction
   doc.setFontSize(12);
   doc.setFont("helvetica", "normal");
   doc.text(
-    `This Contract Farming Agreement ("Agreement") is made and entered into on this ${currentDate} by and between:`,
+    `This agreement ("Agreement") is entered into on ${currentDate} between the Farmer and the Buyer as per the details below:`,
     margin.left,
     margin.top + 20
   );
 
-  // Add Farmer and Buyer Information
-  doc.setFontSize(12);
+  // Farmer Information
   doc.setFont("helvetica", "bold");
   doc.text("Farmer Information", margin.left, margin.top + 40);
   doc.setFont("helvetica", "normal");
   doc.text(`Name: ${contract.seller.name}`, margin.left, margin.top + 50);
   doc.text(`Address: ${contract.seller.address}`, margin.left, margin.top + 60);
-  doc.text(
-    `Phone: ${contract.seller.phoneNumber}`,
-    margin.left,
-    margin.top + 70
-  );
+  doc.text(`Phone: ${contract.seller.phoneNumber}`, margin.left, margin.top + 70);
   doc.text(`Email: ${contract.seller.email}`, margin.left, margin.top + 80);
 
+  // Buyer Information
   doc.setFont("helvetica", "bold");
   doc.text("Buyer Information", margin.left, margin.top + 100);
   doc.setFont("helvetica", "normal");
   doc.text(`Name: ${contract.buyer.name}`, margin.left, margin.top + 110);
   doc.text(`Address: ${contract.buyer.address}`, margin.left, margin.top + 120);
-  doc.text(
-    `Phone: ${contract.seller.phoneNumber}`,
-    margin.left,
-    margin.top + 130
-  );
-  doc.text(`Email: ${contract.seller.email}`, margin.left, margin.top + 140);
+  doc.text(`Phone: ${contract.buyer.phoneNumber}`, margin.left, margin.top + 130);
+  doc.text(`Email: ${contract.buyer.email}`, margin.left, margin.top + 140);
 
-  // Product Details Table
-  doc.setFontSize(14);
+  // Product Details
   doc.setFont("helvetica", "bold");
-  doc.text("1. Product Details", margin.left, margin.top + 150);
-
+  doc.text("Product Details", margin.left, margin.top + 160);
   autoTable(doc, {
-    startY: margin.top + 160,
+    startY: margin.top + 170,
     head: [["Detail", "Description"]],
     body: [
       ["Name", contract.product.name],
-      [
-        "Description",
-        doc.splitTextToSize(contract.product.description, pageWidth),
-      ],
-      ["Quantity", contract.product.quantity.toString()],
-      ["Price", `$${contract.product.price.toFixed(2)}`],
+      ["Description", contract.product.description],
+      ["Quantity", `${contract.product.quantity} units`],
+      ["Price per unit", `$${contract.product.price.toFixed(2)}`],
+      ["Total Price", `$${contract.product.totalPrice.toFixed(2)}`],
     ],
-    margin: { top: 10, left: margin.left, right: margin.right },
+    margin: { left: margin.left, right: margin.right },
     styles: {
-      cellPadding: 5,
       fontSize: 12,
-      valign: "middle",
-      overflow: "linebreak",
+      cellPadding: 5,
       minCellHeight: 10,
+      overflow: "linebreak",
     },
-    headStyles: {
-      fillColor: [0, 0, 0],
-      textColor: [255, 255, 255],
-    },
-    alternateRowStyles: {
-      fillColor: [240, 240, 240],
-    },
+    headStyles: { fillColor: [0, 0, 0], textColor: [255, 255, 255] },
+    alternateRowStyles: { fillColor: [240, 240, 240] },
   });
 
-  // Delivery Terms Table
+  // Get the Y position where the last table ended
+  const finalY = (doc as any).lastAutoTable.finalY || margin.top + 170;
+
+  // Terms and Conditions
   doc.setFontSize(14);
   doc.setFont("helvetica", "bold");
-  doc.text("2. Delivery Terms", margin.left, margin.top + 160);
+  doc.text("Terms and Conditions", margin.left, finalY + 20);
 
-  autoTable(doc, {
-    startY: margin.top + 160,
-    head: [["Term", "Details"]],
-    body: [
-      ["Delivery Date", contract.terms.deliveryDate],
-      ["Delivery Method", contract.terms.deliveryMethod],
-      [
-        "Return Policy",
-        doc.splitTextToSize(contract.terms.returnPolicy, pageWidth),
-      ],
-      [
-        "Additional Terms",
-        doc.splitTextToSize(contract.terms.additionalTerms, pageWidth),
-      ],
-    ],
-    margin: { top: 10, left: margin.left, right: margin.right },
-    styles: {
-      cellPadding: 5,
-      fontSize: 12,
-      valign: "middle",
-      overflow: "linebreak",
-      minCellHeight: 10,
-    },
-    headStyles: {
-      fillColor: [0, 0, 0],
-      textColor: [255, 255, 255],
-    },
-    alternateRowStyles: {
-      fillColor: [240, 240, 240],
-    },
-  });
-
-  // Payment Terms Table
-  doc.setFontSize(14);
-  doc.setFont("helvetica", "bold");
-  doc.text("3. Payment Terms", margin.left, margin.top + 160);
-
-  autoTable(doc, {
-    startY: 170,
-    head: [["Term", "Details"]],
-    body: [
-      [
-        "Payment Terms",
-        doc.splitTextToSize(contract.terms.paymentTerms, pageWidth),
-      ],
-      ["Payment Due Date", contract.terms.deliveryDate], // Assuming due date is the same as delivery date
-    ],
-    margin: { top: 10, left: margin.left, right: margin.right },
-    styles: {
-      cellPadding: 5,
-      fontSize: 12,
-      valign: "middle",
-      overflow: "linebreak",
-      minCellHeight: 10,
-    },
-    headStyles: {
-      fillColor: [0, 0, 0],
-      textColor: [255, 255, 255],
-    },
-    alternateRowStyles: {
-      fillColor: [240, 240, 240],
-    },
-  });
-
-  // Add Additional Terms
-  doc.setFontSize(14);
-  doc.setFont("helvetica", "bold");
-  doc.text("4. Additional Terms", margin.left, margin.top + 160);
   doc.setFontSize(12);
   doc.setFont("helvetica", "normal");
-  doc.text(
-    "[Any other agreed terms or conditions]",
-    margin.left,
-    margin.top + 170,
-    { maxWidth: pageWidth }
-  );
+  doc.text(`1. Delivery Date: ${contract.terms.deliveryDate}`, margin.left, finalY + 30);
+  doc.text(`2. Delivery Location: ${contract.terms.deliveryLocation}`, margin.left, finalY + 40);
+  doc.text(`3. Payment Terms: ${contract.terms.paymentTerms}`, margin.left, finalY + 50);
+  doc.text(`4. Return Policy: ${contract.terms.returnPolicy}`, margin.left, finalY + 60);
+  doc.text(`5. Additional Terms: ${contract.terms.additionalTerms}`, margin.left, finalY + 70);
 
-  // Add signature lines
-  doc.setFontSize(14);
+  // Signature Section
   doc.setFont("helvetica", "bold");
-  doc.text("Signatures", margin.left, margin.top + 180);
-  doc.setFontSize(12);
+  doc.text("Signatures", margin.left, finalY + 90);
   doc.setFont("helvetica", "normal");
-  doc.text(
-    "Farmer Signature: _____________________________",
-    margin.left,
-    margin.top + 190
-  );
-  doc.text(
-    "Date: _____________________________",
-    margin.left,
-    margin.top + 195
-  );
-  doc.text(
-    "Buyer Signature: _____________________________",
-    margin.left,
-    margin.top + 210
-  );
-  doc.text(
-    "Date: _____________________________",
-    margin.left,
-    margin.top + 225
-  );
-
-  // Add footer (if needed)
-  doc.setFontSize(10);
-  doc.setFont("helvetica", "italic");
-  doc.text(
-    "This document is a legally binding agreement.",
-    margin.left,
-    margin.top + 245
-  );
+  doc.text("Farmer Signature: _____________________________", margin.left, finalY + 100);
+  doc.text("Date: _____________________________", margin.left, finalY + 110);
+  doc.text("Buyer Signature: _____________________________", margin.left, finalY + 130);
+  doc.text("Date: _____________________________", margin.left, finalY + 140);
 
   // Save the PDF using edgestore
   /*

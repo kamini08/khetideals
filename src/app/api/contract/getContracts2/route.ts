@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
-import Contract from "@/models/contractmodel";
+import Contract2 from "@/models/secondContract";
 import { auth } from "../../../../../auth";
 
 export async function GET(req: Request) {
@@ -9,10 +9,9 @@ export async function GET(req: Request) {
 
     const role = session?.user.role?.toLocaleLowerCase();
     const email = session?.user.email;
-    console.log(email);
 
     // Fetch contracts from database
-
+console.log(email)
     try {
       const client = await clientPromise();
       if (!client) {
@@ -29,12 +28,12 @@ export async function GET(req: Request) {
         );
       }
 
-      let pendingContracts = await Contract.find({
+      let pendingContracts = await Contract2.find({
         $or: [
-          { "buyer.email": email }, // Condition 1
-          { "seller.email": email }, // Condition 2
+          { "landholder.email": email }, // Condition 1
+          { "sharecropper.email": email }, // Condition 2
         ],
-        contractStatus: "pending",
+        contract2Status: "pending",
       });
       if (!pendingContracts) {
         return NextResponse.json(
@@ -47,12 +46,12 @@ export async function GET(req: Request) {
         );
       }
 
-      let ongoingContracts = await Contract.find({
+      let ongoingContracts = await Contract2.find({
         $or: [
-          { "buyer.email": email }, // Condition 1
-          { "seller.email": email }, // Condition 2
+          { "landholder.email": email }, // Condition 1
+          { "sharecropper.email": email }, // Condition 2
         ],
-        contractStatus: { $in: ["pending", "signed"] },
+        contract2Status: { $in: ["pending", "signed"] },
       });
       if (!ongoingContracts) {
         return NextResponse.json(
@@ -64,12 +63,12 @@ export async function GET(req: Request) {
           }
         );
       }
-      let signedContracts = await Contract.find({
+      let signedContracts = await Contract2.find({
         $or: [
-          { "buyer.email": email }, // Condition 1
-          { "seller.email": email }, // Condition 2
+          { "landholder.email": email }, // Condition 1
+          { "sharecropper.email": email }, // Condition 2
         ],
-        contractStatus: "signed",
+        contract2Status: "signed",
       });
       if (!signedContracts) {
         return NextResponse.json(
@@ -81,13 +80,13 @@ export async function GET(req: Request) {
           }
         );
       }
-      let completedContracts = await Contract.find({
+      let completedContracts = await Contract2.find({
         $or: [
-          { "buyer.email": email }, // Condition 1
-          { "seller.email": email },
+          { "landholder.email": email }, // Condition 1
+          { "sharecropper.email": email },
           // Condition 2
         ],
-        contractStatus: "completed",
+        contract2Status: "completed",
       });
       if (!completedContracts) {
         return NextResponse.json(
@@ -99,11 +98,10 @@ export async function GET(req: Request) {
           }
         );
       }
-      if (pendingContracts || signedContracts || completedContracts) {
+      if (pendingContracts || signedContracts || completedContracts || ongoingContracts) {
         return NextResponse.json(
           {
             message: "Contracts Found",
-
             contracts: {
               pendingContracts,
               signedContracts,
