@@ -1,4 +1,4 @@
-import mongoose, { Schema, HookNextFunction } from 'mongoose';
+import mongoose, { Schema } from "mongoose";
 
 // Define the schema
 const contractSchema: Schema = new Schema({
@@ -10,9 +10,9 @@ const contractSchema: Schema = new Schema({
     address: { type: String, required: true },
     landholderId: {
       type: Schema.Types.ObjectId,
-      ref: 'Landholder',
-      required: true
-    }
+      ref: "Landholder",
+      required: true,
+    },
   },
   sharecropper: {
     name: { type: String, required: true },
@@ -21,41 +21,42 @@ const contractSchema: Schema = new Schema({
     address: { type: String, required: true },
     sharecropperId: {
       type: Schema.Types.ObjectId,
-      ref: 'Sharecropper',
-      required: true
-    } 
+      ref: "Sharecropper",
+      required: true,
+    },
   },
   landDetails: {
     location: { type: String, required: true },
     areaOfLand: { type: Number, required: true },
     soilType: { type: String, required: true },
-    cropToGrow: { type: String, required: true }
+    cropToGrow: { type: String, required: true },
   },
   cropCycle: {
     startingMonth: { type: String, required: true },
-    endingMonth: { type: String, required: true }
+    endingMonth: { type: String, required: true },
   },
   financialDetails: {
     pricePerDecimal: { type: Number, required: true },
     totalCost: { type: Number, required: true },
-    paymentTerms: { type: String, required: true }
+    paymentTerms: { type: String, required: true },
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   updatedAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 // Middleware to update the `updatedAt` field on save
-contractSchema.pre('save', function (next: HookNextFunction) {
-  (this as any).updatedAt = new Date();
+contractSchema.pre("save", function (next) {
+  this.updatedAt = Date.now();
   next();
 });
 
-const ContractModel = mongoose.models.Contract || mongoose.model('Contract', contractSchema);
+const ContractModel =
+  mongoose.models.Contract || mongoose.model("Contract", contractSchema);
 
 export default ContractModel;

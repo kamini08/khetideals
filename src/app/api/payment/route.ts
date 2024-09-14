@@ -6,7 +6,7 @@ import Stripe from "stripe";
 const stripe = new Stripe(
   "sk_test_51PdxcLRoQg51LGuW9hTkP3Bsp9H4KUstaV5khrLS6B7TelcdXCF3VOvGwmMBi6RqrZU4bP4i6aHrDMvzuV3VGiGD00kTGCCUzT",
   {
-    apiVersion: "2022-11-15",
+    apiVersion: "2024-06-20",
   }
 );
 

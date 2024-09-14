@@ -52,21 +52,22 @@ const ContractPdf = async () => {
   const router = useRouter();
   const session = await auth();
 
-  const role = session?.user.role.toLocaleLowerCase();
+  const role = session?.user.role?.toLocaleLowerCase();
   const userId = session?.user.id;
-  const email = session?.user.email
+  const email = session?.user.email;
   try {
     await clientPromise();
-    const user = await buyer.findOne({
-      mainId: userId
-    })? buyer.findOne({
-      mainId: userId
-    }) : farmers.findOne({
-      mainId: userId
-    })
+    const user = (await buyer.findOne({
+      mainId: userId,
+    }))
+      ? buyer.findOne({
+          mainId: userId,
+        })
+      : farmers.findOne({
+          mainId: userId,
+        });
     setUser(await user);
-   
-  } catch(err) {
+  } catch (err) {
     console.log(err);
   }
 
@@ -87,12 +88,13 @@ const ContractPdf = async () => {
 
   console.log(s3Url);
 
-    const key = getS3KeyFromUrl(s3Url);
-    const response = await presignedUrl( key );
-    const presignedURL = response?.noClientUrl;
-    console.log(presignedURL);
-    role=="farmer"? setFarmerSigned(contract.isFarmerSigned): setBuyerSigned(contract.isBuyerSigned);
-    
+  const key = getS3KeyFromUrl(s3Url);
+  const response = await presignedUrl(key);
+  const presignedURL = response?.noClientUrl;
+  console.log(presignedURL);
+  role == "farmer"
+    ? setFarmerSigned(contract.isFarmerSigned)
+    : setBuyerSigned(contract.isBuyerSigned);
 
   const signContract = async (fileId: string) => {
     setLoading(true);
@@ -162,7 +164,6 @@ const ContractPdf = async () => {
         <p>You do not have permission to view this contract.</p>
       </div>
     );
-  
   }
 };
 
