@@ -1,4 +1,4 @@
-import mongoose, { Schema, HookNextFunction } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 // Define the schema
 const contractSchema: Schema = new Schema({
@@ -66,8 +66,8 @@ const contractSchema: Schema = new Schema({
 });
 
 // Middleware to update the `updatedAt` field on save
-contractSchema.pre('save', function (next: HookNextFunction) {
-  (this as any).updatedAt = new Date();
+contractSchema.pre("save", function (next) {
+  this.updatedAt = Date.now();
   next();
 });
 

@@ -64,6 +64,24 @@ const LandlordProfile: React.FC = () => {
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
 
+
+  const signContract = async (fileId: string | undefined) => {
+    try {
+      const contractId = fileId;
+      const response = await fetch(`/api/contract/signContract`, {
+        method: "PUT",
+        body: JSON.stringify({contractId}),
+      });
+      if (!response.ok) {
+        throw new Error("Error signing contract");
+      }
+
+    } catch (error) {
+      console.error("Error signing contract:", error);
+    } finally {
+    }
+  };
+  
   const downloadPdf = async (fileName: string) => {
     setDLoading(true);
     try {

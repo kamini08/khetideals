@@ -79,6 +79,23 @@ const ShareCropperDashboard: React.FC = () => {
   const [dloading, setDLoading] = useState(false);
   const [cloading, setCLoading] = useState(false);
 
+  const signContract = async (fileId: string | undefined) => {
+    try {
+      const contractId = fileId;
+      const response = await fetch(`/api/contract/signContract`, {
+        method: "PUT",
+        body: JSON.stringify({contractId}),
+      });
+      if (!response.ok) {
+        throw new Error("Error signing contract");
+      }
+
+    } catch (error) {
+      console.error("Error signing contract:", error);
+    } finally {
+    }
+  };
+
   const downloadPdf = async (fileName: string) => {
     setDLoading(true);
     console.log(fileName)
@@ -233,28 +250,33 @@ const ShareCropperDashboard: React.FC = () => {
             {ongoingContracts && (ongoingContracts.length > 0 ? (
               ongoingContracts.map((contract: any, index: React.Key | null | undefined) => (
                 <div className="contract-card" key={index}>
-                  <h3 className="mb-4">Farmer: {contract.seller.name}</h3>
-                  <p className="mb-4">Crop Type: {contract.product.name}</p>
-                  <p className="mb-4">Quantity: {contract.product.quantity} kg</p>
-                  <p className="mb-4">Price: ${contract.product.totalPrice}</p>
-                  <p className="mb-4">Status: {contract.contractStatus}</p>
-                  <Link href={`/contracts/${contract.contractId}`}>
-                  <button className="btn purchase-card">View Details</button>
-                  </Link>
+                  <h3 className="mb-4">Landlord: {contract.landholder.name}</h3>
+                  <p className="mb-4">Email: {contract.landholder.email}</p>
+                  <p className="mb-4">Location: {contract.landDetails.location}</p>
+                  <p className="mb-4">Land Area: {contract.landDetails.landOfArea}</p>
+                  <p className="mb-4">Amount: Rs.{contract.finanacialDetails.totalCost}</p>
+                  <p className="mb-4">Status: {contract.contract2Status}</p>
+                  { !contract.isCropperSigned && 
+                (<button
+                  className="btn purchase-card"
+                  onClick={() => signContract(contract.contract2Id)}
+                >
+                  I Agree
+                </button>)}
                     <button
                     className="btn purchase-card"
-                      onClick={() => downloadPdf(contract.contractId)}
+                      onClick={() => downloadPdf(contract.contract2Id)}
                       disabled={dloading}
                     >
-                      {dloading ? "Downloading..." : "Download PDF"}
+                      {"Download PDF"}
                     </button>
                   
                   <button
                   className="btn purchase-card"
-                      onClick={() => cancelContract(contract.contractId)}
+                      onClick={() => cancelContract(contract.contract2Id)}
                       disabled={cloading}
                     >
-                      {cloading ? "Canceling contract..." : "Cancel contract"}
+                      {"Cancel contract"}
                     </button>
                 
                 </div>
@@ -277,17 +299,18 @@ const ShareCropperDashboard: React.FC = () => {
             {completedContracts && (completedContracts.length > 0 ? (
               completedContracts.map((contract: any, index: React.Key | null | undefined) => (
                 <div className="contract-card" key={index}>
-                  <h3 className="mb-4">Farmer: {contract.seller.name}</h3>
-                  <p className="mb-4">Crop Type: {contract.product.name}</p>
-                  <p className="mb-4">Quantity: {contract.product.quantity} kg</p>
-                  <p className="mb-4">Price: ${contract.product.totalPrice}</p>
-                  <p className="mb-4">Status: {contract.contractStatus}</p>
-                  <Link href={`/contracts/${contract.contractId}`}>
+                  <h3 className="mb-4">Landlord: {contract.landholder.name}</h3>
+                  <p className="mb-4">Email: {contract.landholder.email}</p>
+                  <p className="mb-4">Location: {contract.landDetails.location}</p>
+                  <p className="mb-4">Land Area: {contract.landDetails.landOfArea}</p>
+                  <p className="mb-4">Amount: Rs.{contract.finanacialDetails.totalCost}</p>
+                  <p className="mb-4">Status: {contract.contract2Status}</p>
+                  <Link href={`/contracts/${contract.contrac2tId}`}>
                     <button className="btn purchase-card ">View Details</button>
                   </Link>
                     <button
                     className="btn purchase-card"
-                      onClick={() => downloadPdf(contract.contractId)}
+                      onClick={() => downloadPdf(contract.contract2Id)}
                       disabled={dloading}
                     >
                       {dloading ? "Downloading..." : "Download PDF"}
@@ -295,7 +318,7 @@ const ShareCropperDashboard: React.FC = () => {
                  
                   <button
                   className="btn purchase-card"
-                      onClick={() => cancelContract(contract.contractId)}
+                      onClick={() => cancelContract(contract.contract2Id)}
                       disabled={cloading}
                     >
                       {cloading ? "Canceling contract..." : "Cancel contract"}

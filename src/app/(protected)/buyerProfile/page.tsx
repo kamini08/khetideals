@@ -7,6 +7,7 @@ import "@/components/styles/p1a.css"
 import "@/components/styles/p1c.css"
 import BDash from "../components/BDash";
 import Link from "next/link";
+import Contract from "@/models/contractmodel";
 
 const BuyerProfile = () => {
   const [formData, setFormData] = useState({
@@ -29,10 +30,33 @@ const BuyerProfile = () => {
   const [pastPurchases, setPastPurchases] = useState([]);
 const [contracts, setContracts] = useState(null);
 const [ongoingContracts, setOngoingContracts] = useState([]);
-
   const [completedContracts, setCompletedContracts] = useState([]);
   const [dloading, setDLoading] = useState(false);
   const [cloading, setCLoading] = useState(false);
+
+  const signContract = async (fileId: string | undefined) => {
+    try {
+      // Fetch the presigned URL from your backend API
+
+   
+        
+        const contractId = fileId;
+        
+      
+      const response = await fetch(`/api/contract/signContract`, {
+        method: "PUT",
+        body: JSON.stringify({contractId}),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error signing contract");
+      }
+
+    } catch (error) {
+      console.error("Error signing contract:", error);
+    } finally {
+    }
+  };
 
   const downloadPdf = async (fileName: string) => {
     setDLoading(true);
@@ -235,9 +259,13 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
                   <p className="mb-4">Quantity: {contract.product.quantity} kg</p>
                   <p className="mb-4">Price: ${contract.product.totalPrice}</p>
                   <p className="mb-4">Status: {contract.contractStatus}</p>
-                  <Link href={`/contracts/${contract.contractId}`}>
-                  <button className="btn purchase-card">View Details</button>
-                  </Link>
+                 { !contract.isBuyerSigned && 
+                (<button
+                  className="btn purchase-card"
+                  onClick={() => signContract(contract.contractId)}
+                >
+                  I Agree
+                </button>)}
                     <button
                     className="btn purchase-card"
                       onClick={() => downloadPdf(contract.contractId)}
@@ -274,9 +302,7 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
                   <p className="mb-4">Quantity: {contract.product.quantity} kg</p>
                   <p className="mb-4">Price: ${contract.product.totalPrice}</p>
                   <p className="mb-4">Status: {contract.contractStatus}</p>
-                  <Link href={`/contracts/${contract.contractId}`}>
-                    <button className="btn purchase-card ">View Details</button>
-                  </Link>
+                  
                     <button
                     className="btn purchase-card"
                       onClick={() => downloadPdf(contract.contractId)}
