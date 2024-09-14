@@ -5,6 +5,7 @@ export async function getId() {
     const id = session?.user.id;
     const role = session?.user.role?.toLocaleLowerCase();
     const email = session?.user.email;
-    return { id, role, email };
+    const name = session?.user.name;
+    return { id, role, email, name };
     
 }

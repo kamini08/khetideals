@@ -78,7 +78,7 @@ export default function ContractProposalForm() {
 
         <form className="flex justify-center p-3" id="contractForm" onSubmit={handleSubmit(onSubmit)}>
       
-          <div className="input-group flex-col  w-full items-center w-full items-center">
+          <div className="input-group flex-col w-full items-center">
 
             <h3>Landholder Details</h3>
             <input

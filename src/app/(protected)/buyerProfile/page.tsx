@@ -143,7 +143,6 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
     setCompletedContracts(data.contracts.completedContracts);
       
 
-    console.log(ongoingContracts);
   }
 
 

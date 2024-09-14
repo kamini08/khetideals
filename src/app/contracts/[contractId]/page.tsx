@@ -1,7 +1,7 @@
 "use client";
 import { db } from "@/lib/db";
 import React, { useEffect } from "react";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 import { useState } from "react";
 import Pdf from "@/components/contract/PDFImage";
 import { useRouter } from "next/navigation";
@@ -45,8 +45,8 @@ const ContractPdf = () => {
   const[presignedURL, setPresignedURL] = useState<string | undefined>();
 
 
-    const pathname = usePathname();
-    const contractId = pathname.split("/").pop();
+    const {contractId} : any = useParams();
+    
    
 useEffect(() => {
   const fetchDetails = async() => {
