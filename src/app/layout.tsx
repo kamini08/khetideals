@@ -1,6 +1,7 @@
 import Navbar from "@/components/homePage/Navbar";
 import "./globals.css";
-import Footer from "@/components/homePage/Footer";
+// import Footer from "@/components/homePage/Footer";
+// import { auth } from "../../auth";
 // import { Inter } from "next/font/google";
 // import "@fortawesome/fontawesome-svg-core/styles.css";
 // import { config } from "@fortawesome/fontawesome-svg-core";
@@ -19,11 +20,12 @@ export const metadata = {
   description: "Hello World",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // const user = session?.user.role;
   return (
     <html lang="en">
       <body
@@ -37,7 +39,7 @@ export default function RootLayout({
         {/* <div */}
         {/* // className="flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip" */}
         {/* // > */}
-         <Navbar /> 
+        <Navbar />
         {children}
         {/* <Footer /> */}
         {/* </div> */}
