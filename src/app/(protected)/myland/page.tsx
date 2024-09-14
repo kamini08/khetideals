@@ -18,7 +18,10 @@ interface Buyer {
 }
 
 interface LandDetail {
+  _id: string;
   mainId: string;
+  name: string;
+  email: string;
   areaOfLand: number;
   location: string;
   address: string;
@@ -48,6 +51,8 @@ const  LandlordProfile: React.FC = () => {
   const [completedContracts, setCompletedContracts] = useState([]);
   const [dloading, setDLoading] = useState(false);
   const [cloading, setCLoading] = useState(false);
+  const [userName, setUserName] = useState("");
+const [userEmail, setUserEmail] = useState("");
 
   
   const downloadPdf = async (fileName: string) => {
@@ -116,7 +121,10 @@ const  LandlordProfile: React.FC = () => {
     // Fetch landholder details from the backend
     fetch("/api/myland")
       .then((response) => response.json())
-      .then((data) => setLandDetails(data))
+      .then((data) => {setLandDetails(data.document);
+        setUserName(data.name);
+        setUserEmail(data.email);
+      })
       .catch((error) => console.error("Error fetching landholder data:", error));
   }, []);
 
@@ -133,7 +141,29 @@ const  LandlordProfile: React.FC = () => {
     setWorkStatus(updatedStatus);
   };
 
-  
+  //Function to delete a land detail
+  const deleteLandDetail = async (landId:any) => {
+    try {
+      const response = await fetch(`/api/deleteLand?mainId=${landId}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        console.log("Contract deleted successfully:", data.message);
+        // Optionally refresh the list of contracts or remove the deleted one from the UI
+        setLandDetails((prevland) =>
+          prevland.filter((land) => land._id !== landId)
+        );
+      } else {
+        console.error("Error deleting contract:", data.message);
+      }
+    } catch (error) {
+      console.error("Error in delete request:", error);
+    }
+  };
  
   return (
     <div className="container">
@@ -157,6 +187,8 @@ const  LandlordProfile: React.FC = () => {
                       />
                     </div>
                     <div className="plot-card-body">
+                    <p className="plot-card-description">Name: {userName}</p>
+                      <p className="plot-card-description">Email : {userEmail}</p>
                       <p className="plot-card-description">Area of Land: {land.areaOfLand}</p>
                       <p className="plot-card-description">Location: {land.location}</p>
                       <p className="plot-card-description">Crop Type: {land.cropToGrow}</p>
@@ -165,7 +197,7 @@ const  LandlordProfile: React.FC = () => {
                       <p className="plot-card-description">Start Month: {land.startingMonth}</p>
                       <p className="plot-card-description">End Month: {land.endingMonth}</p>
                       <p className="plot-card-description">Price per Decimal: {land.pricePerDecimal}</p>
-                      <button  className="but"type="submit">Delete</button>
+                      <button className="but"type="submit" onClick ={()=>deleteLandDetail(land._id)}>Delete</button>
                     </div>
                   </div>
                 ))

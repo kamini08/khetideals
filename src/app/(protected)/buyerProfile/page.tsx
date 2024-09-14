@@ -105,6 +105,8 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
         const data = await response.json();
         setFormData({
           ...formData,
+          username: data.name,
+          email : data.email,
           category: data.category || "",
           paymentTerms: data.paymentTerms || "Cash",
           location: data.location || "",
@@ -207,7 +209,7 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
         </div>
 
         <div className="profile-detailss">
-          <h2>Hello, I'm {formData.username}</h2>
+          <h2>{formData.username}</h2>
           <p>{formData.description}</p>
           <h3>{formData.email}</h3>
         </div>
@@ -215,6 +217,7 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
 
       {/* Display other fetched details */}
       <div className="details-group text-center mb-4" >
+        
         <p className="mb-6"><strong>Preferred Crops:</strong> {formData.category}</p>
         <p className="mb-6"><strong>Payment Terms:</strong> {formData.paymentTerms}</p>
         <p className="mb-6"><strong>Address:</strong> {formData.address}</p>

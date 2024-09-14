@@ -6,11 +6,12 @@ import FarmerMarketPlaceSub from "@/models/farmermarketplace";
 import buyerMarketPlaceSub from "@/models/buyermarketplacesub.js";
 
 // import { NextResponse } from "next/server.js";
-// import { auth } from "../../../../auth";
+import { auth } from "../../../../auth";
 export async function GET() {
-  // const session = await auth();
+  const session = await auth();
 
-  // const userID = session?.user.id;
+  const userID = session?.user.id;
+
   try {
     const locations = await db.user.findMany({
       select: {
@@ -80,8 +81,10 @@ export async function POST(req: Request) {
     // Execute the query with the constructed query object
     // console.log(query);
     const collection =
-      user.userType === "farmer" ? FarmerMarketPlaceSub : BuyerMarketPlaceSub;
-    // console.log("Collection", collection);
+      user.userType === "farmer" ? BuyerMarketPlaceSub : FarmerMarketPlaceSub;
+    console.log("Query", query);
+    console.log("Collection", collection);
+
     // Execute the query with the selected collection
     const document = await collection.find(query);
     // console.log("casccsdcs", document);

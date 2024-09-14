@@ -38,13 +38,7 @@ const ContractPdf = async () => {
   const [isFarmerSigned, setFarmerSigned] = useState(false);
   const [isBuyerSigned, setBuyerSigned] = useState(false);
   const [contractId, setContractId] = useState("");
-  const [user, setUser] = useState({
-    name: "",
-    address: "",
-    email: "",
-    phone: "",
-    id: "",
-  });
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -60,7 +54,7 @@ const ContractPdf = async () => {
 
   const role = session?.user.role.toLocaleLowerCase();
   const userId = session?.user.id;
- 
+  const email = session?.user.email
   try {
     await clientPromise();
     const user = await buyer.findOne({
@@ -128,8 +122,8 @@ const ContractPdf = async () => {
   };
 
   if (
-    user &&
-    (user["email"] == contract.buyer.email || user["email"] == contract.seller.email)
+    email &&
+    (email == contract.buyer.email || email == contract.seller.email)
   ) {
     return (
       <div className="p-8 mx-auto">
@@ -161,6 +155,14 @@ const ContractPdf = async () => {
         </div>
       </div>
     );
+  } else {
+    return (
+      <div className="text-center py-20">
+        <h1>Unauthorized</h1>
+        <p>You do not have permission to view this contract.</p>
+      </div>
+    );
+  
   }
 };
 

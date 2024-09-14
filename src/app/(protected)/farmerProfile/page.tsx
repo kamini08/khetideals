@@ -40,7 +40,7 @@ const BuyerProfile = () => {
       // Fetch the presigned URL from your backend API
       const response = await fetch(`/api/contract/download/${fileName}`, {
         method: "GET",
-        headers: {
+        headers: { 
           "Content-Type": "application/json",
         },
 
@@ -101,8 +101,8 @@ const BuyerProfile = () => {
         setFormData({
           profilePic: 'https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4215.jpg?size=626&ext=jpg&ga=GA1.1.1974988790.1724696296&semt=ais_hybrid',
 
-          username: "John Doe",
-          email: "john.doe@example.com",
+          username:data.name,
+          email: data.email,
           category: data.category || "",
           paymentTerms: data.paymentTerms || "Cash",
           location: data.location || "",
@@ -205,7 +205,7 @@ const BuyerProfile = () => {
           </div>
 
           <div className="profile-detailss">
-            <h2>Hello, I'm {formData.username}</h2>
+            <h2>{formData.username}</h2>
             <p>{formData.description}</p>
             <h3>{formData.email}</h3>
           </div>
