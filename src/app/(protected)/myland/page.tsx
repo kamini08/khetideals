@@ -68,7 +68,7 @@ const LandlordProfile: React.FC = () => {
   const signContract = async (fileId: string | undefined) => {
     try {
       const contractId = fileId;
-      const response = await fetch(`/api/contract/signContract`, {
+      const response = await fetch(`/api/contract/signContract2`, {
         method: "PUT",
         body: JSON.stringify({contractId}),
       });
@@ -299,11 +299,13 @@ const LandlordProfile: React.FC = () => {
                     </p>
                     <p className="mb-4">Status: {contract.contract2Status}</p>
 
-                    <Link href={`/contract/${contract.contractId}`}>
-                      <button className="btn purchase-card">
-                        View Details
-                      </button>
-                    </Link>
+                    { !contract.isLandLordSigned && 
+                (<button
+                  className="btn purchase-card"
+                  onClick={() => signContract(contract.contract2Id)}
+                >
+                  I Agree
+                </button>)}
                     <button
                       className="btn purchase-card"
                       onClick={() => downloadPdf(contract.contractId)}
@@ -353,11 +355,7 @@ const LandlordProfile: React.FC = () => {
                       Location: {contract.landDetails.location}
                     </p>
                     <p className="mb-4">Status: {contract.contract2Status}</p>
-                    <Link href={`/contract/${contract.contractId}`}>
-                      <button className="btn purchase-card ">
-                        View Details
-                      </button>
-                    </Link>
+                  
                     <button
                       className="btn purchase-card"
                       onClick={() => downloadPdf(contract.contractId)}

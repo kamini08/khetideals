@@ -82,7 +82,7 @@ const ShareCropperDashboard: React.FC = () => {
   const signContract = async (fileId: string | undefined) => {
     try {
       const contractId = fileId;
-      const response = await fetch(`/api/contract/signContract`, {
+      const response = await fetch(`/api/contract/signContract2/signContractS`, {
         method: "PUT",
         body: JSON.stringify({contractId}),
       });
@@ -305,9 +305,7 @@ const ShareCropperDashboard: React.FC = () => {
                   <p className="mb-4">Land Area: {contract.landDetails.landOfArea}</p>
                   <p className="mb-4">Amount: Rs.{contract.finanacialDetails.totalCost}</p>
                   <p className="mb-4">Status: {contract.contract2Status}</p>
-                  <Link href={`/contracts/${contract.contrac2tId}`}>
-                    <button className="btn purchase-card ">View Details</button>
-                  </Link>
+                 
                     <button
                     className="btn purchase-card"
                       onClick={() => downloadPdf(contract.contract2Id)}
