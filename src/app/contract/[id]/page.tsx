@@ -3,12 +3,11 @@ import { db } from "@/lib/db";
 import React, { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import Pdf from "@/components/contract/PDFImage";
 import { useRouter } from "next/navigation";
 import clientPromise from "@/lib/mongodb";
 import buyer from "@/models/buyermodel";
 import farmers from "@/models/farmermodel";
-import Contract from "@/models/contractmodel";
+import Contract2 from "@/models/secondContract";
 import presignedUrl from "@/lib/serverUtils/presignedUrl";
 import { NextResponse } from "next/server";
 import { auth } from "../../../../auth";
@@ -35,18 +34,18 @@ function getS3KeyFromUrl(s3Url: string): string | null {
     return null;
   }
 }
-const ContractPdf = () => {
-  const [isFarmerSigned, setFarmerSigned] = useState(false);
-  const [isBuyerSigned, setBuyerSigned] = useState(false);
+const Contract2Pdf = () => {
+  const [isropperrSigned, setCropperSigned] = useState(false);
+  const [isLandlordSigned, setLandlordSigned] = useState(false);
   
-  const [contract, setContract] = useState<any>();
+  const [contract2, setContract2] = useState<any>();
   const [role, setRole] = useState<string | undefined>();
   const [email, setEmail] = useState<any>();
   const[presignedURL, setPresignedURL] = useState<string | undefined>();
 
 
     const pathname = usePathname();
-    const contractId = pathname.split("/").pop();
+    const contract2Id = pathname.split("/").pop();
    
 useEffect(() => {
   const fetchDetails = async() => {
@@ -63,7 +62,7 @@ useEffect(() => {
   console.log(email);
   }
   
-  const fetchContract = async() => {
+  const fetchContract2 = async() => {
 
   try {
     const client = await clientPromise();
@@ -71,20 +70,20 @@ useEffect(() => {
       console.error("No client found");
     }
     
-    const contractData = await Contract.findOne({ contractId: contractId });
-    if (!contract) {
-      console.log("No contract found");
+    const contract2Data = await Contract2.findOne({ contract2Id: contract2Id });
+    if (!contract2) {
+      console.log("No contract2 found");
       return NextResponse.json(
         {
-          message: "No contract found",
+          message: "No contract2 found",
         },
         {
           status: 404,
         }
       );
     }
-    console.log(contractData);
-    setContract(contractData);
+    console.log(contract2Data);
+    setContract2(contract2Data);
   } catch  (err) {
     console.log(err);
   }
@@ -94,7 +93,7 @@ const fetchUrl = async() => {
 
 try {
 
-  const s3Url = contract.contractUrl;
+  const s3Url = contract2.contract2Url;
 
   console.log(s3Url);
 
@@ -102,32 +101,32 @@ try {
   const response = await presignedUrl(key);
   setPresignedURL(response?.noClientUrl);
   console.log(presignedURL);
-  (role == "farmer")
-    ? setFarmerSigned(contract.isFarmerSigned)
-    : setBuyerSigned(contract.isBuyerSigned);
+  (role == "cropper")
+    ? setCropperSigned(contract2.isCropperSigned)
+    : setLandlordSigned(contract2.isLandlordSigned);
 
   } catch (err) {
     console.log(err);
   }
 }
 
-fetchContract();
+fetchContract2();
 fetchDetails();
 fetchUrl();
 
 }, []);
 
  
-  const signContract = async (fileId: string | undefined) => {
+  const signContract2 = async (fileId: string | undefined) => {
     try {
       // Fetch the presigned URL from your backend API
       
 
 
-      if (role == "farmer") {
-        setFarmerSigned(true);
-        const farmerSigned = await Contract.updateOne(
-          { contractId: contractId },
+      if (role == "cropper") {
+        setCropperSigned(true);
+        const farmerSigned = await Contract2.updateOne(
+          { contract2Id: contract2Id },
           {
             $set: {
               farmerSigned: true,
@@ -136,9 +135,9 @@ fetchUrl();
         );
         console.log(farmerSigned);
       } else if (role == "buyer") {
-        setBuyerSigned(true);
-        const buyerSigned = await Contract.updateOne(
-          { contractId: contractId },
+        setLandlordSigned(true);
+        const buyerSigned = await Contract2.updateOne(
+          { contract2Id: contract2Id },
           {
             $set: {
               buyerSigned: true,
@@ -147,24 +146,24 @@ fetchUrl();
         );
         console.log(buyerSigned);
       }
-      const response = await fetch(`/api/contract/signContract/${fileId}`, {
+      const response = await fetch(`/api/contract2/signContract2/${fileId}`, {
         method: "PUT",
-        body: JSON.stringify({ isFarmerSigned, isBuyerSigned }),
+        body: JSON.stringify({ isropperrSigned, isLandlordSigned }),
       });
 
       if (!response.ok) {
-        throw new Error("Error signing contract");
+        throw new Error("Error signing contract2");
       }
 
     } catch (error) {
-      console.error("Error signing contract:", error);
+      console.error("Error signing contract2:", error);
     } finally {
     }
   };
 
   if (
     email &&
-    (email == contract.buyer.email || email == contract.seller.email)
+    (email == contract2.buyer.email || email == contract2.seller.email)
   ) {
     return (
       <div className="p-8 mx-auto">
@@ -174,19 +173,19 @@ fetchUrl();
           height="600px"
         ></iframe>
         <div>
-          {role == "farmer"
-            ? isFarmerSigned && (
+          {role == "cropper"
+            ? isropperrSigned && (
                 <button
                   className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mx-auto my-3"
-                  onClick={() => signContract(contractId)}
+                  onClick={() => signContract2(contract2Id)}
                 >
                   {"I Agree"}
                 </button>
               )
-            : isBuyerSigned && (
+            : isLandlordSigned && (
                 <button
                   className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mx-auto my-3"
-                  onClick={() => signContract(contractId)}
+                  onClick={() => signContract2(contract2Id)}
                 >
                   {"I Agree"}
                 </button>
@@ -198,10 +197,10 @@ fetchUrl();
     return (
       <div className="text-center py-20">
         <h1>Unauthorized</h1>
-        <p>You do not have permission to view this contract.</p>
+        <p>You do not have permission to view this contract2.</p>
       </div>
     );
   }
 };
 
-export default ContractPdf;
+export default Contract2Pdf;

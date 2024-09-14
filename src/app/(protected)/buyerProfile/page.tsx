@@ -139,14 +139,11 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
     const pastData = data.contracts.completedContracts;
     setContracts(data.contracts);
     setPastPurchases(pastData);
-    setOngoingContracts(data.contracts.pendingContracts);
-      setCompletedContracts(data.contracts.completedContracts);
-      console.log(data.contracts);
-      console.log(pastPurchases);
-      console.log(ongoingContracts);
-      console.log(completedContracts);
+    setOngoingContracts(data.contracts.ongoingContracts);
+    setCompletedContracts(data.contracts.completedContracts);
+      
 
-    console.log(contracts);
+    console.log(ongoingContracts);
   }
 
 
@@ -247,7 +244,7 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
                       onClick={() => downloadPdf(contract.contractId)}
                       disabled={dloading}
                     >
-                      {dloading ? "Downloading..." : "Download PDF"}
+                      {"Download PDF"}
                     </button>
                   
                   <button
@@ -255,7 +252,7 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
                       onClick={() => cancelContract(contract.contractId)}
                       disabled={cloading}
                     >
-                      {cloading ? "Canceling contract..." : "Cancel contract"}
+                      {"Cancel contract"}
                     </button>
                 
                 </div>
@@ -286,7 +283,7 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
                       onClick={() => downloadPdf(contract.contractId)}
                       disabled={dloading}
                     >
-                      {dloading ? "Downloading..." : "Download PDF"}
+                      {"Download PDF"}
                     </button>
                  
                   <button
@@ -294,7 +291,7 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
                       onClick={() => cancelContract(contract.contractId)}
                       disabled={cloading}
                     >
-                      {cloading ? "Canceling contract..." : "Cancel contract"}
+                      {"Cancel contract"}
                     </button>
                  
                 </div>

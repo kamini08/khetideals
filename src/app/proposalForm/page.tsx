@@ -8,9 +8,6 @@ import { auth } from "../../../auth";
 export default function Contract() {
   const [buyerId, setBuyerId] = useState("");
   const [sellerId, setSellerId] = useState("");
-  const [user1Id, setUser1Id] = useState("");
-  const [user2Id, setUser2Id] = useState("");
-  const [role, setRole] = useState("");
   const onSubmitform = async (data: any) => {
     console.log(data);
     try {
@@ -34,56 +31,6 @@ export default function Contract() {
     }
   };
   
-  const getData = async () => {
-    try {
-      const response = await fetch("/api/dashboard", {
-        method: "GET",
-      });
-      const result = await response.json();
-      if (response.ok) {
-        console.log(result.userID);
-        setUser1Id(result.userID);
-        setRole(result.session?.user.role);
-        console.log(result);
-      } else {
-        console.error(result.message);
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const response = await fetch("/api/dashboard", {
-          method: "GET",
-        });
-        const result = await response.json();
-        if (response.ok) {
-          console.log(result.id);
-          setUser1Id(result.id);
-          setRole(result.role);
-        } else {
-          console.error(result.message);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    const setIds = () => {
-      if(role === 'farmer') {
-        setBuyerId(user2Id);
-        setSellerId(user1Id);
-      } else if(role === 'buyer') {
-        setBuyerId(user1Id);
-        setSellerId(user2Id);
-  
-    }
-  }
-    setIds();
-    getData();
-  }, [role, user1Id, user2Id]);
  
   const {
     register,
@@ -128,14 +75,9 @@ export default function Contract() {
     },
   });
 
-  console.log(buyerId);
-  console.log(sellerId);
+
 
  
-  const test = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    onsubmit;
-  };
   const [modal2, setModal2] = useState(false);
 
   const toggleModal2 = () => {

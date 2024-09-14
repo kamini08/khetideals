@@ -133,7 +133,7 @@ const BuyerProfile = () => {
 
       const data = await response.json();
 
-      setOngoingContracts(data.contracts.pendingContracts + data.contracts.signedContracts);
+      setOngoingContracts(data.contracts.ongoingContracts);
       setCompletedContracts(data.contracts.completedContracts);
       setContracts(data.contracts);
 
@@ -241,7 +241,7 @@ const BuyerProfile = () => {
                       onClick={() => downloadPdf(contract.contractId)}
                       disabled={dloading}
                     >
-                      {dloading ? "Downloading..." : "Download PDF"}
+                      {"Download PDF"}
                     </button>
                   
                   <button
@@ -249,7 +249,7 @@ const BuyerProfile = () => {
                       onClick={() => cancelContract(contract.contractId)}
                       disabled={cloading}
                     >
-                      {cloading ? "Canceling contract..." : "Cancel contract"}
+                      {"Cancel contract"}
                     </button>
             
                 </div>
@@ -281,7 +281,7 @@ const BuyerProfile = () => {
                       }}
                       disabled={dloading}
                     >
-                      {dloading ? "Downloading..." : "Download PDF"}
+                      {"Download PDF"}
                     </button>
                   
                   <button
@@ -289,7 +289,7 @@ const BuyerProfile = () => {
                       onClick={() => cancelContract(contract.contractId)}
                       disabled={cloading}
                     >
-                      {cloading ? "Canceling contract..." : "Cancel contract"}
+                      {"Cancel contract"}
                     </button>
                   
                 </div>

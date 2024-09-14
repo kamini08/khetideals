@@ -45,7 +45,7 @@ const  LandlordProfile: React.FC = () => {
     { buyerName: "Buyer 2", area: 10, location: "Location 2", statusOfWork: "Sowing" },
   ]);
   const [ongoingContracts, setOngoingContracts] = useState([]);
-
+  const [contracts, setContracts] = useState([]);
   const [completedContracts, setCompletedContracts] = useState([]);
   const [dloading, setDLoading] = useState(false);
   const [cloading, setCLoading] = useState(false);
@@ -55,7 +55,7 @@ const  LandlordProfile: React.FC = () => {
     setDLoading(true);
     try {
       // Fetch the presigned URL from your backend API
-      const response = await fetch(`/api/contract/download/${fileName}`,
+      const response = await fetch(`/api/contract/download2/${fileName}`,
         {
           method: "GET",
           headers: {
@@ -94,7 +94,7 @@ const  LandlordProfile: React.FC = () => {
     setCLoading(true);
     try {
       // Fetch the presigned URL from your backend API
-      const response = await fetch(`/api/contract/cancel/${fileName}`, {
+      const response = await fetch(`/api/contract/cancel2/${fileName}`, {
         method: "POST",
         
       });
@@ -119,6 +119,26 @@ const  LandlordProfile: React.FC = () => {
       .then((response) => response.json())
       .then((data) => setLandDetails(data))
       .catch((error) => console.error("Error fetching landholder data:", error));
+
+      const fetchContracts = async () => {
+        const response = await fetch('/api/contract/getContracts2', {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        });
+        if (!response.ok) {
+          throw new Error("Failed to fetch reviews");
+        }
+  
+        const data = await response.json();
+  
+        setOngoingContracts(data.contracts.ongoingContracts);
+        setCompletedContracts(data.contracts.completedContracts);
+        setContracts(data.contracts);
+      }
+      fetchContracts();
   }, []);
 
   // Placeholder for handling search (implement this later)
@@ -157,7 +177,6 @@ const  LandlordProfile: React.FC = () => {
       console.error("Error in delete request:", error);
     }
   };
- 
   return (
     <div className="container">
       <div className="sidebar">
@@ -210,7 +229,7 @@ const  LandlordProfile: React.FC = () => {
                   <p className="mb-4">Quantity: {contract.product.quantity} kg</p>
                   <p className="mb-4">Price: ${contract.product.totalPrice}</p>
                   <p className="mb-4">Status: {contract.contractStatus}</p>
-                  <Link href={`/contracts/${contract.contractId}`}>
+                  <Link href={`/contract/${contract.contractId}`}>
                   <button className="btn purchase-card">View Details</button>
                   </Link>
                     <button
@@ -218,7 +237,7 @@ const  LandlordProfile: React.FC = () => {
                       onClick={() => downloadPdf(contract.contractId)}
                       disabled={dloading}
                     >
-                      {dloading ? "Downloading..." : "Download PDF"}
+                      {"Download PDF"}
                     </button>
                   
                   <button
@@ -226,7 +245,7 @@ const  LandlordProfile: React.FC = () => {
                       onClick={() => cancelContract(contract.contractId)}
                       disabled={cloading}
                     >
-                      {cloading ? "Canceling contract..." : "Cancel contract"}
+                      {"Cancel contract"}
                     </button>
                 
                 </div>
@@ -249,7 +268,7 @@ const  LandlordProfile: React.FC = () => {
                   <p className="mb-4">Quantity: {contract.product.quantity} kg</p>
                   <p className="mb-4">Price: ${contract.product.totalPrice}</p>
                   <p className="mb-4">Status: {contract.contractStatus}</p>
-                  <Link href={`/contracts/${contract.contractId}`}>
+                  <Link href={`/contract/${contract.contractId}`}>
                     <button className="btn purchase-card ">View Details</button>
                   </Link>
                     <button
@@ -257,7 +276,7 @@ const  LandlordProfile: React.FC = () => {
                       onClick={() => downloadPdf(contract.contractId)}
                       disabled={dloading}
                     >
-                      {dloading ? "Downloading..." : "Download PDF"}
+                      {"Download PDF"}
                     </button>
                  
                   <button
@@ -265,7 +284,7 @@ const  LandlordProfile: React.FC = () => {
                       onClick={() => cancelContract(contract.contractId)}
                       disabled={cloading}
                     >
-                      {cloading ? "Canceling contract..." : "Cancel contract"}
+                      {"Cancel contract"}
                     </button>
                  
                 </div>
