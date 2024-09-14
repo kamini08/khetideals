@@ -6,11 +6,11 @@ import FarmerMarketPlaceSub from "@/models/farmermarketplace";
 import buyerMarketPlaceSub from "@/models/buyermarketplacesub.js";
 
 // import { NextResponse } from "next/server.js";
-import { auth } from "../../../../auth";
+// import { auth } from "../../../../auth";
 export async function GET() {
-  const session = await auth();
+  // const session = await auth();
 
-  const userID = session?.user.id;
+  // const userID = session?.user.id;
   try {
     const locations = await db.user.findMany({
       select: {
@@ -49,6 +49,8 @@ export async function POST(req: Request) {
       paymentTerms?: string;
       category?: string;
       minimumQuantity?: number;
+    };
+    type User = {
       userType?: string;
     };
 
@@ -56,6 +58,7 @@ export async function POST(req: Request) {
 
     // Initialize an empty query object
     let query: Query = {};
+    let user: User = {};
 
     // Add fields to the query only if they are present in `details`
     if (details.location) {
@@ -71,27 +74,33 @@ export async function POST(req: Request) {
       query.minimumQuantity = details.minimumQuantity;
     }
     if (details.userType) {
-      query.userType = details.userType;
+      user.userType = details.userType;
     }
 
     // Execute the query with the constructed query object
+    // console.log(query);
     const collection =
-      query.userType === "farmer" ? FarmerMarketPlaceSub : BuyerMarketPlaceSub;
+      user.userType === "farmer" ? FarmerMarketPlaceSub : BuyerMarketPlaceSub;
     // console.log("Collection", collection);
     // Execute the query with the selected collection
     const document = await collection.find(query);
     // console.log("casccsdcs", document);
+    const mainIds = document.map((doc) => doc.mainId);
     // Proceed if the document is found and has results
     if (document.length > 0) {
       const locations = await db.user.findMany({
         where: {
-          id: document[0].mainId,
+          id: {
+            in: mainIds, // Use the array of mainIds
+          },
         },
         select: {
           latitude: true,
           longitude: true,
+          id: true,
         },
       });
+      console.log(locations);
       return new Response(JSON.stringify(locations), { status: 200 });
     }
   } catch (error: any) {
