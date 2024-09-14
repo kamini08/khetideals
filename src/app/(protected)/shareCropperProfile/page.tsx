@@ -36,13 +36,13 @@ const ShareCropperProfile: React.FC = () => {
         const data = await response.json();
         setProfileData({
           profilePic: data.profilePic || profileData.profilePic,
-          username: data.username || profileData.username,
+          username: data.name || profileData.username,
           email: data.email || profileData.email,
-          areaOfLand: data.areaOfLand || "",
-          location: data.location || "",
-          startingMonth: data.startingMonth || "january",
-          endingMonth: data.endingMonth || "january",
-          description: data.description || "",
+          areaOfLand: data.document.areaOfLand || "",
+          location: data.document.location || "",
+          startingMonth: data.document.startingMonth || "january",
+          endingMonth: data.document.endingMonth || "january",
+          description: data.document.description || "",
         });
       } catch (error: any) {
         setError(error.message);
@@ -90,7 +90,7 @@ const ShareCropperProfile: React.FC = () => {
           </div>
 
           <div className="profile-detailss">
-            <h2>Hello, I am {profileData.username}</h2>
+            <h2>{profileData.username}</h2>
             <p>{profileData.description}</p>
             <h3>{profileData.email}</h3>
           </div>

@@ -119,7 +119,8 @@ const MapComponent: React.FC = () => {
         const firstResult = searchResults[0];
         const lat = parseFloat(firstResult.latitude);
         const lng = parseFloat(firstResult.longitude);
-        mapRef.current.setView([lat, lng], 13); // Adjust zoom level if needed
+        mapRef.current.setView([lat, lng], 13);
+        // Adjust zoom level if needed
 
         // Remove existing circle
         if (circleRef.current) {

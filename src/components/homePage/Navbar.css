@@ -1,76 +1,105 @@
 .header {
   background-color: #009a4e;
-  padding: 10px 0;
+  padding: 10px 20px;
   color: #ffffff;
   font-family: "Philosopher", sans-serif;
 }
 
 .navbar {
-  margin: 0;
-  border-radius: 0;
-  border: none;
-}
-
-.container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  padding: 0 20px;
-}
-
-.navbar-header {
-  display: flex;
-  align-items: center;
 }
 
 .logo {
   height: 60px;
   width: 80px;
-  margin-right: 20px;
-}
-
-.navbar-toggle {
-  background-color: #006934;
-  border: none;
-  padding: 8px 10px;
-  margin-left: auto;
+  margin-right: 15px; /* Add margin to create space between logo and heading */
 }
 
 .brand {
   color: #ffffff;
   font-size: 23px;
-  text-decoration: none;
   text-transform: uppercase;
   font-weight: bold;
+  text-decoration: none;
 }
 
-.collapse {
-  display: flex;
-  justify-content: flex-end;
-}
-
+/* Navigation list */
 .nav {
   list-style: none;
-  padding: 0;
-  margin: 0;
   display: flex;
-  align-items: center;
+  gap: 20px;
 }
 
+/* Navigation items */
 .nav-item {
-  margin: 0 15px;
+  margin: 0;
 }
 
 .nav-link {
   color: #ffffff;
-  text-decoration: none;
   font-size: 19px;
   font-weight: bold;
   text-transform: uppercase;
+  text-decoration: none;
   transition: color 0.3s;
 }
 
 .nav-link:hover {
   color: #d1d1d1;
+}
+.navbar-header{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Responsive design */
+@media (max-width: 1600px) {
+  .brand {
+    font-size: 20px;
+  }
+
+  .nav-link {
+    font-size: 17px;
+  }
+
+  .logo {
+    height: 50px;
+    width: 70px;
+    margin-right: 10px; /* Adjusted for smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav-link {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 10px;
+  }
+
+  .brand {
+    font-size: 18px;
+  }
+
+  .nav-link {
+    font-size: 15px;
+  }
+
+  .logo {
+    height: 40px;
+    width: 60px;
+    margin-right: 8px; /* Adjusted for very small screens */
+  }
 }

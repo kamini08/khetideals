@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Poppins } from "next/font/google";
 import { cn } from "@/lib/utils";
@@ -5,6 +6,7 @@ import { LoginButton } from "@/components/auth/login-button";
 import Hero from "@/components/homePage/Hero";
 import Navbar from "@/components/homePage/Navbar";
 import Footer from "@/components/homePage/Footer";
+import GoogleTranslate from "@/components/homePage/GoogleTranslate";
 
 const font = Poppins({
   subsets: ["latin"],
@@ -39,7 +41,7 @@ export default function Home() {
     //   </div>
     // </main>
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <Hero />
       <Footer />
     </>

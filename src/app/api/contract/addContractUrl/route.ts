@@ -9,21 +9,21 @@ export async function PUT(request: Request) {
   // Handle PATCH requests to update a contract
   if (request.method === "PUT") {
     const req = await request.json();
-    console.log(req);
+    // console.log(req);
     const contractId = req.contractId;
-    console.log(contractId);
+    // console.log(contractId);
 
     const contractUrl = req.contractUrl;
-    console.log(contractUrl);
+    // console.log(contractUrl);
 
     try {
       const client = await clientPromise();
-  
-        const result = await Contract.findByIdAndUpdate(
-          contractId,
-          { contractUrl }, // Add new key-value pair here
-          { new: true, runValidators: true }
-        );
+
+      const result = await Contract.findByIdAndUpdate(
+        contractId,
+        { contractUrl }, // Add new key-value pair here
+        { new: true, runValidators: true }
+      );
 
       return NextResponse.json(
         { message: "Contract updated successfully" },
