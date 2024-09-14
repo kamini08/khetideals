@@ -107,14 +107,14 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
           ...formData,
           username: data.name,
           email : data.email,
-          category: data.category || "",
-          paymentTerms: data.paymentTerms || "Cash",
-          location: data.location || "",
-          address: data.address || "",
-          startingMonth: data.startingMonth || "january",
-          endingMonth: data.endingMonth || "january",
-          minimumQuantity: data.minimumQuantity || "",
-          description: data.description || "",
+          category: data.document.category || "",
+          paymentTerms: data.document.paymentTerms || "Cash",
+          location: data.document.location || "",
+          address: data.document.address || "",
+          startingMonth: data.document.startingMonth || "january",
+          endingMonth: data.document.endingMonth || "january",
+          minimumQuantity: data.document.minimumQuantity || "",
+          description: data.document.description || "",
         });
       } catch (error: any) {
         setError(error.message);
@@ -210,21 +210,22 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
 
         <div className="profile-detailss">
           <h2>{formData.username}</h2>
-          <p>{formData.description}</p>
+          {/* <p>{formData.description}</p> */}
           <h3>{formData.email}</h3>
         </div>
       </div>
 
       {/* Display other fetched details */}
-      <div className="details-group text-center mb-4" >
+      <div className="details-group text-center mb-4 " >
         
-        <p className="mb-6"><strong>Preferred Crops:</strong> {formData.category}</p>
+        <p className="mb-6 "><strong>Preferred Crops:</strong> {formData.category}</p>
         <p className="mb-6"><strong>Payment Terms:</strong> {formData.paymentTerms}</p>
         <p className="mb-6"><strong>Address:</strong> {formData.address}</p>
         <p className="mb-6"><strong>City:</strong> {formData.location}</p>
         <p className="mb-6"><strong>Minimum Quantity:</strong> {formData.minimumQuantity}</p> {/* Updated field */}
         <p className="mb-6"><strong>Start Month:</strong> {formData.startingMonth}</p> {/* Added start month */}
         <p className="mb-6"><strong>End Month:</strong> {formData.endingMonth}</p> {/* Added end month */}
+        <p className="mb-6"><strong>Description:</strong> {formData.description}</p> {/* Added end month */}
       </div>
       
         {/* Ongoing Contracts Section */}

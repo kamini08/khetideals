@@ -15,6 +15,7 @@ import {
   Key,
 } from "react";
 import { GetServerSideProps } from "next";
+import FDash from "../components/FDash";
 // import FarmerDashboard from "../components/FarmerDashboard";
 // import { GetServerSideProps } from "next";
 
@@ -66,76 +67,33 @@ const SettingsPage = async () => {
       {user === "farmer" ? (
         <div className="container">
           <div className="sidebar">
-            <h2 className="farmer-profile">Farmer Profile</h2>
-            <Link href="/farmerManageProfile">
-              <div className="dashboard-box">
-                <h3>Manage Profile</h3>
-                <p>Update your profile and farming details.</p>
-              </div>
-            </Link>
+            <FDash />
 
-            <Link href="/farmerProfile">
-              <div className="dashboard-box">
-                <h3>My Profile</h3>
-                <p>View your profile and farming details.</p>
-              </div>
-            </Link>
-            <Link href="/dashboard">
-              <div className="dashboard-box">
-                <h3>Search Potential Buyers</h3>
-                <p>Explore new farming opportunities and buyers.</p>
-              </div>
-            </Link>
-            <div className="dashboard-box">
-              <h3>My Contracts</h3>
+          </div>
+          <div className="main-content">
 
-              <div
-                className="dashboard-box"
-                // onClick={() => router.push("/farmerManageProfile")}
-              >
-                <h3>Current Contracts</h3>
 
-                <p>View and manage your current contracts.</p>
+            <div className="section placeholder-container">
+              {/* Placeholder for map or other content */}
+              <div className="flex flex-row w-full">
+                {/* Map component */}
+                <MapWithNoSSR />
               </div>
-              <Link href="/ShareCropperDashboard">
-                <div className="dashboard-box">
-                  <h3>Be a Sharecropper???</h3>
-                  <p>
-                    Register yourself if you want to work on the fields of
-                    landlord and get paid.
-                  </p>
-                </div>
-              </Link>
             </div>
-            <div className="main-content">
-              {/* <FarmerDashboard /> */}
 
-              {/* <div className="section buyer-list text-black">
-              <h3>Buyer List</h3>
-              <ul id="buyerList"></ul>
-            </div> */}
 
-              <div className="section placeholder-container">
-                {/* Placeholder for map or other content */}
-                <div className="flex flex-row w-full">
-                  {/* Map component */}
-                  <MapWithNoSSR />
-                </div>
-              </div>
-
-             
-            </div>
           </div>
         </div>
-      ) : (
-        <div className="container">
-          <BuyerSidebar />
-          {/* <BDash /> */}
+        
+  ) : (
+    <div className="container">
+      <BuyerSidebar />
+      {/* <BDash /> */}
 
-          {/* Farmer Dashboard and Search Section */}
-          <div className="dashboard-content">
-            <div className="farmer-finder">
-              {/* <h1 className="search-profile">Search Potential Farmers</h1>
+      {/* Farmer Dashboard and Search Section */}
+      <div className="dashboard-content">
+        <div className="farmer-finder">
+          {/* <h1 className="search-profile">Search Potential Farmers</h1>
               <div className="form-group text-black">
                 <label htmlFor="cropType">Crop Type</label>
                 <select id="cropType" className="select2">
@@ -146,7 +104,7 @@ const SettingsPage = async () => {
                 </select>
               </div> */}
 
-              {/* <div className="form-group text-black">
+          {/* <div className="form-group text-black">
                 <label htmlFor="quality">Quality</label>
                 <select id="quality">
                   <option value="A">A</option>
@@ -155,7 +113,7 @@ const SettingsPage = async () => {
                 </select>
               </div> */}
 
-              {/* <div className="form-group text-black">
+          {/* <div className="form-group text-black">
                 <label htmlFor="farmerLocation">Location</label>
                 <input type="text" id="farmerLocation" />
               </div>
@@ -170,26 +128,27 @@ const SettingsPage = async () => {
                 Search
               </button> */}
 
-              <div className="farmer-list">
-                <h3>Farmers List</h3>
-                <ul id="farmerList">
-                  {/* Farmers will be dynamically inserted here */}
-                </ul>
-              </div>
-              <div className="section" id="contracts-section">
-                <h2>Current Contracts</h2>
-
-                
-
-
-              </div>
-              {/* Replace map with a simple div */}
-              <MapWithNoSSRBuyer />
-            </div>
+          <div className="farmer-list">
+            <h3>Farmers List</h3>
+            <ul id="farmerList">
+              {/* Farmers will be dynamically inserted here */}
+            </ul>
           </div>
+          <div className="section" id="contracts-section">
+            <h2>Current Contracts</h2>
+
+
+
+
+          </div>
+          {/* Replace map with a simple div */}
+          <MapWithNoSSRBuyer />
         </div>
-      )}
+      </div>
     </div>
+  )
+}
+    </div >
   );
 };
 

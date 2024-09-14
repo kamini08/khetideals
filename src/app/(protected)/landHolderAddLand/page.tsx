@@ -28,10 +28,10 @@ const SharecropperManageProfile: React.FC = () => {
     username: "John Doe",
     email: "john.doe@example.com",
     areaOfLand: 0,
-    location: " ",
-    adress: " ",
-    cropToGrow: " ",
-    soilType:" ",
+    location: "",
+    adress: "",
+    cropToGrow: "",
+    soilType:"",
     startingMonth: "january",
     endingMonth:"january",
     pricePerDecimal:0,
@@ -75,10 +75,10 @@ const SharecropperManageProfile: React.FC = () => {
       setProfileData({
         ...profileData,
         areaOfLand: 0,
-    location: " ",
-    adress: " ",
-    cropToGrow: " ",
-    soilType:" ",
+    location: "",
+    adress: "",
+    cropToGrow: "",
+    soilType:"",
     startingMonth: "january",
     endingMonth:"january",
     pricePerDecimal:0,
@@ -118,7 +118,7 @@ const SharecropperManageProfile: React.FC = () => {
           <h2><strong>Add land requirements</strong></h2>
           <form onSubmit={handleSubmit}>
             <div className="form-group text-center">
-              <label htmlFor="areaOfLand">Area of land</label>
+              <label htmlFor="areaOfLand">Area of land (Decimal)</label>
               <input
                className="text-black"
                 type="number"
@@ -144,7 +144,7 @@ const SharecropperManageProfile: React.FC = () => {
             </div>
 
             <div className="form-group text-center">
-              <label htmlFor="adress">Adress</label>
+              <label htmlFor="adress">Address</label>
               <input
                className="text-black"
                 type="text"
@@ -193,7 +193,17 @@ const SharecropperManageProfile: React.FC = () => {
                   onChange={handleChange}
                 >
                   <option value="january">January</option>
-                  {/* Other months... */}
+                  <option value="february">February</option>
+                  <option value="march">March</option>
+                  <option value="april">April</option>
+                  <option value="may">May</option>
+                  <option value="june">June</option>
+                  <option value="july">July</option>
+                  <option value="august">August</option>
+                  <option value="september">September</option>
+                  <option value="october">October</option>
+                  <option value="november">November</option>
+                  <option value="december">December</option>
                 </select>
               </div>
 
@@ -207,7 +217,17 @@ const SharecropperManageProfile: React.FC = () => {
                   onChange={handleChange}
                 >
                   <option value="january">January</option>
-                  {/* Other months... */}
+                  <option value="february">February</option>
+                  <option value="march">March</option>
+                  <option value="april">April</option>
+                  <option value="may">May</option>
+                  <option value="june">June</option>
+                  <option value="july">July</option>
+                  <option value="august">August</option>
+                  <option value="september">September</option>
+                  <option value="october">October</option>
+                  <option value="november">November</option>
+                  <option value="december">December</option>
                 </select>
               </div>
             </div>
