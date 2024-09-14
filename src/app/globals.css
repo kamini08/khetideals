@@ -71,4 +71,46 @@ body,
   body {
     @apply bg-background text-foreground;
   }
+  #google_translate_element {
+    width:100px;
+    height:70px;
+  }
+  
+  .goog-te-gadget-simple {
+    border: none !important;
+    /* background-color: #f8f9fa !important; */
+    /* padding: 5px !important; */
+    border-radius: 4px;
+    font-size: 14px !important;
+    font-family: Arial, sans-serif;
+  }
+  
+  .goog-te-gadget-icon {
+    display:none;
+  }
+  #google_translate_element {
+    /* width: 200px; */
+    /* margin: 10px auto; */
+    /* border: 1px solid #ccc; */
+    /* padding: 10px; */
+    border-radius: 5px;
+    /* background-color: #f9f9f9; */
+  }
+  .goog-te-combo {
+    width: 100%;
+    /* padding: 8px; */
+    font-size: 14px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: #333;
+  }
+  .goog-logo-frame {
+    display: none !important;
+  }
+  .goog-te-gadget {
+    font-family: 'Arial', sans-serif;
+    font-size: 14px;
+    text-align: center;
+  }
 }

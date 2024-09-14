@@ -46,32 +46,32 @@ const Footer: React.FC<LogoProps> = () => {
               </ul>
             </div>
           </div>
-          <div className="col">
-            <div className="footer-3">
+         <div className="col">
+             {/* <div className="footer-3">
               <h3 className="title">PLATFORMS</h3>
               <ul className="social-icons">
                 <li>
                   <a href="#" className="icon-link">
-                    {/* <FontAwesomeIcon icon={faFacebookF} className="icon" /> */}
+                    <FontAwesomeIcon icon={faFacebookF} className="icon" />
                   </a>
                 </li>
                 <li>
                   <a href="#" className="icon-link">
-                    {/* <FontAwesomeIcon icon={faTwitter} className="icon" /> */}
+                    <FontAwesomeIcon icon={faTwitter} className="icon" />
                   </a>
                 </li>
                 <li>
                   <a href="#" className="icon-link">
-                    {/* <FontAwesomeIcon icon={faGoogle} className="icon" /> */}
+                    <FontAwesomeIcon icon={faGoogle} className="icon" />
                   </a>
                 </li>
                 <li>
                   <a href="#" className="icon-link">
-                    {/* <FontAwesomeIcon icon={faInstagram} className="icon" /> */}
+                    <FontAwesomeIcon icon={faInstagram} className="icon" />
                   </a>
                 </li>
               </ul>
-            </div>
+            </div> */}
             <h4 className="update-title">BE UPDATED!</h4>
             <p className="text">
               Enter your email and we’ll send you the latest updates.

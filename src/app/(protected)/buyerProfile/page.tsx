@@ -209,7 +209,7 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
         </div>
 
         <div className="profile-detailss">
-          <h2>Hello, I'm {formData.username}</h2>
+          <h2>{formData.username}</h2>
           <p>{formData.description}</p>
           <h3>{formData.email}</h3>
         </div>

@@ -127,6 +127,16 @@
   margin: 0 auto 40px;
   line-height: 1.6;
 }
+.testimonial-description{
+
+  font-size: 1rem;
+  font-weight: bold;
+  max-width: 600px;
+  margin: 0 auto 40px;
+  line-height: 1.6;
+  margin-top: 50px;
+
+}
 
 .testimonial-cards {
   display: flex;
@@ -246,8 +256,8 @@ h2 {
   height: 240px;
 }
 .place_main {
-  padding-top: 50px;
-  padding-bottom: 100px;
+  padding-top: 5px;
+  padding-bottom: 235px;
   background-color: #0000009e;
 }
 .place_1 {

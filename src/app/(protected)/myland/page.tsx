@@ -20,6 +20,8 @@ interface Buyer {
 interface LandDetail {
   _id: string;
   mainId: string;
+  name: string;
+  email: string;
   areaOfLand: number;
   location: string;
   address: string;
@@ -49,6 +51,8 @@ const  LandlordProfile: React.FC = () => {
   const [completedContracts, setCompletedContracts] = useState([]);
   const [dloading, setDLoading] = useState(false);
   const [cloading, setCLoading] = useState(false);
+  const [userName, setUserName] = useState("");
+const [userEmail, setUserEmail] = useState("");
 
   
   const downloadPdf = async (fileName: string) => {
@@ -117,7 +121,10 @@ const  LandlordProfile: React.FC = () => {
     // Fetch landholder details from the backend
     fetch("/api/myland")
       .then((response) => response.json())
-      .then((data) => setLandDetails(data))
+      .then((data) => {setLandDetails(data.document);
+        setUserName(data.name);
+        setUserEmail(data.email);
+      })
       .catch((error) => console.error("Error fetching landholder data:", error));
   }, []);
 
@@ -180,6 +187,8 @@ const  LandlordProfile: React.FC = () => {
                       />
                     </div>
                     <div className="plot-card-body">
+                    <p className="plot-card-description">Name: {userName}</p>
+                      <p className="plot-card-description">Email : {userEmail}</p>
                       <p className="plot-card-description">Area of Land: {land.areaOfLand}</p>
                       <p className="plot-card-description">Location: {land.location}</p>
                       <p className="plot-card-description">Crop Type: {land.cropToGrow}</p>

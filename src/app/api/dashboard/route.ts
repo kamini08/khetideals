@@ -11,6 +11,7 @@ export async function GET() {
   const session = await auth();
 
   const userID = session?.user.id;
+
   try {
     const locations = await db.user.findMany({
       select: {
