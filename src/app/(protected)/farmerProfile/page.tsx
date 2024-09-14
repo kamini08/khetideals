@@ -121,14 +121,14 @@ const BuyerProfile = () => {
 
           username:data.name,
           email: data.email,
-          category: data.category || "",
-          paymentTerms: data.paymentTerms || "Cash",
-          location: data.location || "",
-          address: data.address || "",
-          startingMonth: data.startingMonth || "january",
-          endingMonth: data.endingMonth || "january",
+          category: data.document.category || "",
+          paymentTerms: data.document.paymentTerms || "Cash",
+          location: data.document.location || "",
+          address: data.document.address || "",
+          startingMonth: data.document.startingMonth || "january",
+          endingMonth: data.document.endingMonth || "january",
 
-          description: data.description || "",
+          description: data.document.description || "",
         });
       } catch (error: any) {
         setError(error.message);
@@ -224,7 +224,6 @@ const BuyerProfile = () => {
 
           <div className="profile-detailss">
             <h2>{formData.username}</h2>
-            <p>{formData.description}</p>
             <h3>{formData.email}</h3>
           </div>
         </div>
@@ -237,6 +236,7 @@ const BuyerProfile = () => {
           <p className="mb-6"><strong>City:</strong> {formData.location}</p> {/* Display location */}
           <p className="mb-6"><strong>Start Month:</strong> {formData.startingMonth}</p>
           <p className="mb-6"><strong>End Month:</strong> {formData.endingMonth}</p>
+          <p className="mb-6"><strong>Description:</strong> {formData.description}</p>
         </div>
 
         {/* Ongoing Contracts Section */}

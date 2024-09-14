@@ -89,15 +89,17 @@ const UserDetailPage = () => {
             />
           </div>
 
-          {userData && userData.userDetails ? (
-            <>
-              <h2>Hello, I'm {userData.userDetails.name}</h2>
-              <p>{userData.description}</p>
-              <h3>{userData.userDetails.email}</h3>
-            </>
-          ) : (
-            <p>Loading profile...</p>
-          )}
+          <div className="profile-detailss">
+            {userData && userData.userDetails ? (
+              <>
+                <h2>Hello, I'm {userData.userDetails.name}</h2>
+                <p>{userData.description}</p>
+                <h3>{userData.userDetails.email}</h3>
+              </>
+            ) : (
+              <p>Loading profile...</p>
+            )}
+          </div>
         </div>
         <div className="details-group text-center mb-4">
           <p className="mb-6">

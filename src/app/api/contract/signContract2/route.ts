@@ -1,3 +1,4 @@
+
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 import { auth } from "../../../../../auth";
@@ -28,10 +29,12 @@ export async function PUT(req: Request) {
           {contract2Id: contract2Id},
           { contractStatus: "signed" }, // Add new key-value pair here
           { new: true }
+
         );
       }
 
       return NextResponse.json(
+
         { message: "Contract updated successfully" },
         { status: 200 }
       );
@@ -40,6 +43,7 @@ export async function PUT(req: Request) {
       return NextResponse.json(
         
         { message: "Error updating contract", err},
+
         { status: 500 }
       );
     }
@@ -52,4 +56,5 @@ export async function PUT(req: Request) {
       { status: 405 }
     );
   }
+
 }

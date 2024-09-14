@@ -1,4 +1,6 @@
+
 import mongoose, { Schema } from 'mongoose';
+
 
 // Define the schema
 const contractSchema: Schema = new Schema({
@@ -32,6 +34,7 @@ const contractSchema: Schema = new Schema({
     landholderId: {
       type: String,
     }
+
   },
   sharecropper: {
     name: { type: String, required: true },
@@ -44,25 +47,25 @@ const contractSchema: Schema = new Schema({
     location: { type: String, required: true },
     areaOfLand: { type: Number, required: true },
     soilType: { type: String, required: true },
-    cropToGrow: { type: String, required: true }
+    cropToGrow: { type: String, required: true },
   },
   cropCycle: {
     startingMonth: { type: String, required: true },
-    endingMonth: { type: String, required: true }
+    endingMonth: { type: String, required: true },
   },
   financialDetails: {
     pricePerDecimal: { type: Number, required: true },
     totalCost: { type: Number, required: true },
-    paymentTerms: { type: String, required: true }
+    paymentTerms: { type: String, required: true },
   },
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   updatedAt: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 // Middleware to update the `updatedAt` field on save
@@ -72,5 +75,6 @@ contractSchema.pre("save", function (next) {
 });
 
 const ContractModel = mongoose.models.Contract2 || mongoose.model('Contract2', contractSchema);
+
 
 export default ContractModel;
