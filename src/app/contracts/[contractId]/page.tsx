@@ -3,7 +3,6 @@ import { db } from "@/lib/db";
 import React, { useEffect } from "react";
 import { useParams, usePathname } from "next/navigation";
 import { useState } from "react";
-import Pdf from "@/components/contract/PDFImage";
 import { useRouter } from "next/navigation";
 import clientPromise from "@/lib/mongodb";
 import buyer from "@/models/buyermodel";
