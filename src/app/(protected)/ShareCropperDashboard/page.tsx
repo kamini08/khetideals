@@ -347,9 +347,11 @@ const ShareCropperDashboard: React.FC = () => {
                     <button className="but text-xs" type="submit">
                       Chat with the landholder
                     </button>
-                    <button className="but text-xs" type="submit">
-                      Make a Proposal for contract
-                    </button>
+                    <Link href="/proposalForm2">
+                      <button className="but text-xs" type="submit">
+                        Make a Proposal for contract
+                      </button>
+                    </Link>
                   </div>
                 </div>
               ))

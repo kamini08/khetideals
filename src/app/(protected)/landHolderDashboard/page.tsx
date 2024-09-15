@@ -5,6 +5,7 @@ import "@/components/styles/p2b.css";
 import "@/components/styles/p2c.css";
 import LDash from "../components/LDash";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 interface UserDetails {
   id: string;
@@ -219,9 +220,11 @@ const LandHolderDashboard: React.FC = () => {
                       <button className="but" type="button">
                         Chat Now
                       </button>
-                      <button className="but" type="button">
-                        Make Proposal
-                      </button>
+                      <Link href="/proposalForm2">
+                        <button className="but" type="button">
+                          Make Proposal
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 ))

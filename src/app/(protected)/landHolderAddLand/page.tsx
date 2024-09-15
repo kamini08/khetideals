@@ -1,5 +1,5 @@
-"use client"
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import "@/components/styles/p2a.css";
 import "@/components/styles/p2b.css";
 // import "../components/profilePic.css";
@@ -16,27 +16,33 @@ interface ProfileData {
   location: string;
   adress: string;
   cropToGrow: string;
-  soilType:string;
+  soilType: string;
   startingMonth: string;
   endingMonth: string;
-  pricePerDecimal:number ;
+  pricePerDecimal: number;
+}
+interface UserData {
+  name: string;
+  email: string;
 }
 
 const SharecropperManageProfile: React.FC = () => {
   // Initialize state with type ProfileData
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [profileData, setProfileData] = useState<ProfileData>({
-    profilePic: 'https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4215.jpg?size=626&ext=jpg&ga=GA1.1.1974988790.1724696296&semt=ais_hybrid',
+    profilePic:
+      "https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4215.jpg?size=626&ext=jpg&ga=GA1.1.1974988790.1724696296&semt=ais_hybrid",
     username: "John Doe",
     email: "john.doe@example.com",
     areaOfLand: 0,
     location: "",
     adress: "",
     cropToGrow: "",
-    soilType:"",
+    soilType: "",
     startingMonth: "january",
-    endingMonth:"january",
-    pricePerDecimal:0,
-    
+    endingMonth: "january",
+    pricePerDecimal: 0,
   });
 
   // Handle form field changes
@@ -51,6 +57,25 @@ const SharecropperManageProfile: React.FC = () => {
       [name]: value,
     });
   };
+  useEffect(() => {
+    // Function to fetch user data from the API
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch("/api/updateBuyerProfile"); // Change to your actual API endpoint
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await response.json();
+        // console.log(data.data);
+        setUserData(data.data); // Access the data structure returned from the API
+      } catch (error: any) {
+        setError(error.message);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
@@ -79,14 +104,13 @@ const SharecropperManageProfile: React.FC = () => {
       setProfileData({
         ...profileData,
         areaOfLand: 0,
-    location: "",
-    adress: "",
-    cropToGrow: "",
-    soilType:"",
-    startingMonth: "january",
-    endingMonth:"january",
-    pricePerDecimal:0,
-    
+        location: "",
+        adress: "",
+        cropToGrow: "",
+        soilType: "",
+        startingMonth: "january",
+        endingMonth: "january",
+        pricePerDecimal: 0,
       });
     } catch (error) {
       console.error("Error submitting form:", error);
@@ -100,9 +124,10 @@ const SharecropperManageProfile: React.FC = () => {
   return (
     <div className="container">
       <div className="sidebar">
-        <h2 className="farmer-profile"><strong>LandLord Profile</strong></h2>
+        <h2 className="farmer-profile">
+          <strong>LandLord Profile</strong>
+        </h2>
         <LDash />
-       
       </div>
 
       <div className="main-content form-background">
@@ -113,22 +138,24 @@ const SharecropperManageProfile: React.FC = () => {
           </div>
           <div className="profile-details">
             <h3 id="username">
-              <span>Name:</span> {profileData.username}
+              <span>Name:</span> {userData?.name}
             </h3>
             <p id="email">
-              <span>Email:</span> {profileData.email}
+              <span>Email:</span> {userData?.email}
             </p>
           </div>
         </div>
 
         {/* Form for further details */}
         <div className="form-container">
-          <h2><strong>Add land requirements</strong></h2>
+          <h2>
+            <strong>Add land requirements</strong>
+          </h2>
           <form onSubmit={handleSubmit}>
             <div className="form-group text-center">
               <label htmlFor="areaOfLand">Area of land (Decimal)</label>
               <input
-               className="text-black"
+                className="text-black"
                 type="number"
                 id="areaOfLand"
                 name="areaOfLand"
@@ -141,7 +168,7 @@ const SharecropperManageProfile: React.FC = () => {
             <div className="form-group text-center">
               <label htmlFor="location">City</label>
               <input
-               className="text-black"
+                className="text-black"
                 type="text"
                 id="location"
                 name="location"
@@ -154,7 +181,7 @@ const SharecropperManageProfile: React.FC = () => {
             <div className="form-group text-center">
               <label htmlFor="adress">Address</label>
               <input
-               className="text-black"
+                className="text-black"
                 type="text"
                 id="adress"
                 name="adress"
@@ -167,7 +194,7 @@ const SharecropperManageProfile: React.FC = () => {
             <div className="form-group text-center">
               <label htmlFor="cropToGrow">Crop To Grow</label>
               <input
-               className="text-black"
+                className="text-black"
                 type="text"
                 id="cropToGrow"
                 name="cropToGrow"
@@ -180,7 +207,7 @@ const SharecropperManageProfile: React.FC = () => {
             <div className="form-group text-center">
               <label htmlFor="soilType">Soil Type</label>
               <input
-               className="text-black"
+                className="text-black"
                 type="text"
                 id="soilType"
                 name="soilType"
@@ -194,7 +221,7 @@ const SharecropperManageProfile: React.FC = () => {
               <div className="form-group text-center">
                 <label htmlFor="startingMonth">Start Month</label>
                 <select
-                 className="text-black"
+                  className="text-black"
                   id="startingMonth"
                   name="startingMonth"
                   value={profileData.startingMonth}
@@ -218,7 +245,7 @@ const SharecropperManageProfile: React.FC = () => {
               <div className="form-group text-center">
                 <label htmlFor="endingMonth">End Month</label>
                 <select
-                 className="text-black"
+                  className="text-black"
                   id="endingMonth"
                   name="endingMonth"
                   value={profileData.endingMonth}
@@ -243,7 +270,7 @@ const SharecropperManageProfile: React.FC = () => {
             <div className="form-group text-center">
               <label htmlFor="pricePerDecimal">Price per Decimal</label>
               <input
-               className="text-black"
+                className="text-black"
                 type="number"
                 id="pricePerDecimal"
                 name="pricePerDecimal"

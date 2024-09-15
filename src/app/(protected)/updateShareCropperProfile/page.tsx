@@ -1,17 +1,23 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import "../components/buyer.css";
 // import "../components/profilePic.css"
 import SDash from "../components/SDash";
-import "@/components/styles/p2a.css"
-import "@/components/styles/p2b.css"
+import "@/components/styles/p2a.css";
+import "@/components/styles/p2b.css";
 import { toast } from "react-toastify";
-
+interface UserData {
+  name: string;
+  email: string;
+}
 const FarmerProfile = () => {
   // State to hold form data
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [profileData, setProfileData] = useState({
-    profilePic: 'https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4215.jpg?size=626&ext=jpg&ga=GA1.1.1974988790.1724696296&semt=ais_hybrid',
+    profilePic:
+      "https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4215.jpg?size=626&ext=jpg&ga=GA1.1.1974988790.1724696296&semt=ais_hybrid",
     username: "John Doe",
     email: "john.doe@example.com",
     areaOfLand: "",
@@ -20,7 +26,6 @@ const FarmerProfile = () => {
     endingMonth: "january", // Default to January
     description: "",
   });
-  
 
   // Handle form field changes
   const handleChange = (
@@ -34,6 +39,25 @@ const FarmerProfile = () => {
       [name]: value,
     });
   };
+  useEffect(() => {
+    // Function to fetch user data from the API
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch("/api/updateBuyerProfile"); // Change to your actual API endpoint
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await response.json();
+        // console.log(data.data);
+        setUserData(data.data); // Access the data structure returned from the API
+      } catch (error: any) {
+        setError(error.message);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
@@ -93,10 +117,10 @@ const FarmerProfile = () => {
           </div>
           <div className="profile-details">
             <h3 id="username">
-              <span>Name:</span> {profileData.username}
+              <span>Name:</span> {userData?.name}
             </h3>
             <p id="email">
-              <span>Email:</span> {profileData.email}
+              <span>Email:</span> {userData?.email}
             </p>
           </div>
         </div>

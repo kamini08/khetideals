@@ -48,6 +48,10 @@ export default async function RootLayout({
         {/* <Navbar /> */}
         {children}
         <ToastContainer />
+        <script
+          src="//code.tidio.co/z3kklhq0ur8kvth5ooe9dufkol3etwa9.js"
+          async
+        ></script>
         {/* <Footer /> */}
         {/* </div> */}
         {/* </NextThemesProvider> */}

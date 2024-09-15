@@ -1,8 +1,8 @@
-"use client"
-import React, { useState } from "react";
-import "@/components/styles/p2a.css"
-import "@/components/styles/p2b.css"
-import "@/components/styles/p2c.css"
+"use client";
+import React, { useEffect, useState } from "react";
+import "@/components/styles/p2a.css";
+import "@/components/styles/p2b.css";
+import "@/components/styles/p2c.css";
 // import "../components/buyer.css";
 // import "../components/profilePic.css";
 // import "../components/shareCropperSidebar"
@@ -20,11 +20,18 @@ interface ProfileData {
   endingMonth: string;
   description: string;
 }
+interface UserData {
+  name: string;
+  email: string;
+}
 
 const SharecropperManageProfile: React.FC = () => {
   // Initialize state with type ProfileData
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [profileData, setProfileData] = useState<ProfileData>({
-    profilePic: 'https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4215.jpg?size=626&ext=jpg&ga=GA1.1.1974988790.1724696296&semt=ais_hybrid',
+    profilePic:
+      "https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4215.jpg?size=626&ext=jpg&ga=GA1.1.1974988790.1724696296&semt=ais_hybrid",
     username: "John Doe",
     email: "john.doe@example.com",
     areaOfLand: "",
@@ -33,6 +40,25 @@ const SharecropperManageProfile: React.FC = () => {
     endingMonth: "january",
     description: "",
   });
+  useEffect(() => {
+    // Function to fetch user data from the API
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch("/api/updateBuyerProfile"); // Change to your actual API endpoint
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await response.json();
+        // console.log(data.data);
+        setUserData(data.data); // Access the data structure returned from the API
+      } catch (error: any) {
+        setError(error.message);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   // Handle form field changes
   const handleChange = (
@@ -59,7 +85,6 @@ const SharecropperManageProfile: React.FC = () => {
           "Content-Type": "application/json",
         },
       });
-      
 
       if (!response.ok) {
         throw new Error("Failed to submit form");
@@ -82,7 +107,7 @@ const SharecropperManageProfile: React.FC = () => {
       });
     } catch (error) {
       console.error("Error submitting form:", error);
-      
+
       toast.error("Error in submitting the form", {
         position: "top-right",
         autoClose: 3000,
@@ -127,10 +152,10 @@ const SharecropperManageProfile: React.FC = () => {
           </div>
           <div className="profile-details">
             <h3 id="username">
-              <span>Name:</span> {profileData.username}
+              <span>Name:</span> {userData?.name}
             </h3>
             <p id="email">
-              <span>Email:</span> {profileData.email}
+              <span>Email:</span> {userData?.email}
             </p>
           </div>
         </div>
@@ -142,7 +167,7 @@ const SharecropperManageProfile: React.FC = () => {
             <div className="form-group">
               <label htmlFor="areaOfLand">Area of land (in decimals)</label>
               <input
-               className="text-black"
+                className="text-black"
                 type="number"
                 id="areaOfLand"
                 name="areaOfLand"
@@ -155,7 +180,7 @@ const SharecropperManageProfile: React.FC = () => {
             <div className="form-group">
               <label htmlFor="location">Location</label>
               <input
-               className="text-black"
+                className="text-black"
                 type="text"
                 id="location"
                 name="location"
@@ -169,7 +194,7 @@ const SharecropperManageProfile: React.FC = () => {
               <div className="form-group">
                 <label htmlFor="startingMonth">Start Month</label>
                 <select
-                 className="text-black"
+                  className="text-black"
                   id="startingMonth"
                   name="startingMonth"
                   value={profileData.startingMonth}
@@ -193,7 +218,7 @@ const SharecropperManageProfile: React.FC = () => {
               <div className="form-group">
                 <label htmlFor="endingMonth">End Month</label>
                 <select
-                 className="text-black"
+                  className="text-black"
                   id="endingMonth"
                   name="endingMonth"
                   value={profileData.endingMonth}
@@ -218,7 +243,7 @@ const SharecropperManageProfile: React.FC = () => {
             <div className="form-group">
               <label htmlFor="description">Description</label>
               <textarea
-               className="text-black"
+                className="text-black"
                 id="description"
                 name="description"
                 value={profileData.description}

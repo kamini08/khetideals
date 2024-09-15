@@ -1,14 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import "../components/buyer.css";
 import "@/components/styles/p1b.css";
 import "@/components/styles/p1a.css";
 import FDash from "../components/FDash";
 import { toast } from "react-toastify";
-
+interface UserData {
+  name: string;
+  email: string;
+}
 const FarmerProfile = () => {
   // State to hold form data
+  const [userData, setUserData] = useState<UserData | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     profilePic:
       "https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4215.jpg?size=626&ext=jpg&ga=GA1.1.1974988790.1724696296&semt=ais_hybrid",
@@ -23,6 +28,25 @@ const FarmerProfile = () => {
     endingMonth: "january", // Default to January
     description: "",
   });
+  useEffect(() => {
+    // Function to fetch user data from the API
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch("/api/updateBuyerProfile"); // Change to your actual API endpoint
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await response.json();
+        // console.log(data.data);
+        setUserData(data.data); // Access the data structure returned from the API
+      } catch (error: any) {
+        setError(error.message);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   // Handle form field changes
   const handleChange = (
@@ -98,10 +122,10 @@ const FarmerProfile = () => {
           </div>
           <div className="profile-details">
             <h3 id="username">
-              <span>Name:</span> {formData.username}
+              <span>Name:</span> {userData?.name}
             </h3>
             <p id="email">
-              <span>Email:</span> {formData.email}
+              <span>Email:</span> {userData?.email}
             </p>
           </div>
         </div>
