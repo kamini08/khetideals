@@ -2,6 +2,8 @@ import Navbar from "@/components/homePage/Navbar";
 import "./globals.css";
 import GoogleTranslate from "@/components/homePage/GoogleTranslate";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import Footer from "@/components/homePage/Footer";
 // import { auth } from "../../auth";
 // import { Inter } from "next/font/google";
@@ -45,6 +47,7 @@ export default async function RootLayout({
 
         {/* <Navbar /> */}
         {children}
+        <ToastContainer />
         {/* <Footer /> */}
         {/* </div> */}
         {/* </NextThemesProvider> */}

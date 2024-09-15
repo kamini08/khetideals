@@ -94,7 +94,7 @@ const FarmerDashboard: React.FC<FarmerDashboardProps> = ({
               value={formData.paymentTerms}
             >
               <option value="Cash">Cash</option>
-              <option value="Credit">Credit</option>
+              <option value="Credit">UPI</option>
               <option value="Installments">Installments</option>
             </select>
           </div>

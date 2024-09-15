@@ -128,7 +128,11 @@ body {
   animation: fadeIn 1s ease-in;
   min-width: 100vw;
 }
-
+nav {
+  min-width: 100vw;
+  z-index: 1000; /* Adjust this as needed */
+  position: relative;
+}
 @keyframes fadeIn {
   from {
     opacity: 0;

@@ -58,7 +58,7 @@ const BDash = () => {
               <p>Initiate and process payments securely.</p>
             </div>
           </Link>
-          <Link href='#ongoing-contracts-section'>
+          <Link href="/#past-purchases-section">
           <div className="dashboard-box">
             <h3><strong>My Contracts</strong></h3>
             <p>Review your ongoing and previous contracts</p>

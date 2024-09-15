@@ -5,6 +5,7 @@ import "@/components/styles/p2a.css";
 import "@/components/styles/p2b.css";
 import "@/components/styles/p2c.css";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 // Define types for Buyers, Land Details, and Work Status
 interface Buyer {
@@ -70,7 +71,7 @@ const LandlordProfile: React.FC = () => {
       const contractId = fileId;
       const response = await fetch(`/api/contract/signContract2`, {
         method: "PUT",
-        body: JSON.stringify({contractId}),
+        body: JSON.stringify({ contractId }),
       });
       if (!response.ok) {
         throw new Error("Error signing contract");
@@ -81,7 +82,7 @@ const LandlordProfile: React.FC = () => {
     } finally {
     }
   };
-  
+
   const downloadPdf = async (fileName: string) => {
     setDLoading(true);
     try {
@@ -205,6 +206,11 @@ const LandlordProfile: React.FC = () => {
       }
     } catch (error) {
       console.error("Error in delete request:", error);
+
+      toast.error("Error in submitting the form", {
+        position: "top-right",
+        autoClose: 3000,
+      });
     }
   };
   return (
@@ -222,8 +228,8 @@ const LandlordProfile: React.FC = () => {
               {landDetails.length > 0 ? (
                 landDetails.map((land, index) => (
                   <div className="plot-card" key={index}>
-                    <div className="plot-card-header">
-                      <img
+                    <div className="plot-card-header h-64 w-full">
+                      <img className="h-64 w-full object-cover"
                         src="https://t4.ftcdn.net/jpg/02/75/94/93/240_F_275949388_k1rVe1KTRLzPeQAfbxdTXvcTLbiHB95l.jpg"
                         alt="Icon"
                       />
@@ -273,110 +279,93 @@ const LandlordProfile: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div
-        className="contracts-section text-center"
-        id="ongoing-contracts-section"
-      >
-        <h2>
-          <strong>Ongoing Contracts</strong>
-        </h2>
-        <div className="contracts-container">
-          {ongoingContracts &&
-            (ongoingContracts.length > 0 ? (
-              ongoingContracts.map(
-                (contract: any, index: React.Key | null | undefined) => (
-                  <div className="contract-card" key={index}>
-                    <h3 className="mb-4">
-                      Farmer: {contract.sharecropper.name}
-                    </h3>
-                    <p className="mb-4">Email: {contract.sharecropper.email}</p>
-                    <p className="mb-4">
-                      Amount: {contract.financialDetails.totalCost}{" "}
-                    </p>
-                    <p className="mb-4">
-                      Location: {contract.landDetails.location}
-                    </p>
-                    <p className="mb-4">Status: {contract.contract2Status}</p>
 
-                    { !contract.isLandLordSigned && 
-                (<button
-                  className="btn purchase-card"
-                  onClick={() => signContract(contract.contract2Id)}
-                >
-                  I Agree
-                </button>)}
-                    <button
-                      className="btn purchase-card"
-                      onClick={() => downloadPdf(contract.contractId)}
-                      disabled={dloading}
-                    >
-                      {"Download PDF"}
-                    </button>
+        <div className="contracts-section text-center" id="ongoing-contracts-section">
+          <h2><strong>Ongoing Contracts</strong></h2>
+          <div className="contracts-container">
+            {ongoingContracts && (ongoingContracts.length > 0 ? (
+              ongoingContracts.map((contract: any, index: React.Key | null | undefined) => (
+                <div className="contract-card" key={index}>
+                  <h3 className="mb-4">SharedCropper: {contract.seller.name}</h3>
+                  <p className="mb-4">Crop Type: {contract.product.name}</p>
+                  <p className="mb-4">Quantity: {contract.product.quantity} kg</p>
+                  <p className="mb-4">Price: ${contract.product.totalPrice}</p>
+                  <p className="mb-4">Status: {contract.contractStatus}</p>
+                  <Link href={`/contracts/${contract.contractId}`}>
+                    <button className="btn purchase-card">View Details</button>
+                  </Link>
+                  <button
+                    className="btn purchase-card"
+                    onClick={() => downloadPdf(contract.contractId)}
+                    disabled={dloading}
+                  >
+                    {"Download PDF"}
+                  </button>
 
-                    <button
-                      className="btn purchase-card"
-                      onClick={() => cancelContract(contract.contractId)}
-                      disabled={cloading}
-                    >
-                      {"Cancel contract"}
-                    </button>
-                  </div>
-                )
+                  <button
+                    className="btn purchase-card"
+                    onClick={() => cancelContract(contract.contractId)}
+                    disabled={cloading}
+                  >
+                    {"Cancel contract"}
+                  </button>
+                </div>
+              )
               )
             ) : (
               <p>No ongoing contracts.</p>
             ))}
+          </div>
         </div>
-      </div>
 
-      {/* Completed Contracts Section */}
-      <div
-        className="contracts-section text-center"
-        id="completed-contracts-section"
-      >
-        <h2>
-          <strong>Completed Contracts</strong>
-        </h2>
-        <div className="contracts-container">
-          {completedContracts &&
-            (completedContracts.length > 0 ? (
-              completedContracts.map(
-                (contract: any, index: React.Key | null | undefined) => (
-                  <div className="contract-card" key={index}>
-                    <h3 className="mb-4">
-                      Farmer: {contract.sharecropper.name}
-                    </h3>
-                    <p className="mb-4">Email: {contract.sharecropper.email}</p>
-                    <p className="mb-4">
-                      Amount: {contract.financialDetails.totalCost}{" "}
-                    </p>
-                    <p className="mb-4">
-                      Location: {contract.landDetails.location}
-                    </p>
-                    <p className="mb-4">Status: {contract.contract2Status}</p>
-                  
-                    <button
-                      className="btn purchase-card"
-                      onClick={() => downloadPdf(contract.contractId)}
-                      disabled={dloading}
-                    >
-                      {"Download PDF"}
-                    </button>
+        {/* Completed Contracts Section */}
+        <div
+          className="contracts-section text-center"
+          id="completed-contracts-section"
+        >
+          <h2>
+            <strong>Completed Contracts</strong>
+          </h2>
+          <div className="contracts-container">
+            {completedContracts &&
+              (completedContracts.length > 0 ? (
+                completedContracts.map(
+                  (contract: any, index: React.Key | null | undefined) => (
+                    <div className="contract-card" key={index}>
+                      <h3 className="mb-4">
+                        Farmer: {contract.sharecropper.name}
+                      </h3>
+                      <p className="mb-4">Email: {contract.sharecropper.email}</p>
+                      <p className="mb-4">
+                        Amount: {contract.financialDetails.totalCost}{" "}
+                      </p>
+                      <p className="mb-4">
+                        Location: {contract.landDetails.location}
+                      </p>
+                      <p className="mb-4">Status: {contract.contract2Status}</p>
 
-                    <button
-                      className="btn purchase-card"
-                      onClick={() => cancelContract(contract.contractId)}
-                      disabled={cloading}
-                    >
-                      {"Cancel contract"}
-                    </button>
-                  </div>
+                      <button
+                        className="btn purchase-card"
+                        onClick={() => downloadPdf(contract.contractId)}
+                        disabled={dloading}
+                      >
+                        {"Download PDF"}
+                      </button>
+
+                      <button
+                        className="btn purchase-card"
+                        onClick={() => cancelContract(contract.contractId)}
+                        disabled={cloading}
+                      >
+                        {"Cancel contract"}
+                      </button>
+                    </div>
+                  )
                 )
-              )
-            ) : (
-              <p>No completed contracts.</p>
-            ))}
+              ) : (
+                <p>No completed contracts.</p>
+              ))}
+          </div>
         </div>
       </div>
     </div>
