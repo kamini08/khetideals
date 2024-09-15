@@ -1,7 +1,8 @@
 // import Link from "next/link";
 import { useSession } from "next-auth/react";
 import GoogleTranslate from "./GoogleTranslate";
-// import "./Navbar.css";
+
+import "./Navbar1.css";
 const Navbar = () => {
   // const { data: session };
   return (

@@ -1,6 +1,6 @@
-"use client"
+"use client";
 import React, { useEffect } from "react";
-import "@/app/globals.css"
+import "@/app/globals.css";
 
 declare global {
   interface Window {
@@ -39,7 +39,12 @@ const GoogleTranslate: React.FC = () => {
     }
   }, []);
 
-  return <div id="google_translate_element"></div>;
+  return (
+    <div
+      id="google_translate_element"
+      style={{ width: "auto", height: "auto" }}
+    ></div>
+  );
 };
 
 export default GoogleTranslate;
