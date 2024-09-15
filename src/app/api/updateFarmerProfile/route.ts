@@ -47,7 +47,7 @@ export async function PUT(req: Request) {
 
     // Save the updated document
     const updatedEntry = await existingEntry.save();
-
+    console.log(updatedEntry);
     return new Response(JSON.stringify(updatedEntry), { status: 200 });
   } catch (error: any) {
     console.error("Error during update:", error);

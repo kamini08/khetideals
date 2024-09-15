@@ -66,9 +66,9 @@ const UserDetailPage = () => {
           </div>
 
           <div className="profile-detailss">
-            <h2>Hello, I'm {userData.userDetails.name}</h2>
+            <h2>Hello, I'm {userData.userDetails?.name}</h2>
             <p>{userData.description}</p>
-            <h3>{userData.userDetails.email}</h3>
+            <h3>{userData.userDetails?.email}</h3>
           </div>
         </div>
         <div className="details-group text-center mb-4">

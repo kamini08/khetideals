@@ -2,6 +2,7 @@ import clientPromise from "@/lib/mongodb";
 import BuyerMarketPlaceSub from "@/models/buyermarketplacesub.js";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import farmermarketplace from "@/models/farmermarketplace";
 
 interface UserDetails {
   name: string | null;
@@ -16,6 +17,7 @@ export async function GET(
   try {
     const { userId } = params;
     console.log("Received userId:", userId);
+    await clientPromise();
 
     // Fetch user details using findUnique for a single user
     const userDetails: UserDetails | null = await db.user.findUnique({
@@ -28,21 +30,31 @@ export async function GET(
         // Add other fields if needed
       },
     });
+    console.log("svsd", userDetails);
 
     // Ensure MongoDB connection
-    await clientPromise();
 
     // Fetch the document based on `mainId` (userId)
-    const document = await BuyerMarketPlaceSub.findOne({ mainId: userId });
-
+    let document = await farmermarketplace.findOne({ mainId: userId });
+    console.log("ssgegegergg", document);
     // Handle case where the document is not found
     if (!document) {
-      return NextResponse.json(
-        {
-          message: "Document with the specified mainId not found",
-        },
-        { status: 404 }
+      console.log(
+        "Document not found in farmermarketplace, trying BuyerMarketPlaceSub..."
       );
+      document = await BuyerMarketPlaceSub.findOne({ mainId: userId });
+      console.log("Buyer Marketplace Document:", document);
+
+      // If document is still not found, return a 404 error
+      if (!document) {
+        return NextResponse.json(
+          {
+            message:
+              "Document with the specified mainId not found in both collections",
+          },
+          { status: 404 }
+        );
+      }
     }
 
     // Combine the document and userDetails
