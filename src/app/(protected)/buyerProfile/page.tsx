@@ -7,6 +7,7 @@ import "@/components/styles/p1a.css"
 import "@/components/styles/p1c.css"
 import BDash from "../components/BDash";
 import Link from "next/link";
+import Contract from "@/models/contractmodel";
 
 const BuyerProfile = () => {
   const [formData, setFormData] = useState({
@@ -29,10 +30,33 @@ const BuyerProfile = () => {
   const [pastPurchases, setPastPurchases] = useState([]);
 const [contracts, setContracts] = useState(null);
 const [ongoingContracts, setOngoingContracts] = useState([]);
-
   const [completedContracts, setCompletedContracts] = useState([]);
   const [dloading, setDLoading] = useState(false);
   const [cloading, setCLoading] = useState(false);
+
+  const signContract = async (fileId: string | undefined) => {
+    try {
+      // Fetch the presigned URL from your backend API
+
+   
+        
+        const contractId = fileId;
+        
+      
+      const response = await fetch(`/api/contract/signContract`, {
+        method: "PUT",
+        body: JSON.stringify({contractId}),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error signing contract");
+      }
+
+    } catch (error) {
+      console.error("Error signing contract:", error);
+    } finally {
+    }
+  };
 
   const downloadPdf = async (fileName: string) => {
     setDLoading(true);
@@ -107,14 +131,14 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
           ...formData,
           username: data.name,
           email : data.email,
-          category: data.category || "",
-          paymentTerms: data.paymentTerms || "Cash",
-          location: data.location || "",
-          address: data.address || "",
-          startingMonth: data.startingMonth || "january",
-          endingMonth: data.endingMonth || "january",
-          minimumQuantity: data.minimumQuantity || "",
-          description: data.description || "",
+          category: data.document.category || "",
+          paymentTerms: data.document.paymentTerms || "Cash",
+          location: data.document.location || "",
+          address: data.document.address || "",
+          startingMonth: data.document.startingMonth || "january",
+          endingMonth: data.document.endingMonth || "january",
+          minimumQuantity: data.document.minimumQuantity || "",
+          description: data.document.description || "",
         });
       } catch (error: any) {
         setError(error.message);
@@ -139,14 +163,10 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
     const pastData = data.contracts.completedContracts;
     setContracts(data.contracts);
     setPastPurchases(pastData);
-    setOngoingContracts(data.contracts.pendingContracts);
-      setCompletedContracts(data.contracts.completedContracts);
-      console.log(data.contracts);
-      console.log(pastPurchases);
-      console.log(ongoingContracts);
-      console.log(completedContracts);
+    setOngoingContracts(data.contracts.ongoingContracts);
+    setCompletedContracts(data.contracts.completedContracts);
+      
 
-    console.log(contracts);
   }
 
 
@@ -210,21 +230,22 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
 
         <div className="profile-detailss">
           <h2>{formData.username}</h2>
-          <p>{formData.description}</p>
+          {/* <p>{formData.description}</p> */}
           <h3>{formData.email}</h3>
         </div>
       </div>
 
       {/* Display other fetched details */}
-      <div className="details-group text-center mb-4" >
+      <div className="details-group text-center mb-4 " >
         
-        <p className="mb-6"><strong>Preferred Crops:</strong> {formData.category}</p>
+        <p className="mb-6 "><strong>Preferred Crops:</strong> {formData.category}</p>
         <p className="mb-6"><strong>Payment Terms:</strong> {formData.paymentTerms}</p>
         <p className="mb-6"><strong>Address:</strong> {formData.address}</p>
         <p className="mb-6"><strong>City:</strong> {formData.location}</p>
         <p className="mb-6"><strong>Minimum Quantity:</strong> {formData.minimumQuantity}</p> {/* Updated field */}
         <p className="mb-6"><strong>Start Month:</strong> {formData.startingMonth}</p> {/* Added start month */}
         <p className="mb-6"><strong>End Month:</strong> {formData.endingMonth}</p> {/* Added end month */}
+        <p className="mb-6"><strong>Description:</strong> {formData.description}</p> {/* Added end month */}
       </div>
       
         {/* Ongoing Contracts Section */}
@@ -239,15 +260,19 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
                   <p className="mb-4">Quantity: {contract.product.quantity} kg</p>
                   <p className="mb-4">Price: ${contract.product.totalPrice}</p>
                   <p className="mb-4">Status: {contract.contractStatus}</p>
-                  <Link href={`/contracts/${contract.contractId}`}>
-                  <button className="btn purchase-card">View Details</button>
-                  </Link>
+                 { !contract.isBuyerSigned && 
+                (<button
+                  className="btn purchase-card"
+                  onClick={() => signContract(contract.contractId)}
+                >
+                  I Agree
+                </button>)}
                     <button
                     className="btn purchase-card"
                       onClick={() => downloadPdf(contract.contractId)}
                       disabled={dloading}
                     >
-                      {dloading ? "Downloading..." : "Download PDF"}
+                      {"Download PDF"}
                     </button>
                   
                   <button
@@ -255,7 +280,7 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
                       onClick={() => cancelContract(contract.contractId)}
                       disabled={cloading}
                     >
-                      {cloading ? "Canceling contract..." : "Cancel contract"}
+                      {"Cancel contract"}
                     </button>
                 
                 </div>
@@ -278,15 +303,13 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
                   <p className="mb-4">Quantity: {contract.product.quantity} kg</p>
                   <p className="mb-4">Price: ${contract.product.totalPrice}</p>
                   <p className="mb-4">Status: {contract.contractStatus}</p>
-                  <Link href={`/contracts/${contract.contractId}`}>
-                    <button className="btn purchase-card ">View Details</button>
-                  </Link>
+                  
                     <button
                     className="btn purchase-card"
                       onClick={() => downloadPdf(contract.contractId)}
                       disabled={dloading}
                     >
-                      {dloading ? "Downloading..." : "Download PDF"}
+                      {"Download PDF"}
                     </button>
                  
                   <button
@@ -294,7 +317,7 @@ const [ongoingContracts, setOngoingContracts] = useState([]);
                       onClick={() => cancelContract(contract.contractId)}
                       disabled={cloading}
                     >
-                      {cloading ? "Canceling contract..." : "Cancel contract"}
+                      {"Cancel contract"}
                     </button>
                  
                 </div>

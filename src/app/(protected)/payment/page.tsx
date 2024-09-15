@@ -169,6 +169,8 @@ function CheckoutForm() {
       alert("Payment successful! Payment ID: " + paymentIntent.id);
     }
 
+    
+
     setLoading(false);
   };
 

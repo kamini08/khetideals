@@ -147,7 +147,7 @@ const LandHolderDashboard: React.FC = () => {
           </form>
 
           <div className="plot-section" id="sharecropper-details-section">
-            <h2>Sharecropper's Details</h2>
+            {/* <h2>Sharecropper's Details</h2> */}
             <div className="plot-container">
               {sharecroppers.length > 0 ? (
                 sharecroppers.map((sharecropper, index) => (

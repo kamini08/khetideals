@@ -34,6 +34,22 @@ const BuyerProfile = () => {
   const [dloading, setDLoading] = useState(false);
   const [cloading, setCLoading] = useState(false);
 
+  const signContract = async (fileId: string | undefined) => {
+    try {
+      const contractId = fileId;
+      const response = await fetch(`/api/contract/signContract`, {
+        method: "PUT",
+        body: JSON.stringify({ contractId }),
+      });
+      if (!response.ok) {
+        throw new Error("Error signing contract");
+      }
+    } catch (error) {
+      console.error("Error signing contract:", error);
+    } finally {
+    }
+  };
+
   const downloadPdf = async (fileName: string) => {
     setDLoading(true);
     try {
@@ -133,9 +149,7 @@ const BuyerProfile = () => {
 
       const data = await response.json();
 
-      setOngoingContracts(
-        data.contracts.pendingContracts + data.contracts.signedContracts
-      );
+      setOngoingContracts(data.contracts.ongoingContracts);
       setCompletedContracts(data.contracts.completedContracts);
       setContracts(data.contracts);
 
@@ -204,7 +218,6 @@ const BuyerProfile = () => {
 
           <div className="profile-detailss">
             <h2>{formData.username}</h2>
-            <p>{formData.description}</p>
             <h3>{formData.email}</h3>
           </div>
         </div>
@@ -229,6 +242,9 @@ const BuyerProfile = () => {
           </p>
           <p className="mb-6">
             <strong>End Month:</strong> {formData.endingMonth}
+          </p>
+          <p className="mb-6">
+            <strong>Description:</strong> {formData.description}
           </p>
         </div>
 
@@ -255,17 +271,23 @@ const BuyerProfile = () => {
                         Price: ${contract.product.totalPrice}
                       </p>
                       <p className="mb-4">Status: {contract.contractStatus}</p>
-                      <Link href={`/contracts/${contract.contractId}`}>
-                        <button className="btn purchase-card">
-                          View Details
+                      {/*  <Link href={`/contracts/${contract.contractId}`}>
+                  <button className="btn purchase-card">View Details</button>
+                  </Link> */}
+                      {!contract.isFarmerSigned && (
+                        <button
+                          className="btn purchase-card"
+                          onClick={() => signContract(contract.contractId)}
+                        >
+                          I Agree
                         </button>
-                      </Link>
+                      )}
                       <button
                         className="btn purchase-card"
                         onClick={() => downloadPdf(contract.contractId)}
                         disabled={dloading}
                       >
-                        {dloading ? "Downloading..." : "Download PDF"}
+                        {"Download PDF"}
                       </button>
 
                       <button
@@ -273,7 +295,7 @@ const BuyerProfile = () => {
                         onClick={() => cancelContract(contract.contractId)}
                         disabled={cloading}
                       >
-                        {cloading ? "Canceling contract..." : "Cancel contract"}
+                        {"Cancel contract"}
                       </button>
                     </div>
                   )
@@ -319,7 +341,7 @@ const BuyerProfile = () => {
                         }}
                         disabled={dloading}
                       >
-                        {dloading ? "Downloading..." : "Download PDF"}
+                        {"Download PDF"}
                       </button>
 
                       <button
@@ -327,7 +349,7 @@ const BuyerProfile = () => {
                         onClick={() => cancelContract(contract.contractId)}
                         disabled={cloading}
                       >
-                        {cloading ? "Canceling contract..." : "Cancel contract"}
+                        {"Cancel contract"}
                       </button>
                     </div>
                   )

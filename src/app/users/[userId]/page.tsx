@@ -12,14 +12,11 @@ const UserDetailPage = () => {
 
   const [userData, setUserData] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [pastPurchases, setPastPurchases] = useState([
-    {
-      farmerName: "Sample Farmer",
-      cropType: "Wheat",
-      quantityTaken: 500,
-      totalAmount: 2500,
-    },
-  ]);
+  const [pastPurchases, setPastPurchases] = useState([]);
+  const [contracts, setContracts] = useState(null);
+  const [ongoingContracts, setOngoingContracts] = useState([]);
+
+  const [completedContracts, setCompletedContracts] = useState([]);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -34,6 +31,29 @@ const UserDetailPage = () => {
         setLoading(false);
       }
     };
+    const fetchContracts = async () => {
+      const response = await fetch("/api/contract/getContracts", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch reviews");
+      }
+
+      const data = await response.json();
+      const pastData = data.contracts.completedContracts;
+      setContracts(data.contracts);
+      setPastPurchases(pastData);
+      setOngoingContracts(data.contracts.ongoingContracts);
+      setCompletedContracts(data.contracts.completedContracts);
+
+      console.log(ongoingContracts);
+    };
+
+    fetchContracts();
 
     if (userId) {
       fetchUserData();
@@ -46,6 +66,10 @@ const UserDetailPage = () => {
 
   if (!userData) {
     return <div>User not found</div>;
+  }
+
+  function handleChat(): void {
+    throw new Error("Function not implemented.");
   }
 
   return (
@@ -108,13 +132,15 @@ const UserDetailPage = () => {
             {pastPurchases.length > 0 ? (
               pastPurchases.map((purchase, index) => (
                 <div className="purchase-card " key={index}>
-                  <h3 className="mb-4">Farmer: {purchase.farmerName}</h3>
-                  <p className="mb-4">Crop Type: {purchase.cropType}</p>
+                  <h3 className="mb-4">Farmer: {purchase["seller"]["name"]}</h3>
                   <p className="mb-4">
-                    Quantity Taken: {purchase.quantityTaken} kg
+                    Crop Type: {purchase["product"]["cropType"]}
                   </p>
                   <p className="mb-4">
-                    Total Amount: Rs:{purchase.totalAmount}
+                    Quantity Taken: {purchase["product"]["quantity"]} kg
+                  </p>
+                  <p className="mb-4">
+                    Total Amount: Rs:{purchase["product"]["totalPrice"]}
                   </p>
                 </div>
               ))
@@ -124,15 +150,19 @@ const UserDetailPage = () => {
           </div>
         </div>
         <div className="form-group text-center">
-          <button type="submit" className="text-white">
-            Chat with the person
-          </button>
+          <Link href="/proposalForm">
+            <button type="button" onClick={handleChat} className="text-white">
+              Chat with the person
+            </button>
+          </Link>
         </div>
-        <div className="form-group text-center">
-          <button type="submit" className="text-white">
-            Make a propasal of a contract
-          </button>
-        </div>
+        <Link href="/proposalForm">
+          <div className="form-group text-center">
+            <button type="button" className="text-white">
+              Make a propasal of a contract
+            </button>
+          </div>
+        </Link>
       </div>
     </div>
   );
