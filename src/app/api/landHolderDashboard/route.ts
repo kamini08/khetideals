@@ -2,6 +2,7 @@ import clientPromise from "@/lib/mongodb";
 import SharecropperModel from "@/models/shareCropper";
 import { NextResponse } from "next/server";
 import { db } from "@/lib/db";
+// import { useEffect } from "react";
 
 interface UserDetails {
   id: string;
@@ -9,6 +10,7 @@ interface UserDetails {
   email: string | null;
   // Add other fields you need from db.user
 }
+
 export async function GET() {
   await clientPromise();
   try {
