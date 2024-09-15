@@ -1,7 +1,7 @@
-
+import Contract from "@/models/contractmodel";
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
-import { auth } from "../../../../../auth";
+import { auth } from "../..//../../../../auth";
 import Contract2 from "@/models/secondContract";
 
 export async function PUT(req: Request) {
@@ -14,7 +14,7 @@ export async function PUT(req: Request) {
       const client = await clientPromise();
     
    
-        const updates = { isLandlordSigned: "true" };
+        const updates = { isCropperSigned: "true" };
         await Contract2.findOneAndUpdate(
           {contract2Id: contract2Id},
           updates, // Add new key-value pair here
@@ -29,12 +29,10 @@ export async function PUT(req: Request) {
           {contract2Id: contract2Id},
           { contractStatus: "signed" }, // Add new key-value pair here
           { new: true }
-
         );
       }
 
       return NextResponse.json(
-
         { message: "Contract updated successfully" },
         { status: 200 }
       );
@@ -43,7 +41,6 @@ export async function PUT(req: Request) {
       return NextResponse.json(
         
         { message: "Error updating contract", err},
-
         { status: 500 }
       );
     }
@@ -56,5 +53,4 @@ export async function PUT(req: Request) {
       { status: 405 }
     );
   }
-
 }

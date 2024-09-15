@@ -1,54 +1,56 @@
 import Contract from "../../../../models/contractmodel";
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "../../../../lib/mongodb";
-import { contractValidate } from "../../../../lib/serverUtils/validate";
-import generateContractPdf from "../../../../lib/clientUtils/generatePDF";
+import { auth } from "../../../../../auth";
+
 
 export async function PUT(req: Request) {
   // Handle PATCH requests to update a contract
   if (req.method === "PUT") {
     const request = await req.json();
-    const {user, isFarmerSigned, isBuyerSigned} = request;
-    const parts = req.url.split("/");
-    const contractId = parts[parts.length - 1].toString();
+    const contractId = request.contractId;
     console.log(contractId);
-    
     try {
       const client = await clientPromise();
-
-      if (isFarmerSigned) {
-        await Contract.findByIdAndUpdate(
-          contractId,
-          { isFarmerSigned }, // Add new key-value pair here
-          { new: false, runValidators: true }
+      const session = await auth();
+      const role = session?.user.role?.toLocaleLowerCase();
+      console.log(role);
+      if (role == "farmer") {
+        const updates = { isFarmerSigned: "true" };
+        await Contract.findOneAndUpdate(
+          {contractId: contractId},
+          updates, // Add new key-value pair here
+          { new: true}
         );
-      } else if(isBuyerSigned) {
-        await Contract.findByIdAndUpdate(
-          contractId,
-          { isBuyerSigned }, // Add new key-value pair here
-          { new: false, runValidators: true }
+      } else if(role == "buyer") {
+        const updates = { isBuyerSigned: "true" };
+        await Contract.findOneAndUpdate(
+          {contractId: contractId},
+          updates, // Add new key-value pair here
+          { new: true}
         );
-      }
+      } 
 
       const contract = await Contract.findOne({ contractId });
-
+      
       if(contract.isFarmerSigned && contract.isBuyerSigned) {
-        const contractStatus = "signed";
-        await Contract.findByIdAndUpdate(
-          contractId,
-          { contractStatus }, // Add new key-value pair here
-          { new: false, runValidators: true }
+        await Contract.findOneAndUpdate(
+          {contractId: contractId},
+          { contractStatus: "signed" }, // Add new key-value pair here
+          { new: true }
         );
       }
+     
 
       return NextResponse.json(
         { message: "Contract updated successfully" },
         { status: 200 }
       );
     } catch (err: any) {
-      console.log(err);
+      console.error(err);
       return NextResponse.json(
-        { message: "Error updating contract", error: err.message },
+        
+        { message: "Error updating contract", err},
         { status: 500 }
       );
     }

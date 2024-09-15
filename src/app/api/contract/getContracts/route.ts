@@ -8,7 +8,8 @@ export async function GET(req: Request) {
     const session = await auth();
 
     const role = session?.user.role?.toLocaleLowerCase();
-    const id = session?.user.id;
+    const email = session?.user.email;
+    console.log(email);
 
     // Fetch contracts from database
 
@@ -30,9 +31,10 @@ export async function GET(req: Request) {
 
       let pendingContracts = await Contract.find({
         $or: [
-          { "buyer.id": id }, // Condition 1
-          { "seller.id": id }, // Condition 2
+          { "buyer.email": email }, // Condition 1
+          { "seller.email": email }, // Condition 2
         ],
+        contractStatus: "pending",
       });
       if (!pendingContracts) {
         return NextResponse.json(
@@ -44,11 +46,30 @@ export async function GET(req: Request) {
           }
         );
       }
+
+      let ongoingContracts = await Contract.find({
+        $or: [
+          { "buyer.email": email }, // Condition 1
+          { "seller.email": email }, // Condition 2
+        ],
+        contractStatus: { $in: ["pending", "signed"] },
+      });
+      if (!ongoingContracts) {
+        return NextResponse.json(
+          {
+            message: "No ongoing contracts found",
+          },
+          {
+            status: 201,
+          }
+        );
+      }
       let signedContracts = await Contract.find({
         $or: [
-          { "buyer.id": id }, // Condition 1
-          { "seller.id": id }, // Condition 2
+          { "buyer.email": email }, // Condition 1
+          { "seller.email": email }, // Condition 2
         ],
+        contractStatus: "signed",
       });
       if (!signedContracts) {
         return NextResponse.json(
@@ -62,9 +83,11 @@ export async function GET(req: Request) {
       }
       let completedContracts = await Contract.find({
         $or: [
-          { "buyer.id": id }, // Condition 1
-          { "seller.id": id }, // Condition 2
+          { "buyer.email": email }, // Condition 1
+          { "seller.email": email },
+          // Condition 2
         ],
+        contractStatus: "completed",
       });
       if (!completedContracts) {
         return NextResponse.json(
@@ -76,14 +99,15 @@ export async function GET(req: Request) {
           }
         );
       }
-      console.log(pendingContracts);
       if (pendingContracts || signedContracts || completedContracts) {
         return NextResponse.json(
           {
             message: "Contracts Found",
+
             contracts: {
               pendingContracts,
               signedContracts,
+              ongoingContracts,
               completedContracts,
             },
           },
@@ -115,7 +139,7 @@ export async function GET(req: Request) {
   } else {
     return NextResponse.json(
       {
-        message: `Invalid request method`,
+        message: `Invalemail request method`,
       },
       {
         status: 405,
