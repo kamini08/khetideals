@@ -1,6 +1,7 @@
 import Navbar from "@/components/homePage/Navbar";
-import "./globals.css";
+// import "./globals.css";
 import GoogleTranslate from "@/components/homePage/GoogleTranslate";
+import NavbarLogin from "../(protected)/components/NavbarLogin";
 
 // import Footer from "@/components/homePage/Footer";
 // import { auth } from "../../auth";
@@ -43,7 +44,7 @@ export default async function RootLayout({
         {/* // > */}
         {/* <GoogleTranslate /> */}
 
-        {/* <Navbar /> */}
+        <NavbarLogin />
         {children}
         {/* <Footer /> */}
         {/* </div> */}

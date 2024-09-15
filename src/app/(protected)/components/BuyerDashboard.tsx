@@ -95,7 +95,7 @@ const BuyerDashboard: React.FC<FarmerDashboardProps> = ({
               value={formData.paymentTerms}
             >
               <option value="Cash">Cash</option>
-              <option value="Credit">Credit</option>
+              <option value="Credit">UPI</option>
               <option value="Installments">Installments</option>
             </select>
           </div>
@@ -109,10 +109,10 @@ const BuyerDashboard: React.FC<FarmerDashboardProps> = ({
               placeholder="Search by city"
             />
           </div>
-<div className="div text-center" >
-          <button id="searchBtn" type="submit">
-            Search
-          </button>
+          <div className="div text-center">
+            <button id="searchBtn" type="submit">
+              Search
+            </button>
           </div>
         </div>
       </form>

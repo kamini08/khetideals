@@ -1,7 +1,9 @@
 // import Link from "next/link";
 import { useSession } from "next-auth/react";
-import GoogleTranslate from "./GoogleTranslate";
-// import "./Navbar.css";
+import GoogleTranslate from "../../../components/homePage/GoogleTranslate";
+import "../Navbar.css";
+import { signOut } from "../../../../auth";
+
 const Navbar = () => {
   // const { data: session };
   return (
@@ -15,13 +17,13 @@ const Navbar = () => {
         </div>
 
         <ul className="nav">
-          <li className="nav-item">
-            <a href="/" className="nav-link">
+          <li className="nav-item flex justify-center items-center text-center">
+            <a href="/" className="nav-link ">
               Home
             </a>
           </li>
 
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <a href="" className="nav-link">
               Services
             </a>
@@ -30,11 +32,24 @@ const Navbar = () => {
             <a href="#footer" className="nav-link">
               Contact
             </a>
-          </li>
-          <li className="nav-item">
+          </li> */}
+          {/* <li className="nav-item">
             <a href="/auth/login" className="nav-link">
               login
             </a>
+          </li> */}
+          <li className="nav-item">
+            <form
+              action={async () => {
+                "use server";
+
+                await signOut();
+              }}
+            >
+              <button type="submit" className="nav-link w-[300px] ">
+                Sign Out
+              </button>
+            </form>
           </li>
         </ul>
         <GoogleTranslate />

@@ -1,0 +1,105 @@
+.header {
+  background-color: #009a4e;
+  padding: 10px 20px;
+  color: #ffffff;
+  font-family: "Philosopher", sans-serif;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.logo {
+  height: 60px;
+  width: 80px;
+  margin-right: 15px; /* Add margin to create space between logo and heading */
+}
+
+.brand {
+  color: #ffffff;
+  font-size: 23px;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+/* Navigation list */
+.nav {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+/* Navigation items */
+.nav-item {
+  margin: 0;
+}
+
+.nav-link {
+  color: #ffffff;
+  font-size: 19px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.nav-link:hover {
+  color: #d1d1d1;
+}
+.navbar-header{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Responsive design */
+@media (max-width: 1600px) {
+  .brand {
+    font-size: 20px;
+  }
+
+  .nav-link {
+    font-size: 17px;
+  }
+
+  .logo {
+    height: 50px;
+    width: 70px;
+    margin-right: 10px; /* Adjusted for smaller screens */
+  }
+}
+
+@media (max-width: 768px) {
+  .nav {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .nav-link {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding: 10px;
+  }
+
+  .brand {
+    font-size: 18px;
+  }
+
+  .nav-link {
+    font-size: 15px;
+  }
+
+  .logo {
+    height: 40px;
+    width: 60px;
+    margin-right: 8px; /* Adjusted for very small screens */
+  }
+}

@@ -2,14 +2,15 @@
 
 import React, { useState } from "react";
 // import "../components/buyer.css";
-import "@/components/styles/p1b.css"
-import "@/components/styles/p1a.css"
+import "@/components/styles/p1b.css";
+import "@/components/styles/p1a.css";
 import FDash from "../components/FDash";
 
 const FarmerProfile = () => {
   // State to hold form data
   const [formData, setFormData] = useState({
-    profilePic: 'https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4215.jpg?size=626&ext=jpg&ga=GA1.1.1974988790.1724696296&semt=ais_hybrid',
+    profilePic:
+      "https://img.freepik.com/premium-vector/silver-membership-icon-default-avatar-profile-icon-membership-icon-social-media-user-image-vector-illustration_561158-4215.jpg?size=626&ext=jpg&ga=GA1.1.1974988790.1724696296&semt=ais_hybrid",
 
     username: "John Doe",
     email: "john.doe@example.com",
@@ -77,7 +78,9 @@ const FarmerProfile = () => {
         <FDash />
       </div>
 
-      <div className="main-content form-background"> {/* Added class 'form-background' for background styling */}
+      <div className="main-content form-background">
+        {" "}
+        {/* Added class 'form-background' for background styling */}
         {/* Profile Header */}
         <div className="profile-header">
           <div className="profile-pic">
@@ -92,10 +95,11 @@ const FarmerProfile = () => {
             </p>
           </div>
         </div>
-
         <div className="form-container">
           <div className="edit">
-            <h2><strong>Fill further details</strong></h2>
+            <h2>
+              <strong>Fill further details</strong>
+            </h2>
           </div>
           <form onSubmit={handleSubmit}>
             <div className="form-group text-center">
@@ -123,7 +127,7 @@ const FarmerProfile = () => {
                 required
               >
                 <option value="Cash">Cash</option>
-                <option value="Credit">Credit</option>
+                <option value="Credit">UPI</option>
                 <option value="Installments">Installments</option>
               </select>
             </div>
@@ -224,9 +228,9 @@ const FarmerProfile = () => {
             </div>
           </form>
         </div>
-        </div>
       </div>
-        );
+    </div>
+  );
 };
 
-        export default FarmerProfile;
+export default FarmerProfile;
