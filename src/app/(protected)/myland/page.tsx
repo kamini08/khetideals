@@ -5,6 +5,7 @@ import "@/components/styles/p2a.css";
 import "@/components/styles/p2b.css";
 import "@/components/styles/p2c.css";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 // Define types for Buyers, Land Details, and Work Status
 interface Buyer {
@@ -162,6 +163,11 @@ const [userEmail, setUserEmail] = useState("");
       }
     } catch (error) {
       console.error("Error in delete request:", error);
+     
+      toast.error("Error in submitting the form", {
+        position: "top-right",
+        autoClose: 3000,
+      });
     }
   };
  
@@ -180,8 +186,8 @@ const [userEmail, setUserEmail] = useState("");
               {landDetails.length > 0 ? (
                 landDetails.map((land, index) => (
                   <div className="plot-card" key={index}>
-                    <div className="plot-card-header">
-                      <img
+                    <div className="plot-card-header h-64 w-full">
+                      <img className="h-64 w-full object-cover" 
                         src="https://t4.ftcdn.net/jpg/02/75/94/93/240_F_275949388_k1rVe1KTRLzPeQAfbxdTXvcTLbiHB95l.jpg"
                         alt="Icon"
                       />
@@ -207,7 +213,7 @@ const [userEmail, setUserEmail] = useState("");
             </div>
           </div>
         </div>
-      </div>
+     
       <div className="contracts-section text-center" id="ongoing-contracts-section">
           <h2><strong>Ongoing Contracts</strong></h2>
           <div className="contracts-container">
@@ -284,7 +290,7 @@ const [userEmail, setUserEmail] = useState("");
             ))}
           </div>
         </div>
-     
+        </div>
     </div>
   );
 };

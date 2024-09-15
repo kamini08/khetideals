@@ -201,15 +201,22 @@
   .plot-section h2{
    color:#009a4e;
   }
-  .plot-card-header {
+  /* .plot-card-header {
     width: 100%;
-    height: 80px;
-    padding-bottom: 30%;
+    height: 90px;
+    padding-bottom: 10%;
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     overflow: hidden;
     position: relative;
    
+  }
+  .plot-card-header img {
+    width: 100%;
+    height: auto;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    object-fit: cover;
   }
   
   
@@ -222,14 +229,39 @@
    text-align:center;
   
   }
+   */
+   .plot-card-header {
+    width: 100%;
+    height: 120px; /* Increased height */
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    overflow: hidden;
+    position: relative;
+  }
   
   .plot-card-header img {
     width: 100%;
-    height: auto;
+    height: 100%; /* Image fills the container */
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
     object-fit: cover;
   }
+  
+  .Name {
+    padding: 0;
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #009a4e;
+    text-align: center;
+  }
+  
+  .plot-card p, .plot-card h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  
   
   .plot-card-body {
     display: flex;

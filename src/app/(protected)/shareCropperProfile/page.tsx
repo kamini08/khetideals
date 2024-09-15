@@ -130,7 +130,7 @@ const ShareCropperProfile: React.FC = () => {
                   <p>Punctuality: {review.timeliness}/5</p>
                   <p>Communication Skills: {review.communicationSkills}/5</p>
                   <p>Crop Quality: {review.cropQuality}/5</p>
-                  <p>Feedback: {review.feedback}/5</p>
+                  <p>Feedback: {review.feedback}</p>
                 </div>
               ))
             ) : (

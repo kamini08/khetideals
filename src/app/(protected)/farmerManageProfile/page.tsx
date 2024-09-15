@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import "@/components/styles/p1b.css"
 import "@/components/styles/p1a.css"
 import FDash from "../components/FDash";
+import { toast } from "react-toastify";
 
 const FarmerProfile = () => {
   // State to hold form data
@@ -55,6 +56,11 @@ const FarmerProfile = () => {
       const data = await response.json();
       console.log("Form submitted successfully:", data);
 
+      toast.success("Form submitted successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+
       // Optionally, reset form after successful submission
       setFormData({
         ...formData,
@@ -68,6 +74,10 @@ const FarmerProfile = () => {
       });
     } catch (error) {
       console.error("Error submitting form:", error);
+      toast.error("Error in submitting the form", {
+        position: "top-right",
+        autoClose: 3000,
+      });
     }
   };
 

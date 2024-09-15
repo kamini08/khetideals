@@ -241,7 +241,7 @@ const Hero: React.FC = () => {
       </section>
 
       {/* Platform Steps Section */}
-      <section className="platform-steps">
+      <section className="platform-steps" id="platform-steps">
         <div className="platform-steps__container">
           <h2 className="platform-steps__title">How Our Platform Works</h2>
           <div className="platform-steps__grid">

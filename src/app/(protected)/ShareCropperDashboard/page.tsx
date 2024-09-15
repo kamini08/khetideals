@@ -5,6 +5,7 @@ import "@/components/styles/p2a.css";
 import "@/components/styles/p2b.css";
 import "@/components/styles/p2c.css";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 // Define types for Buyers, Land Details, and Work Status
 interface Buyer {
@@ -138,7 +139,18 @@ const ShareCropperDashboard: React.FC = () => {
     // Fetch landholder details from the backend
     fetch("/api/ShareCropperDashboard")
       .then((response) => response.json())
-      .then((data) => setLandDetails(data))
+      .then((data) =>{
+
+        if (data.length === 0) {
+          console.log("No data found");
+         
+          toast.warn("No sharecroppers found for the specified criteria", {
+            position: "top-right",
+          });
+        }
+
+        setLandDetails(data)
+  })
       .catch((error) =>
         console.error("Error fetching landholder data:", error)
       );
@@ -255,6 +267,68 @@ const ShareCropperDashboard: React.FC = () => {
           </form>
           {/*  */}
         </div>
+
+ {/* Land Details Section */}
+ <div className="plot-section" id="land-details-section">
+          {/* <h2 className="text-center text-xl">
+            <strong>Landlord's Plots</strong>
+          </h2> */}
+          <div className="plot-container">
+            {landDetails.length > 0 ? (
+              landDetails.map((land, index) => (
+                <div className="plot-card" key={index}>
+                  <div className="plot-card-header ">
+                    <img
+                      src="https://t4.ftcdn.net/jpg/02/75/94/93/240_F_275949388_k1rVe1KTRLzPeQAfbxdTXvcTLbiHB95l.jpg"
+                      alt="Icon"
+                    />
+                  </div>
+                  <div className="plot-card-body">
+                    <p className="Name">Name: {land?.userDetails?.name}</p>
+                    <p className="plot-card-description">
+                      Email: {land?.userDetails?.email}
+                    </p>
+                    <p className="plot-card-description">
+                      Area of Land: {land.areaOfLand}
+                    </p>
+                    <p className="plot-card-description">
+                      Location: {land.location}
+                    </p>
+                    <p className="plot-card-description">
+                      Crop To Grow: {land.cropToGrow}
+                    </p>
+                    <p className="plot-card-description">
+                      Address: {land.address}
+                    </p>
+                    <p className="plot-card-description">
+                      Soil Type: {land.soilType}
+                    </p>
+                    <p className="plot-card-description">
+                      Start Month: {land.startingMonth}
+                    </p>
+                    <p className="plot-card-description">
+                      End Month: {land.endingMonth}
+                    </p>
+                    <p className="plot-card-description">
+                      Price per Decimal: {land.pricePerDecimal}
+                    </p>
+                    <button className="but text-xs" type="submit">
+                      Chat with the landholder
+                    </button>
+                    <button className="but text-xs" type="submit">
+                      Make a Proposal for contract
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <p>No land details available.</p>
+            )}
+          </div>
+        </div>
+
+
+
         <div
           className="contracts-section text-center"
           id="ongoing-contracts-section"
@@ -358,65 +432,7 @@ const ShareCropperDashboard: React.FC = () => {
           </div>
         </div>
 
-        {/* Land Details Section */}
-        <div className="plot-section" id="land-details-section">
-          <h2 className="text-center text-xl">
-            <strong>Landlord's Plots</strong>
-          </h2>
-          <div className="plot-container">
-            {landDetails.length > 0 ? (
-              landDetails.map((land, index) => (
-                <div className="plot-card" key={index}>
-                  <div className="plot-card-header ">
-                    <img
-                      src="https://t4.ftcdn.net/jpg/02/75/94/93/240_F_275949388_k1rVe1KTRLzPeQAfbxdTXvcTLbiHB95l.jpg"
-                      alt="Icon"
-                    />
-                  </div>
-                  <div className="plot-card-body">
-                    <p className="Name">Name: {land?.userDetails?.name}</p>
-                    <p className="plot-card-description">
-                      Email: {land?.userDetails?.email}
-                    </p>
-                    <p className="plot-card-description">
-                      Area of Land: {land.areaOfLand}
-                    </p>
-                    <p className="plot-card-description">
-                      Location: {land.location}
-                    </p>
-                    <p className="plot-card-description">
-                      Crop To Grow: {land.cropToGrow}
-                    </p>
-                    <p className="plot-card-description">
-                      Address: {land.address}
-                    </p>
-                    <p className="plot-card-description">
-                      Soil Type: {land.soilType}
-                    </p>
-                    <p className="plot-card-description">
-                      Start Month: {land.startingMonth}
-                    </p>
-                    <p className="plot-card-description">
-                      End Month: {land.endingMonth}
-                    </p>
-                    <p className="plot-card-description">
-                      Price per Decimal: {land.pricePerDecimal}
-                    </p>
-                    <button className="but text-xs" type="submit">
-                      Chat with the landholder
-                    </button>
-                    <button className="but text-xs" type="submit">
-                      Make a Proposal for contract
-                    </button>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <p>No land details available.</p>
-            )}
-          </div>
-        </div>
-
+       
         {/* Status of Work Section */}
         <div className="section text-center mb-4 " id="work-status-section">
           <h2 className="mb-4" text-xl>

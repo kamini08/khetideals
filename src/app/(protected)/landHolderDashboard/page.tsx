@@ -4,6 +4,7 @@ import "@/components/styles/p2a.css";
 import "@/components/styles/p2b.css";
 import "@/components/styles/p2c.css";
 import LDash from "../components/LDash";
+import { toast } from "react-toastify";
 
 interface UserDetails {
   id: string;
@@ -34,6 +35,11 @@ const LandHolderDashboard: React.FC = () => {
     fetch("/api/landHolderDashboard")
       .then((response) => response.json())
       .then((data) => {
+        if (data.length === 0) {
+          toast.warn("No sharecroppers found for the specified criteria", {
+            position: "top-right",
+          });
+        }
         setSharecroppers(data);
         console.log(data);
         setLoading(false); // Add this to stop showing the loading message
@@ -153,7 +159,7 @@ const LandHolderDashboard: React.FC = () => {
                 sharecroppers.map((sharecropper, index) => (
                   <div className="plot-card" key={index}>
                     <div className="plot-card-header">
-                      <img
+                      <img 
                         src="https://t4.ftcdn.net/jpg/02/75/94/93/240_F_275949388_k1rVe1KTRLzPeQAfbxdTXvcTLbiHB95l.jpg"
                         alt="Icon"
                       />

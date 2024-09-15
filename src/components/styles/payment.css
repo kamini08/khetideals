@@ -122,12 +122,19 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: auto;
     animation: fadeIn 1s ease-in;
+    min-width: 100vw;
 }
+nav{
+    min-width: 100vw;
+    z-index: 1000; /* Adjust this as needed */
+    position: relative;
 
+}
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }

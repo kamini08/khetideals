@@ -22,12 +22,12 @@ const Navbar = () => {
           </li>
 
           <li className="nav-item">
-            <a href="" className="nav-link">
+            <a href="/#platform-steps" className="nav-link">
               Services
             </a>
           </li>
           <li className="nav-item">
-            <a href="#footer" className="nav-link">
+            <a href="/#footer-top" className="nav-link">
               Contact
             </a>
           </li>

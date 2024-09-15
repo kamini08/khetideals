@@ -128,22 +128,23 @@ const SettingsPage = async () => {
                 Search
               </button> */}
 
-          <div className="farmer-list">
-            <h3>Farmers List</h3>
-            <ul id="farmerList">
-              {/* Farmers will be dynamically inserted here */}
-            </ul>
-          </div>
-          <div className="section" id="contracts-section">
-            <h2>Current Contracts</h2>
-
+          
 
 
 
           </div>
           {/* Replace map with a simple div */}
           <MapWithNoSSRBuyer />
-        </div>
+          {/* <div className="farmer-list">
+            <h3>Farmers List</h3>
+            <ul id="farmerList">
+           
+            </ul>
+          </div> */}
+          {/* <div className="section" id="contracts-section">
+            <h2>Current Contracts</h2>
+
+        </div> */}
       </div>
     </div>
   )

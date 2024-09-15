@@ -5,6 +5,7 @@ import "@/components/styles/p1b.css"
 import "@/components/styles/p1a.css"
 // import "../components/buyer.css";
 import BDash from "../components/BDash";
+import { toast } from "react-toastify";
 
 const BuyerProfile = () => {
   // State to hold form data
@@ -56,6 +57,11 @@ const BuyerProfile = () => {
       const data = await response.json();
       console.log("Form submitted successfully:", data);
 
+      toast.success("Form submitted successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+
       // Optionally, reset form after successful submission
       setFormData({
         ...formData,
@@ -70,6 +76,11 @@ const BuyerProfile = () => {
       });
     } catch (error) {
       console.error("Error submitting form:", error);
+
+      toast.error("Error in submitting the form", {
+        position: "top-right",
+        autoClose: 3000,
+      });
     }
   };
 
@@ -127,7 +138,7 @@ const BuyerProfile = () => {
                 required
               >
                 <option value="Cash">Cash</option>
-                <option value="Credit">Credit</option>
+                <option value="Credit">UPI</option>
                 <option value="Installments">Installments</option>
               </select>
             </div>

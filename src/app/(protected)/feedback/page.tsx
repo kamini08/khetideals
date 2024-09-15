@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import "../components/feedback.css"; // Ensure this path is correct for your CSS
+import { toast } from "react-toastify";
 
 
 const FeedbackForm = () => {
@@ -26,7 +27,6 @@ const FeedbackForm = () => {
 
   const handleSubmit =async (e:any) => {
     e.preventDefault();
-    alert("Feedback submitted successfully!");
   
       try {
         const response = await fetch("/api/feedback", {
@@ -43,7 +43,10 @@ const FeedbackForm = () => {
   
         const data = await response.json();
         console.log("Form submitted successfully:", data);
-  
+        toast.success("Form submitted successfully!", {
+          position: "top-right",
+          autoClose: 3000,
+        });
         // Optionally, reset form after successful submission
         setFormData({
           ...formData,
@@ -59,18 +62,22 @@ const FeedbackForm = () => {
         });
       } catch (error) {
         console.error("Error submitting form:", error);
+        toast.error("Error in submitting the form", {
+          position: "top-right",
+          autoClose: 3000,
+        });
       }
     
   };
 
   return (
     <div className="container animated fadeInUp">
-      <h1>Sharecropper Feedback Form</h1>
+      <h1 className="text-4xl"><strong>Sharecropper Feedback Form</strong></h1>
 
       <form onSubmit={handleSubmit}>
         {/* Personal Information */}
         <section className="personal-info animated fadeInUp">
-          <h2>Personal Information</h2>
+          <h2 className="text-2xl">Personal Information</h2>
           <div className="input-group text-center">
             <label htmlFor="farmerName">Name of Sharecropper:</label>
             <input

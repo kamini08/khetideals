@@ -8,7 +8,7 @@ const Footer: React.FC<LogoProps> = () => {
  
   return (
     <div>
-      <div className="footer-top">
+      <div className="footer-top" id="footer-top">
         <div className="row">
           <div className="col">
             <div className="footer-1">
@@ -40,7 +40,7 @@ const Footer: React.FC<LogoProps> = () => {
                 <li className="contact-item">
                   <i className="fa fa-envelope"></i>{" "}
                   <a href="mailto:info@khetideals27.com" className="link">
-                    info@khetideals27.com
+                    infokhetideals27@gmail.com
                   </a>
                 </li>
               </ul>

@@ -7,6 +7,7 @@ import "@/components/styles/p2c.css"
 // import "../components/profilePic.css";
 // import "../components/shareCropperSidebar"
 import SDash from "../components/SDash";
+import { toast } from "react-toastify";
 
 // Define the types for profile data
 interface ProfileData {
@@ -66,7 +67,10 @@ const SharecropperManageProfile: React.FC = () => {
 
       const data = await response.json();
       console.log("Form submitted successfully:", data);
-
+      toast.success("Form submitted successfully!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
       // Optionally, reset form after successful submission
       setProfileData({
         ...profileData,
@@ -78,6 +82,11 @@ const SharecropperManageProfile: React.FC = () => {
       });
     } catch (error) {
       console.error("Error submitting form:", error);
+      
+      toast.error("Error in submitting the form", {
+        position: "top-right",
+        autoClose: 3000,
+      });
     }
   };
 
