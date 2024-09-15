@@ -30,7 +30,7 @@ const SDash = () => {
           <p>Search for available lands to work.</p>
         </div>
       </Link>
-      <Link href="#ongoing-contracts-section">
+      <Link href="/ShareCropperDashboard#ongoing-contracts-section">
         <div className="dashboard-box">
           <h3>
             <strong>My contracts</strong>

@@ -14,6 +14,9 @@ const stripe = new Stripe(
 export async function POST(req: Request) {
   try {
     const { amount } = await req.json();
+    const parts = req.url.split("/");
+    const contractId = parts[parts.length - 1].toString();
+    console.log(contractId);
 
     // Create a PaymentIntent with the amount
     const paymentIntent = await stripe.paymentIntents.create({
@@ -24,7 +27,7 @@ export async function POST(req: Request) {
 
     // Return the client secret to the client
     return NextResponse.json(
-      { clientSecret: paymentIntent.client_secret },
+      { clientSecret: paymentIntent.client_secret, contractId },
       { status: 200 }
     );
   } catch (error: any) {

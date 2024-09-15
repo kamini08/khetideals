@@ -111,6 +111,7 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import "@/components/styles/payment.css";
+import { useParams } from "next/navigation";
 // import dotenv from "dotenv"
 
 // Load Stripe
@@ -122,6 +123,8 @@ function CheckoutForm() {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = useState(false);
+  const { id } = useParams();
+  const contractId: any = id;
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -143,7 +146,7 @@ function CheckoutForm() {
     setLoading(true);
 
     // Call your backend to create a PaymentIntent
-    const res = await fetch("/api/payment", {
+    const res = await fetch(`/api/payment/${contractId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -151,7 +154,7 @@ function CheckoutForm() {
       body: JSON.stringify({ amount }),
     });
 
-    const { clientSecret } = await res.json();
+    const { clientSecret, contractId: any } = await res.json();
 
     // Confirm the card payment
     const { error, paymentIntent } = await stripe.confirmCardPayment(
@@ -167,9 +170,11 @@ function CheckoutForm() {
       alert("Payment failed: " + error.message);
     } else if (paymentIntent.status === "succeeded") {
       alert("Payment successful! Payment ID: " + paymentIntent.id);
+      const response = await fetch("/api/contract/completeContract", {
+        method: "PUT",
+        body: JSON.stringify({ contractId, paymentIntent: paymentIntent.id }),
+      });
     }
-
-    
 
     setLoading(false);
   };
