@@ -186,6 +186,25 @@ const ShareCropperDashboard: React.FC = () => {
       .catch((error) =>
         console.error("Error fetching landholder data:", error)
       );
+    const fetchContracts = async () => {
+      const response = await fetch("/api/contract/getContracts2", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
+      if (!response.ok) {
+        throw new Error("Failed to fetch reviews");
+      }
+
+      const data = await response.json();
+
+      setOngoingContracts(data.contracts.ongoingContracts);
+      setCompletedContracts(data.contracts.completedContracts);
+      setContracts(data.contracts);
+    };
+    fetchContracts();
   }, [setLandDetails]);
 
   // const handleChange = (
@@ -385,7 +404,7 @@ const ShareCropperDashboard: React.FC = () => {
                         Land Area: {contract.landDetails.landOfArea}
                       </p>
                       <p className="mb-4">
-                        Amount: Rs.{contract.finanacialDetails.totalCost}
+                        Amount: Rs.{contract.financialDetails.totalCost}
                       </p>
                       <p className="mb-4">Status: {contract.contract2Status}</p>
                       {!contract.isCropperSigned && (
