@@ -2,7 +2,7 @@
 import React from "react";
 import "../Home.css";
 import HeroSlider from "./slider";
-import Navbar from "./Navbar"
+import Navbar from "./Navbar";
 
 // Import images
 // import mid1 from "../images/mid1.jpg";
@@ -27,7 +27,6 @@ import {
   FaCreditCard,
   FaStar,
 } from "react-icons/fa";
-
 
 type Feature = {
   image: any;
@@ -69,13 +68,15 @@ const Hero: React.FC = () => {
         "Protect your interests with legally binding agreements that ensure fair terms and secure payments for your produce.",
     },
     {
-      image: "https://img.indiafilings.com/learn/wp-content/uploads/2019/06/12004345/Contract-farming.jpg",
+      image:
+        "https://img.indiafilings.com/learn/wp-content/uploads/2019/06/12004345/Contract-farming.jpg",
       title: "Market Access",
       description:
         "Connect directly with buyers and secure a guaranteed market for your crops, minimizing risk and maximizing profits.",
     },
     {
-      image: "https://americancompass.org/wp-content/uploads/2022/10/AdobeStock_274921913-scaled-1.jpeg",
+      image:
+        "https://americancompass.org/wp-content/uploads/2022/10/AdobeStock_274921913-scaled-1.jpeg",
       title: "Comprehensive Support",
       description:
         "Receive expert guidance, from crop planning to harvest, ensuring you achieve the best results every season.",
@@ -201,8 +202,7 @@ const Hero: React.FC = () => {
 
   return (
     <>
-    <script src="//code.tidio.co/z3kklhq0ur8kvth5ooe9dufkol3etwa9.js"async></script>
-    < HeroSlider/>
+      <HeroSlider />
       {/* Middle Section */}
       <section className="middle-section">
         <div className="content-container">
@@ -293,35 +293,45 @@ const Hero: React.FC = () => {
         </div>
       </section> */}
       <section className="testimonial-section">
-      <h2 className="platform-steps__title">Testimonials</h2>
+        <h2 className="platform-steps__title">Testimonials</h2>
 
-      <p className="description">
-        Hear from farmers and buyers who have successfully used our platform to build lasting partnerships and secure quality produce through contract farming.
-      </p>
-      <div className="testimonial-cards">
-        {testimonials.map((testimonial, index) => (
-          <div className="card" key={index}>
-            <div className="img-card flex justify-center">
-              <img className="text-center" src={testimonial.image} alt={testimonial.name} />
-            </div>
-            <div className="content text-center">
-              <h3 className="name">{testimonial.name}</h3>
-              <p className="role">{testimonial.role}</p>
-              <div className="rating">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <i
-                    key={i}
-                    className={`fa fa-star ${i < testimonial.rating ? 'checked' : ''}`}
-                  ></i>
-                ))}
+        <p className="description">
+          Hear from farmers and buyers who have successfully used our platform
+          to build lasting partnerships and secure quality produce through
+          contract farming.
+        </p>
+        <div className="testimonial-cards">
+          {testimonials.map((testimonial, index) => (
+            <div className="card" key={index}>
+              <div className="img-card flex justify-center">
+                <img
+                  className="text-center"
+                  src={testimonial.image}
+                  alt={testimonial.name}
+                />
               </div>
-              <p className="testimonial-description font-bold">{testimonial.text}</p>
+              <div className="content text-center">
+                <h3 className="name">{testimonial.name}</h3>
+                <p className="role">{testimonial.role}</p>
+                <div className="rating">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <i
+                      key={i}
+                      className={`fa fa-star ${
+                        i < testimonial.rating ? "checked" : ""
+                      }`}
+                    ></i>
+                  ))}
+                </div>
+                <p className="testimonial-description font-bold">
+                  {testimonial.text}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
-    </section>
-    <section id="place">
+          ))}
+        </div>
+      </section>
+      <section id="place">
         <div className="place_main relative bg-black bg-opacity-50">
           <div className="container text-center flex justify-center align-center">
             <div className="row absolute inset-0 flex justify-center items-center">
@@ -330,11 +340,13 @@ const Hero: React.FC = () => {
                 <p>Join our community of volunteers and make a difference.</p>
                 <a href="#" className="button_1">SIGN UP NOW</a>
               </div> */}
-                <div className="place_1 text-center flex justify-center items-center flex-col ">
-                  <h2>Get Started Today</h2>
-                  <p>Join our community of volunteers and make a difference.</p>
-                  <a href="#" className="button_1">SIGN UP NOW</a>
-                </div>
+              <div className="place_1 text-center flex justify-center items-center flex-col ">
+                <h2>Get Started Today</h2>
+                <p>Join our community of volunteers and make a difference.</p>
+                <a href="#" className="button_1">
+                  SIGN UP NOW
+                </a>
+              </div>
             </div>
           </div>
         </div>

@@ -5,6 +5,7 @@ import "@/components/styles/p2b.css";
 import "@/components/styles/p2c.css";
 import LDash from "../components/LDash";
 import { toast } from "react-toastify";
+import Link from "next/link";
 
 interface UserDetails {
   id: string;
@@ -21,6 +22,12 @@ interface Sharecropper {
   description: string;
   userDetails?: UserDetails | null;
 }
+interface WorkStatus {
+  buyerName: string;
+  area: number;
+  location: string;
+  statusOfWork: string;
+}
 
 const LandHolderDashboard: React.FC = () => {
   const [sharecroppers, setSharecroppers] = useState<Sharecropper[]>([]);
@@ -30,6 +37,21 @@ const LandHolderDashboard: React.FC = () => {
     area: "",
     location: "",
   });
+
+  const [workStatus, setWorkStatus] = useState<WorkStatus[]>([
+    {
+      buyerName: "Buyer 1",
+      area: 5,
+      location: "Location 1",
+      statusOfWork: "Sowing",
+    }, // Default value
+    {
+      buyerName: "Buyer 2",
+      area: 10,
+      location: "Location 2",
+      statusOfWork: "Sowing",
+    },
+  ]);
 
   useEffect(() => {
     fetch("/api/landHolderDashboard")
@@ -93,6 +115,14 @@ const LandHolderDashboard: React.FC = () => {
   if (loading) {
     return <p>Loading...</p>;
   }
+
+  // Handle status change
+  const handleStatusChange = (index: number, status: string) => {
+    const updatedStatus = [...workStatus];
+    updatedStatus[index].statusOfWork = status;
+    setWorkStatus(updatedStatus);
+    console.log(updatedStatus);
+  };
 
   return (
     <div className="container">
@@ -159,7 +189,7 @@ const LandHolderDashboard: React.FC = () => {
                 sharecroppers.map((sharecropper, index) => (
                   <div className="plot-card" key={index}>
                     <div className="plot-card-header">
-                      <img 
+                      <img
                         src="https://t4.ftcdn.net/jpg/02/75/94/93/240_F_275949388_k1rVe1KTRLzPeQAfbxdTXvcTLbiHB95l.jpg"
                         alt="Icon"
                       />
@@ -190,15 +220,34 @@ const LandHolderDashboard: React.FC = () => {
                       <button className="but" type="button">
                         Chat Now
                       </button>
-                      <button className="but" type="button">
-                        Make Proposal
-                      </button>
+                      <Link href="/proposalForm2">
+                        <button className="but" type="button">
+                          Make Proposal
+                        </button>
+                      </Link>
                     </div>
                   </div>
                 ))
               ) : (
                 <p>No sharecropper details available.</p>
               )}
+            </div>
+          </div>
+
+          {/* Status of Work Section */}
+          <div className="section text-center mb-4 " id="work-status-section">
+            <h2 className="mb-4" text-xl>
+              <strong>Status of Work</strong>
+            </h2>
+            <div className="contracts-container">
+              {workStatus.map((status, index) => (
+                <div className="contract-card" key={index}>
+                  <h3>ShareCropper: {status.buyerName}</h3>
+                  <p>Area: {status.area} decimals</p>
+                  <p>Location: {status.location}</p>
+                  <p>Status Of Work: {status.statusOfWork}</p>
+                </div>
+              ))}
             </div>
           </div>
         </div>

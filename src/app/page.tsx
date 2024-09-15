@@ -40,7 +40,7 @@ export default function Home() {
     //   </div>
     // </main>
     <>
-      {/* <Navbar /> */}
+      <Navbar />
       <Hero />
       <Footer />
     </>

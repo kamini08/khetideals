@@ -36,7 +36,7 @@ export async function GET() {
       ...landholder.toJSON(), // Convert Mongoose document to plain JS object
       userDetails: userDetails.find((user) => user.id === landholder.mainId), // Find matching user by id
     }));
-    // console.log(combinedData);
+    console.log(combinedData);
 
     // Return the landholders as a JSON response
     return NextResponse.json(combinedData, { status: 200 });

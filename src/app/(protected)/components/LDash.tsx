@@ -28,12 +28,15 @@ const LDash = () => {
           <p>Search for sharecroppers in your area .</p>
         </div>
       </Link>
-      <div className="dashboard-box">
-        <h3>
-          <strong>Status of Work</strong>
-        </h3>
-        <p>Track the progress of sowing, growing, and harvesting.</p>
-      </div>
+
+      <Link href="/landHolderDashboard/#work-status-section">
+        <div className="dashboard-box">
+          <h3>
+            <strong>Status of Work</strong>
+          </h3>
+          <p>Track the progress of sowing, growing, and harvesting.</p>
+        </div>
+      </Link>
       <Link href="/feedback">
         <div className="dashboard-box">
           <h3>

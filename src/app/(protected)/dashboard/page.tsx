@@ -46,15 +46,14 @@ const SettingsPage = async () => {
     }
   );
 
-
   // TODO form validation
 
   // const router = useRouter();
   return (
     <div>
-      {JSON.stringify(session?.user)}
+      {/* {JSON.stringify(session?.user)} */}
 
-      <form
+      {/* <form
         action={async () => {
           "use server";
 
@@ -62,17 +61,14 @@ const SettingsPage = async () => {
         }}
       >
         <button type="submit">Sign Out</button>
-      </form>
+      </form> */}
 
       {user === "farmer" ? (
         <div className="container">
           <div className="sidebar">
             <FDash />
-
           </div>
           <div className="main-content">
-
-
             <div className="section placeholder-container">
               {/* Placeholder for map or other content */}
               <div className="flex flex-row w-full">
@@ -80,20 +76,17 @@ const SettingsPage = async () => {
                 <MapWithNoSSR />
               </div>
             </div>
-
-
           </div>
         </div>
-        
-  ) : (
-    <div className="container">
-      <BuyerSidebar />
-      {/* <BDash /> */}
+      ) : (
+        <div className="container">
+          <BuyerSidebar />
+          {/* <BDash /> */}
 
-      {/* Farmer Dashboard and Search Section */}
-      <div className="dashboard-content">
-        <div className="farmer-finder">
-          {/* <h1 className="search-profile">Search Potential Farmers</h1>
+          {/* Farmer Dashboard and Search Section */}
+          <div className="dashboard-content">
+            <div className="farmer-finder">
+              {/* <h1 className="search-profile">Search Potential Farmers</h1>
               <div className="form-group text-black">
                 <label htmlFor="cropType">Crop Type</label>
                 <select id="cropType" className="select2">
@@ -104,7 +97,7 @@ const SettingsPage = async () => {
                 </select>
               </div> */}
 
-          {/* <div className="form-group text-black">
+              {/* <div className="form-group text-black">
                 <label htmlFor="quality">Quality</label>
                 <select id="quality">
                   <option value="A">A</option>
@@ -113,7 +106,7 @@ const SettingsPage = async () => {
                 </select>
               </div> */}
 
-          {/* <div className="form-group text-black">
+              {/* <div className="form-group text-black">
                 <label htmlFor="farmerLocation">Location</label>
                 <input type="text" id="farmerLocation" />
               </div>
@@ -128,28 +121,21 @@ const SettingsPage = async () => {
                 Search
               </button> */}
 
-          
-
-
-
+              {/* <div className="farmer-list">
+                <h3>Farmers List</h3>
+                <ul id="farmerList">
+                </ul>
+              </div>
+              <div className="section" id="contracts-section">
+                <h2>Current Contracts</h2>
+              </div> */}
+              {/* Replace map with a simple div */}
+              <MapWithNoSSRBuyer />
+            </div>
           </div>
-          {/* Replace map with a simple div */}
-          <MapWithNoSSRBuyer />
-          {/* <div className="farmer-list">
-            <h3>Farmers List</h3>
-            <ul id="farmerList">
-           
-            </ul>
-          </div> */}
-          {/* <div className="section" id="contracts-section">
-            <h2>Current Contracts</h2>
-
-        </div> */}
-      </div>
+        </div>
+      )}
     </div>
-  )
-}
-    </div >
   );
 };
 

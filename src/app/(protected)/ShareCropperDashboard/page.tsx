@@ -57,6 +57,18 @@ const ShareCropperDashboard: React.FC = () => {
     area: "",
     pricePerDecimal: "",
   });
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
+  ) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
   const [onSearchResults, setOnSearchResults] = useState<SearchResult[]>([]);
   const [buyers, setBuyers] = useState<Buyer[]>([]);
   const [landDetails, setLandDetails] = useState<LandDetail[]>([]);
@@ -83,14 +95,16 @@ const ShareCropperDashboard: React.FC = () => {
   const signContract = async (fileId: string | undefined) => {
     try {
       const contractId = fileId;
-      const response = await fetch(`/api/contract/signContract2/signContractS`, {
-        method: "PUT",
-        body: JSON.stringify({contractId}),
-      });
+      const response = await fetch(
+        `/api/contract/signContract2/signContractS`,
+        {
+          method: "PUT",
+          body: JSON.stringify({ contractId }),
+        }
+      );
       if (!response.ok) {
         throw new Error("Error signing contract");
       }
-
     } catch (error) {
       console.error("Error signing contract:", error);
     } finally {
@@ -99,17 +113,15 @@ const ShareCropperDashboard: React.FC = () => {
 
   const downloadPdf = async (fileName: string) => {
     setDLoading(true);
-    console.log(fileName)
+    console.log(fileName);
     try {
       // Fetch the presigned URL from your backend API
-      const response = await fetch(`/api/contract/download/${fileName}`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`/api/contract/download/${fileName}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       const res = await response.json();
 
@@ -139,7 +151,7 @@ const ShareCropperDashboard: React.FC = () => {
   };
   const cancelContract = async (fileName: string) => {
     setCLoading(true);
-    console.log(fileName)
+    console.log(fileName);
     try {
       // Fetch the presigned URL from your backend API
       const response = await fetch(`/api/contract/cancel2/${fileName}`, {
@@ -160,26 +172,33 @@ const ShareCropperDashboard: React.FC = () => {
     // Fetch landholder details from the backend
     fetch("/api/ShareCropperDashboard")
       .then((response) => response.json())
-      .then((data) =>{
-        setLandDetails(data)
-        console.log(data)
-  })
+      .then((data) => {
+        if (data.length === 0) {
+          console.log("No data found");
+
+          toast.warn("No sharecroppers found for the specified criteria", {
+            position: "top-right",
+          });
+        }
+
+        setLandDetails(data);
+      })
       .catch((error) =>
         console.error("Error fetching landholder data:", error)
       );
   }, [setLandDetails]);
 
-  const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
-  ) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  // const handleChange = (
+  //   e: React.ChangeEvent<
+  //     HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+  //   >
+  // ) => {
+  //   const { name, value } = e.target;
+  //   setFormData({
+  //     ...formData,
+  //     [name]: value,
+  //   });
+  // };
 
   // Placeholder for handling search (implement this later)
   const searchBuyers = async (e: FormEvent) => {
@@ -201,7 +220,7 @@ const ShareCropperDashboard: React.FC = () => {
 
       const data = await response.json();
       setLandDetails(data);
-      console.log("Form submitted successfully:", data[0]);
+      console.log("Form submitted successfully:", data);
 
       // Optionally, reset form after successful submission
     } catch (error) {
@@ -233,21 +252,44 @@ const ShareCropperDashboard: React.FC = () => {
           <form onSubmit={searchBuyers}>
             <div className="form-group">
               <label htmlFor="CropType">Crop Type</label>
-              <input type="text" id="CropType" name="CropType" placeholder="Enter the Crop..." />
+              <input
+                type="text"
+                id="CropType"
+                name="CropType"
+                placeholder="Enter the Crop..."
+              />
             </div>
             <div className="form-group inline-group">
               <div className="form-group">
                 <label htmlFor="landarea">Area of land</label>
-                <input type="number" id="landarea" name="landarea" placeholder="Enter area of land in decimals..." />
+                <input
+                  type="number"
+                  id="landarea"
+                  name="area"
+                  onChange={handleChange}
+                  placeholder="Enter area of land in decimals..."
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="pricePerDecimal">Price per decimal</label>
-                <input type="number" id="pricePerDecimal" name="pricePerDecimal" placeholder="Enter price per Decimals..." />
+                <input
+                  type="number"
+                  id="pricePerDecimal"
+                  name="pricePerDecimal"
+                  onChange={handleChange}
+                  placeholder="Enter price per Decimals..."
+                />
               </div>
             </div>
             <div className="form-group">
               <label htmlFor="location">City</label>
-              <input type="text" id="location" name="location" placeholder="Enter your city..." />
+              <input
+                type="text"
+                id="location"
+                name="location"
+                onChange={handleChange}
+                placeholder="Enter your city..."
+              />
             </div>
             <div className="text-center">
               <button id="searchBtn" type="submit">
@@ -258,8 +300,8 @@ const ShareCropperDashboard: React.FC = () => {
           {/*  */}
         </div>
 
- {/* Land Details Section */}
- <div className="plot-section" id="land-details-section">
+        {/* Land Details Section */}
+        <div className="plot-section" id="land-details-section">
           {/* <h2 className="text-center text-xl">
             <strong>Landlord's Plots</strong>
           </h2> */}
@@ -305,9 +347,11 @@ const ShareCropperDashboard: React.FC = () => {
                     <button className="but text-xs" type="submit">
                       Chat with the landholder
                     </button>
-                    <button className="but text-xs" type="submit">
-                      Make a Proposal for contract
-                    </button>
+                    <Link href="/proposalForm2">
+                      <button className="but text-xs" type="submit">
+                        Make a Proposal for contract
+                      </button>
+                    </Link>
                   </div>
                 </div>
               ))
@@ -317,8 +361,6 @@ const ShareCropperDashboard: React.FC = () => {
           </div>
         </div>
 
-
-
         <div
           className="contracts-section text-center"
           id="ongoing-contracts-section"
@@ -327,43 +369,54 @@ const ShareCropperDashboard: React.FC = () => {
             <strong>Ongoing Contracts</strong>
           </h2>
           <div className="contracts-container">
-            {ongoingContracts && (ongoingContracts.length > 0 ? (
-              ongoingContracts.map((contract: any, index: React.Key | null | undefined) => (
-                <div className="contract-card" key={index}>
-                  <h3 className="mb-4">Landlord: {contract.landholder.name}</h3>
-                  <p className="mb-4">Email: {contract.landholder.email}</p>
-                  <p className="mb-4">Location: {contract.landDetails.location}</p>
-                  <p className="mb-4">Land Area: {contract.landDetails.landOfArea}</p>
-                  <p className="mb-4">Amount: Rs.{contract.finanacialDetails.totalCost}</p>
-                  <p className="mb-4">Status: {contract.contract2Status}</p>
-                  { !contract.isCropperSigned && 
-                (<button
-                  className="btn purchase-card"
-                  onClick={() => signContract(contract.contract2Id)}
-                >
-                  I Agree
-                </button>)}
-                    <button
-                    className="btn purchase-card"
-                      onClick={() => downloadPdf(contract.contract2Id)}
-                      disabled={dloading}
-                    >
-                      {"Download PDF"}
-                    </button>
-                  
-                  <button
-                  className="btn purchase-card"
-                      onClick={() => cancelContract(contract.contract2Id)}
-                      disabled={cloading}
-                    >
-                      {"Cancel contract"}
-                    </button>
-                
-                </div>
-              ))
-            ) : (
-              <p>No ongoing contracts.</p>
-            ))}
+            {ongoingContracts &&
+              (ongoingContracts.length > 0 ? (
+                ongoingContracts.map(
+                  (contract: any, index: React.Key | null | undefined) => (
+                    <div className="contract-card" key={index}>
+                      <h3 className="mb-4">
+                        Landlord: {contract.landholder.name}
+                      </h3>
+                      <p className="mb-4">Email: {contract.landholder.email}</p>
+                      <p className="mb-4">
+                        Location: {contract.landDetails.location}
+                      </p>
+                      <p className="mb-4">
+                        Land Area: {contract.landDetails.landOfArea}
+                      </p>
+                      <p className="mb-4">
+                        Amount: Rs.{contract.finanacialDetails.totalCost}
+                      </p>
+                      <p className="mb-4">Status: {contract.contract2Status}</p>
+                      {!contract.isCropperSigned && (
+                        <button
+                          className="btn purchase-card"
+                          onClick={() => signContract(contract.contract2Id)}
+                        >
+                          I Agree
+                        </button>
+                      )}
+                      <button
+                        className="btn purchase-card"
+                        onClick={() => downloadPdf(contract.contract2Id)}
+                        disabled={dloading}
+                      >
+                        {"Download PDF"}
+                      </button>
+
+                      <button
+                        className="btn purchase-card"
+                        onClick={() => cancelContract(contract.contract2Id)}
+                        disabled={cloading}
+                      >
+                        {"Cancel contract"}
+                      </button>
+                    </div>
+                  )
+                )
+              ) : (
+                <p>No ongoing contracts.</p>
+              ))}
           </div>
         </div>
 
@@ -376,41 +429,49 @@ const ShareCropperDashboard: React.FC = () => {
             <strong>Completed Contracts</strong>
           </h2>
           <div className="contracts-container">
-            {completedContracts && (completedContracts.length > 0 ? (
-              completedContracts.map((contract: any, index: React.Key | null | undefined) => (
-                <div className="contract-card" key={index}>
-                  <h3 className="mb-4">Landlord: {contract.landholder.name}</h3>
-                  <p className="mb-4">Email: {contract.landholder.email}</p>
-                  <p className="mb-4">Location: {contract.landDetails.location}</p>
-                  <p className="mb-4">Land Area: {contract.landDetails.landOfArea}</p>
-                  <p className="mb-4">Amount: Rs.{contract.finanacialDetails.totalCost}</p>
-                  <p className="mb-4">Status: {contract.contract2Status}</p>
-                 
-                    <button
-                    className="btn purchase-card"
-                      onClick={() => downloadPdf(contract.contract2Id)}
-                      disabled={dloading}
-                    >
-                      {dloading ? "Downloading..." : "Download PDF"}
-                    </button>
-                 
-                  <button
-                  className="btn purchase-card"
-                      onClick={() => cancelContract(contract.contract2Id)}
-                      disabled={cloading}
-                    >
-                      {cloading ? "Canceling contract..." : "Cancel contract"}
-                    </button>
-                 
-                </div>
-              ))
-            ) : (
-              <p>No completed contracts.</p>
-            ))}
+            {completedContracts &&
+              (completedContracts.length > 0 ? (
+                completedContracts.map(
+                  (contract: any, index: React.Key | null | undefined) => (
+                    <div className="contract-card" key={index}>
+                      <h3 className="mb-4">
+                        Landlord: {contract.landholder.name}
+                      </h3>
+                      <p className="mb-4">Email: {contract.landholder.email}</p>
+                      <p className="mb-4">
+                        Location: {contract.landDetails.location}
+                      </p>
+                      <p className="mb-4">
+                        Land Area: {contract.landDetails.landOfArea}
+                      </p>
+                      <p className="mb-4">
+                        Amount: Rs.{contract.finanacialDetails.totalCost}
+                      </p>
+                      <p className="mb-4">Status: {contract.contract2Status}</p>
+
+                      <button
+                        className="btn purchase-card"
+                        onClick={() => downloadPdf(contract.contract2Id)}
+                        disabled={dloading}
+                      >
+                        {dloading ? "Downloading..." : "Download PDF"}
+                      </button>
+
+                      <button
+                        className="btn purchase-card"
+                        onClick={() => cancelContract(contract.contract2Id)}
+                        disabled={cloading}
+                      >
+                        {cloading ? "Canceling contract..." : "Cancel contract"}
+                      </button>
+                    </div>
+                  )
+                )
+              ) : (
+                <p>No completed contracts.</p>
+              ))}
           </div>
         </div>
-
-       
 
         {/* Status of Work Section */}
         <div className="section text-center mb-4 " id="work-status-section">
