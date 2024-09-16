@@ -1,42 +1,27 @@
+import serverClient from "@/lib/serverUtils/stream"; // Ensure your stream client setup
 import { NextResponse } from "next/server";
-import serverClient from "../../../../../lib/serverUtils/stream"; // Import GetStream server-side client
+import { auth } from "../../../../../../auth";
 
 export async function GET(req: Request) {
-  const parts = req.url.split("/");
-  const userId = parts[parts.length - 1].toString();
   try {
-  if (!userId) {
-    return NextResponse.json(
-      {
-        error: "Missing required parameter: userId",
-      },
-      { status: 400 }
-    );
-  }
+    const session = await auth();
 
+    const userId: any = session?.user.id;
+    const name: any = session?.user.name;
+    const otherId: any = req.url.split("/").pop();
 
-    // Generate a token for the user
-    const token = serverClient.createToken(userId);
-    console.log(token);
-    // Return the token to the client
-    return NextResponse.json(
-      {
-        token: token,
-      },
+    const token1 = serverClient.createToken(userId);
+    const token2 = serverClient.createToken(otherId);
 
-      {
-        status: 200,
-      }
-    );
-  } catch (error) {
-    console.error("Error generating token:", error);
-    return NextResponse.json(
-      {
-        error: "Error generating token",
-      },
-      {
-        status: 400,
-      }
-    );
+    return NextResponse.json({
+      userToken: token1,
+      userId: userId,
+      userToken2: token2,
+      name,
+    });
+  } catch (error: any) {
+    return NextResponse.json({
+      error: error.message,
+    });
   }
 }

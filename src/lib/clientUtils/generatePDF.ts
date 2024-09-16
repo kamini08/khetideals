@@ -8,7 +8,6 @@ import { NextResponse } from "next/server";
 import Contract from "@/models/contractmodel";
 import clientPromise from "../mongodb";
 
-
 // AWS S3 Setup
 const s3 = new S3({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
@@ -37,7 +36,8 @@ export default async function generateContractPDF(contract: {
 }) {
   const doc = new jsPDF("landscape");
   const margin = { top: 20, left: 20, right: 20, bottom: 30 };
-  const pageWidth = doc.internal.pageSize.getWidth() - margin.left - margin.right;
+  const pageWidth =
+    doc.internal.pageSize.getWidth() - margin.left - margin.right;
 
   const currentDate = new Date().toLocaleDateString("en-US", {
     weekday: "long",
@@ -49,7 +49,12 @@ export default async function generateContractPDF(contract: {
   // Title
   doc.setFontSize(20);
   doc.setFont("helvetica", "bold");
-  doc.text("Contract Farming Agreement", pageWidth / 2 + margin.left, margin.top, { align: "center" });
+  doc.text(
+    "Contract Farming Agreement",
+    pageWidth / 2 + margin.left,
+    margin.top,
+    { align: "center" }
+  );
 
   // Date and introduction
   doc.setFontSize(12);
@@ -66,7 +71,11 @@ export default async function generateContractPDF(contract: {
   doc.setFont("helvetica", "normal");
   doc.text(`Name: ${contract.seller.name}`, margin.left, margin.top + 50);
   doc.text(`Address: ${contract.seller.address}`, margin.left, margin.top + 60);
-  doc.text(`Phone: ${contract.seller.phoneNumber}`, margin.left, margin.top + 70);
+  doc.text(
+    `Phone: ${contract.seller.phoneNumber}`,
+    margin.left,
+    margin.top + 70
+  );
   doc.text(`Email: ${contract.seller.email}`, margin.left, margin.top + 80);
 
   // Buyer Information
@@ -75,7 +84,11 @@ export default async function generateContractPDF(contract: {
   doc.setFont("helvetica", "normal");
   doc.text(`Name: ${contract.buyer.name}`, margin.left, margin.top + 110);
   doc.text(`Address: ${contract.buyer.address}`, margin.left, margin.top + 120);
-  doc.text(`Phone: ${contract.buyer.phoneNumber}`, margin.left, margin.top + 130);
+  doc.text(
+    `Phone: ${contract.buyer.phoneNumber}`,
+    margin.left,
+    margin.top + 130
+  );
   doc.text(`Email: ${contract.buyer.email}`, margin.left, margin.top + 140);
 
   // Product Details
@@ -88,8 +101,8 @@ export default async function generateContractPDF(contract: {
       ["Name", contract.product.name],
       ["Description", contract.product.description],
       ["Quantity", `${contract.product.quantity} units`],
-      ["Price per unit", `$${contract.product.price.toFixed(2)}`],
-      ["Total Price", `$${contract.product.totalPrice.toFixed(2)}`],
+      ["Price per unit", `Rs.${contract.product.price.toFixed(2)}`],
+      ["Total Price", `RS.${contract.product.totalPrice.toFixed(2)}`],
     ],
     margin: { left: margin.left, right: margin.right },
     styles: {
@@ -112,19 +125,47 @@ export default async function generateContractPDF(contract: {
 
   doc.setFontSize(12);
   doc.setFont("helvetica", "normal");
-  doc.text(`1. Delivery Date: ${contract.terms.deliveryDate}`, margin.left, finalY + 30);
-  doc.text(`2. Delivery Location: ${contract.terms.deliveryLocation}`, margin.left, finalY + 40);
-  doc.text(`3. Payment Terms: ${contract.terms.paymentTerms}`, margin.left, finalY + 50);
-  doc.text(`4. Return Policy: ${contract.terms.returnPolicy}`, margin.left, finalY + 60);
-  doc.text(`5. Additional Terms: ${contract.terms.additionalTerms}`, margin.left, finalY + 70);
+  doc.text(
+    `1. Delivery Date: ${contract.terms.deliveryDate}`,
+    margin.left,
+    finalY + 30
+  );
+  doc.text(
+    `2. Delivery Location: ${contract.terms.deliveryLocation}`,
+    margin.left,
+    finalY + 40
+  );
+  doc.text(
+    `3. Payment Terms: ${contract.terms.paymentTerms}`,
+    margin.left,
+    finalY + 50
+  );
+  doc.text(
+    `4. Return Policy: ${contract.terms.returnPolicy}`,
+    margin.left,
+    finalY + 60
+  );
+  doc.text(
+    `5. Additional Terms: ${contract.terms.additionalTerms}`,
+    margin.left,
+    finalY + 70
+  );
 
   // Signature Section
   doc.setFont("helvetica", "bold");
   doc.text("Signatures", margin.left, finalY + 90);
   doc.setFont("helvetica", "normal");
-  doc.text("Farmer Signature: _____________________________", margin.left, finalY + 100);
+  doc.text(
+    "Farmer Signature: _____________________________",
+    margin.left,
+    finalY + 100
+  );
   doc.text("Date: _____________________________", margin.left, finalY + 110);
-  doc.text("Buyer Signature: _____________________________", margin.left, finalY + 130);
+  doc.text(
+    "Buyer Signature: _____________________________",
+    margin.left,
+    finalY + 130
+  );
   doc.text("Date: _____________________________", margin.left, finalY + 140);
 
   // Save the PDF using edgestore
@@ -157,8 +198,6 @@ export default async function generateContractPDF(contract: {
     ContentType: "application/pdf",
   };
 
- 
-
   try {
     const data = await s3.upload(uploadParams).promise();
     console.log(`File uploaded successfully. ${data.Location}`);
@@ -168,10 +207,10 @@ export default async function generateContractPDF(contract: {
     const client = await clientPromise();
 
     const result = await Contract.findByIdAndUpdate(
-        contractId,
-        { contractUrl }, // Add new key-value pair here
-        { new: true, runValidators: true }
-      );
+      contractId,
+      { contractUrl }, // Add new key-value pair here
+      { new: true, runValidators: true }
+    );
 
     return NextResponse.json(
       { message: "Contract updated successfully" },
@@ -215,7 +254,6 @@ export default async function generateContractPDF(contract: {
       });
     }
       */
-
   } catch (error) {
     console.error(`Error uploading PDF: ${error}`);
     throw error;

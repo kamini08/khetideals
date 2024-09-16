@@ -217,9 +217,11 @@ const LandHolderDashboard: React.FC = () => {
                       <p className="plot-card-description">
                         Description: {sharecropper.description}
                       </p>
-                      <button className="but" type="button">
-                        Chat Now
-                      </button>
+                      <Link href={`/chat/${sharecropper.mainId}`}>
+                        <button className="but" type="button">
+                          Chat Now
+                        </button>
+                      </Link>
                       <Link href="/proposalForm2">
                         <button className="but" type="button">
                           Make Proposal

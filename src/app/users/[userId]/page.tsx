@@ -150,8 +150,8 @@ const UserDetailPage = () => {
           </div>
         </div>
         <div className="form-group text-center">
-          <Link href="/proposalForm">
-            <button type="button" onClick={handleChat} className="text-white">
+          <Link href={`/chat/${userId}`}>
+            <button type="button" className="text-white">
               Chat with the person
             </button>
           </Link>
