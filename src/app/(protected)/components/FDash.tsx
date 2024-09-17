@@ -30,7 +30,7 @@ const FDash = () => {
           <p>Explore new farming opportunities and buyers.</p>
         </div>
       </Link>
-      <Link href="#ongoing-contracts-section">
+      <Link href="/farmerProfile#ongoing-contracts-section">
         <div className="dashboard-box">
           <h3>
             <strong>My Contracts</strong>

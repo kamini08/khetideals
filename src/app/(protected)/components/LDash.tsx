@@ -45,7 +45,7 @@ const LDash = () => {
           <p>Provide feedback on your farming operations.</p>
         </div>
       </Link>
-      <Link href="#ongoing-contracts-section">
+      <Link href="/myLand#ongoing-contracts-section">
         <div className="dashboard-box">
           <h3>
             <strong>My Contracts</strong>
