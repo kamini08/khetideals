@@ -10,17 +10,35 @@ import { auth } from "../../../../auth";
 export async function GET() {
   const session = await auth();
 
-  const userID = session?.user.id;
+  // Get the role of the current user
+  const role = session?.user.role?.toLowerCase();
+
+  console.log(role);
 
   try {
-    const locations = await db.user.findMany({
-      select: {
-        latitude: true,
-        longitude: true,
-        id: true,
-      },
-    });
-    // console.log(locations);
+    let locations;
+
+    // If the role is buyer, get all the coordinates of farmers
+    if (role === "buyer") {
+      locations = await db.user.findMany({
+        where: { role: "farmer" }, // Filter to get only farmers
+        select: {
+          latitude: true,
+          longitude: true,
+          id: true,
+        },
+      });
+    } else {
+      // Otherwise, return all coordinates (or based on your other requirements)
+      locations = await db.user.findMany({
+        where: { role: "buyer" },
+        select: {
+          latitude: true,
+          longitude: true,
+          id: true,
+        },
+      });
+    }
 
     return NextResponse.json(locations, { status: 200 });
   } catch (error) {
@@ -31,6 +49,7 @@ export async function GET() {
     );
   }
 }
+
 export async function POST(req: Request) {
   // console.log("hello");
   await clientPromise();
