@@ -363,9 +363,11 @@ const ShareCropperDashboard: React.FC = () => {
                     <p className="plot-card-description">
                       Price per Decimal: {land.pricePerDecimal}
                     </p>
-                    <button className="but text-xs" type="submit">
-                      Chat with the landholder
-                    </button>
+                    <Link href={`/chat/${land.mainId}`}>
+                      <button className="but text-xs" type="submit">
+                        Chat with the landholder
+                      </button>
+                    </Link>
                     <Link href="/proposalForm2">
                       <button className="but text-xs" type="submit">
                         Make a Proposal for contract
