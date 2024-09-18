@@ -46,7 +46,10 @@ const Navbar = () => {
                   <LoginForm />
                 </DialogContent>
               </Dialog> */}
-            <LoginButton mode="modal" asChild>
+            <LoginButton
+              // mode="modal"
+              asChild
+            >
               <Button variant="link" size="lg" className="nav-link pb-3">
                 Sign in
               </Button>
