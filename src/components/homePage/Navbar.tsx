@@ -1,8 +1,14 @@
 // import Link from "next/link";
 import { useSession } from "next-auth/react";
 import GoogleTranslate from "./GoogleTranslate";
+// import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 import "./Navbar1.css";
+// import { LoginForm } from "../auth/login-form";
+// import { DialogTitle } from "@radix-ui/react-dialog";
+import { LoginButton } from "../auth/login-button";
+import { Button } from "../ui/button";
+
 const Navbar = () => {
   // const { data: session };
   return (
@@ -33,9 +39,19 @@ const Navbar = () => {
             </a>
           </li>
           <li className="nav-item">
-            <a href="/auth/login" className="nav-link">
-              login
-            </a>
+            {/* <a href="/auth/login" className="nav-link"> */}
+            {/* <Dialog>
+                <DialogTitle>Log in</DialogTitle>
+                <DialogContent>
+                  <LoginForm />
+                </DialogContent>
+              </Dialog> */}
+            <LoginButton mode="modal" asChild>
+              <Button variant="link" size="lg" className="nav-link pb-3">
+                Sign in
+              </Button>
+            </LoginButton>
+            {/* </a> */}
           </li>
         </ul>
         <GoogleTranslate />
