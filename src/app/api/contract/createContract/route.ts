@@ -1,13 +1,15 @@
 import Contract from "../../../../models/contractmodel";
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "../../../../lib/mongodb";
-import { redirect } from "next/dist/server/api-utils";
 import { contractValidate } from "../../../../lib/serverUtils/validate";
 import generateContractPdf from "../../../../lib/clientUtils/generatePDF";
-import { AnyAaaaRecord } from "dns";
 import { auth } from "../../../../../auth";
-import Farmer from "../../../../models/farmermodel";
-import Buyer from "../../../../models/buyermodel";
+import {
+  createCSRFToken,
+  getSessionIdFromRequest,
+  verifyCSRFToken,
+} from "@/lib/serverUtils/csrf";
+
 
 
 export async function POST(request: Request) {
@@ -35,39 +37,51 @@ export async function POST(request: Request) {
       const role = session?.user.id?.toLocaleLowerCase();
       const user1Id = session?.user.id;
 
-      
+      const { recaptcha_token, ...data } = req;
 
-    /*  const { buyer, seller, product, terms } = {
-        buyer: {
-          name: "John Doe",
-          email: "john@example.com",
-          phoneNumber: "1234567890",
-          address: "123 Main St",
-          Account: 123456,
-        },
-        seller: {
-          name: "Jane Smith",
-          email: "jane@example.com",
-          phoneNumber: "0987654321",
-          address: "456 Elm St",
-          Account: 654321,
-        },
-        product: {
-          name: "Corn",
-          description: "High quality corn",
-          quantity: 100,
-          price: 500,
-          totalprice: 50000,
-        },
-        terms: {
-          paymentTerms: "50% upfront, 50% on delivery",
-          deliveryDate: "2024-12-31",
-          deliveryMethod: "Shipping",
-          returnPolicy: "No returns",
-          additionalTerms: "None",
-        },
-      };
-    */
+
+      const recaptchaToken = recaptcha_token;
+      if (!recaptchaToken) {
+        return NextResponse.json(
+          {
+            message: "reCAPTCHA token not found! Refresh and try again",
+            error: "reCAPTCHA token not found!",
+          },
+          {
+            status: 500,
+          }
+        );
+      }
+      const recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY;
+    
+      // Verify reCAPTCHA token
+      const recaptchaResponse = await fetch(
+        `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecretKey}&response=${recaptchaToken}`,
+        { method: "POST" }
+      );
+      const recaptchaResult = await recaptchaResponse.json();
+    
+      console.log(recaptchaResult);
+      if (!recaptchaResult.success) {
+        return NextResponse.json({
+          message: "reCAPTCHA validation failed",
+          error: recaptchaResult["error-codes"],
+        });
+      }
+
+      const sessionId = getSessionIdFromRequest(request);
+      const csrfToken = createCSRFToken(sessionId);
+    
+      // Verify the CSRF token
+      if (!verifyCSRFToken(sessionId, csrfToken)) {
+        return NextResponse.json(
+          { message: "Invalid CSRF token" },
+          {
+            status: 403,
+          }
+        );
+      }
+    
       // Generate a unique contract ID
       const contractId = `CONTRACT-${Date.now()}`;
 

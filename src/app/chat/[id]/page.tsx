@@ -24,6 +24,7 @@ export default function WhatsAppChat() {
   const apiKey = process.env.NEXT_PUBLIC_REACT_APP_STREAM_KEY || "Set API Key";
   const [chatClient, setChatClient] = useState<StreamChat | null>(null);
   const [loading, setLoading] = useState(true);
+  const [firstId, setFirstId] = useState('');
 
   useEffect(() => {
     // Ensure IDs are available before continuing
@@ -41,10 +42,11 @@ export default function WhatsAppChat() {
         // const buyerId = '09876';
         otherId = buyerId;
         const userToken = data.userToken;
+        setFirstId(buyerId);
+
 
         // Initialize the Stream chat client
         const client = StreamChat.getInstance(apiKey);
-
         // Connect the farmer (current user)
 
         await client.connectUser({ id: buyerId, name: buyerName }, userToken);
@@ -73,13 +75,13 @@ export default function WhatsAppChat() {
   }, [farmerId]); // Depend on farmerId and buyerId for dynamic setup
 
   if (loading) return <div>Loading chat...</div>;
-  const filters: any = { members: { $in: [farmerId] } };
+  const filters: any = { members: { $in: ['', 'cm0rqos7l0000j4spcyrixgdw'] } };
 
   const sort: any = { last_message_at: -1 };
   return (
     chatClient && (
       <Chat client={chatClient}>
-        <ChannelList filters={filters} sort={sort} />
+        <ChannelList filters={filters} />
         <Channel>
           <Window>
             <ChannelHeader />
