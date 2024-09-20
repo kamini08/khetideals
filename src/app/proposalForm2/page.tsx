@@ -3,10 +3,21 @@ import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import "@/components/styles/contract.css"; // Assuming you're linking to the stylesheet
 import { auth } from "../../../auth";
+import {
+  GoogleReCaptchaProvider,
+  GoogleReCaptcha,
+} from "react-google-recaptcha-v3";
+import { getErrorMessage, fetchCsrfToken } from "@/lib/clientUtils/secure";
 
-const RECAPTCHA_SITE_KEY = "YOUR_RECAPTCHA_SITE_KEY"; // Replace with your site key
 
 export default function ContractProposalForm() {
+  const [token, setToken] = useState("");
+  const [refreshReCaptcha, setRefreshReCaptcha] = useState(false);
+  const [csrfToken, setCsrfToken] = useState<string>("");
+
+  const setTokenFunc = (getToken: string) => {
+    setToken(getToken);
+  };
 
 
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -47,10 +58,15 @@ export default function ContractProposalForm() {
 
 
     try {
+      data.recaptcha_token = token;
+
+      const csrftoken = await fetchCsrfToken();
+      setCsrfToken(csrftoken);
       const response = await fetch("/api/contract/createContract2", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "X-CSRF-Token": csrfToken,
         },
         body: JSON.stringify(data),
       });
@@ -62,13 +78,19 @@ export default function ContractProposalForm() {
         alert(result.message || "Error creating contract proposal");
       }
     } catch (err) {
+      setRefreshReCaptcha(!refreshReCaptcha);
       console.error(err);
       alert("Error creating contract proposal");
     }
   };
 
   
-
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`;
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
  
 
   return (
@@ -253,6 +275,18 @@ export default function ContractProposalForm() {
           </div>
          
           <button type="submit">Submit Proposal</button>
+          <GoogleReCaptchaProvider
+            reCaptchaKey={
+              process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+                ? process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+                : ""
+            }
+          >
+            <GoogleReCaptcha
+              onVerify={setTokenFunc}
+              refreshReCaptcha={refreshReCaptcha}
+            />
+          </GoogleReCaptchaProvider>
         </form>
       </div>
     </div>

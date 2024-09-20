@@ -13,10 +13,9 @@ export const connectUser = async (
 
   try {
     // Ensure user is upserted before connecting
-    await chatClient.upsertUser({
-      id: userId,
-      name: userName, // Replace with actual user name
-    });
+   
+
+    console.log('user upserted', userId);
 
     // Connect user
     await chatClient.connectUser(
@@ -27,6 +26,8 @@ export const connectUser = async (
       token
     );
     console.log("User connected successfully");
+    chatClient.disconnectUser();
+    return true;
   } catch (error) {
     console.error("Error in connectUser:", error);
   }

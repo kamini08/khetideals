@@ -5,16 +5,34 @@ import { useEffect, useState } from "react";
 import { useForm, SubmitHandler, useFieldArray } from "react-hook-form";
 import "@/components/styles/contract.css"; // Assuming you're linking to the stylesheet
 import { auth } from "../../../auth";
+import {
+  GoogleReCaptchaProvider,
+  GoogleReCaptcha,
+} from "react-google-recaptcha-v3";
+import { getErrorMessage, fetchCsrfToken } from "@/lib/clientUtils/secure";
 export default function Contract() {
   const [buyerId, setBuyerId] = useState("");
   const [sellerId, setSellerId] = useState("");
+  const [token, setToken] = useState("");
+  const [refreshReCaptcha, setRefreshReCaptcha] = useState(false);
+  const [csrfToken, setCsrfToken] = useState<string>("");
+
+  const setTokenFunc = (getToken: string) => {
+    setToken(getToken);
+  };
+
   const onSubmitform = async (data: any) => {
     console.log(data);
     try {
+      data.recaptcha_token = token;
+
+      const csrftoken = await fetchCsrfToken();
+      setCsrfToken(csrftoken);
       const response = await fetch("/api/contract/createContract", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "X-CSRF-Token": csrfToken,
         },
         body: JSON.stringify(data),
       });
@@ -26,10 +44,17 @@ export default function Contract() {
         alert(result.message || "Error creating contract");
       }
     } catch (err) {
+      setRefreshReCaptcha(!refreshReCaptcha);
       console.error(err);
       alert("Error creating contract");
     }
   };
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`;
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
   
  
   const {
@@ -337,6 +362,18 @@ export default function Contract() {
                 <button form="modform" type="submit" className="submit-modal">
                   Create Contract
                 </button>
+                <GoogleReCaptchaProvider
+            reCaptchaKey={
+              process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+                ? process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+                : ""
+            }
+          >
+            <GoogleReCaptcha
+              onVerify={setTokenFunc}
+              refreshReCaptcha={refreshReCaptcha}
+            />
+          </GoogleReCaptchaProvider>
               </>
             )}
           </form>

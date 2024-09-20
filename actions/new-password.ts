@@ -7,18 +7,38 @@ import { getUserByEmail } from "../data/user";
 import { db } from "@/lib/db";
 
 export const newPassword = async (
-  values: z.infer<typeof NewPasswordSchema>,
+
+  
+  values: any,
   token?: string | null
 ) => {
   if (!token) {
     return { error: "Missing token" };
   }
-
+  const {recaptcha_token} = values;
   const validatedFields = NewPasswordSchema.safeParse(values);
 
   if (!validatedFields.success) {
     return { error: "Invalid Fields" };
   }
+  
+  if (!recaptcha_token) {
+    return { error: "reCAPTCHA token not found! Refresh and try again" };
+  }
+  const recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY;
+
+  // Verify reCAPTCHA token
+  const recaptchaResponse = await fetch(
+    `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecretKey}&response=${recaptcha_token}`,
+    { method: "POST" }
+  );
+  const recaptchaResult = await recaptchaResponse.json();
+
+  console.log(recaptchaResult);
+  if (!recaptchaResult.success) {
+    return { error: recaptchaResult["error-codes"] };
+  }
+
 
   const { password } = validatedFields.data;
 

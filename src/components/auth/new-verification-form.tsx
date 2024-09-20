@@ -6,6 +6,8 @@ import { useSearchParams } from "next/navigation";
 import { newVerification } from "../../../actions/new-verification";
 import { FormError } from "../form-error";
 import { FormSuccess } from "../form-success";
+import { getErrorMessage, fetchCsrfToken } from "@/lib/clientUtils/secure";
+
 
 export const NewVerificationForm = () => {
   const [error, setError] = useState<string | undefined>();
@@ -14,12 +16,16 @@ export const NewVerificationForm = () => {
 
   const token = searchParams.get("token");
 
-  const onSubmit = useCallback(() => {
+
+
+  const onSubmit = useCallback(async() => {
     if (success || error) return;
     if (!token) {
       setError("Missing token");
       return;
     }
+
+
     newVerification(token)
       .then((data) => {
         setSuccess(data.success);

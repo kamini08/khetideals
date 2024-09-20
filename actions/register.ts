@@ -8,7 +8,8 @@ import { getUserByEmail } from "../data/user";
 import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "../src/lib/mail";
 import { getAllCoordinates } from "../data/user";
-export const register = async (values: z.infer<typeof RegisterSchema>) => {
+export const register = async (values: any) => {
+  const { recaptcha_token } = values;
   const validatedFields = RegisterSchema.safeParse(values);
 
   if (!validatedFields.success) {
@@ -21,6 +22,23 @@ export const register = async (values: z.infer<typeof RegisterSchema>) => {
   //     console.log(coord.longitude);
   //   })
   // );
+
+  if (!recaptcha_token) {
+    return { error: "reCAPTCHA token not found! Refresh and try again" };
+  }
+  const recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY;
+
+  // Verify reCAPTCHA token
+  const recaptchaResponse = await fetch(
+    `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecretKey}&response=${recaptcha_token}`,
+    { method: "POST" }
+  );
+  const recaptchaResult = await recaptchaResponse.json();
+
+  console.log(recaptchaResult);
+  if (!recaptchaResult.success) {
+    return { error: recaptchaResult["error-codes"] };
+  }
 
   const { email, password, name, number, role, latitude, longitude } =
     validatedFields.data;

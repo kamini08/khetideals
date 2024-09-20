@@ -3,6 +3,11 @@ import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "../../../../lib/mongodb";
 import generateContract2Pdf from "@/lib/clientUtils/generatePDF2";
 import { auth } from "../../../../../auth";
+import {
+  createCSRFToken,
+  getSessionIdFromRequest,
+  verifyCSRFToken,
+} from "@/lib/serverUtils/csrf";
 
 export async function POST(request: Request) {
   if (request.method === "POST") {
@@ -26,8 +31,53 @@ export async function POST(request: Request) {
       const { landholder, sharecropper, landDetails, cropCycle, financialDetails } = req;
 
       const session = await auth();
-      const role = session?.user.id?.toLocaleLowerCase();
-      const user1Id = session?.user.id;
+     
+      
+      const { recaptcha_token, ...data } = req;
+
+
+      const recaptchaToken = recaptcha_token;
+      if (!recaptchaToken) {
+        return NextResponse.json(
+          {
+            message: "reCAPTCHA token not found! Refresh and try again",
+            error: "reCAPTCHA token not found!",
+          },
+          {
+            status: 500,
+          }
+        );
+      }
+      const recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY;
+    
+      // Verify reCAPTCHA token
+      const recaptchaResponse = await fetch(
+        `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecretKey}&response=${recaptchaToken}`,
+        { method: "POST" }
+      );
+      const recaptchaResult = await recaptchaResponse.json();
+    
+      console.log(recaptchaResult);
+      if (!recaptchaResult.success) {
+        return NextResponse.json({
+          message: "reCAPTCHA validation failed",
+          error: recaptchaResult["error-codes"],
+        });
+      }
+
+      const sessionId = getSessionIdFromRequest(request);
+      const csrfToken = createCSRFToken(sessionId);
+    
+      // Verify the CSRF token
+      if (!verifyCSRFToken(sessionId, csrfToken)) {
+        return NextResponse.json(
+          { message: "Invalid CSRF token" },
+          {
+            status: 403,
+          }
+        );
+      }
+    
 
       // Generate a unique contract2 ID
       const contract2Id = `CONTRACT2-${Date.now()}`;

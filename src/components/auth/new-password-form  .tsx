@@ -4,6 +4,12 @@ import { useState, useTransition } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
+import {
+  GoogleReCaptchaProvider,
+  GoogleReCaptcha,
+} from "react-google-recaptcha-v3";
+import { getErrorMessage, fetchCsrfToken } from "@/lib/clientUtils/secure";
+
 
 import {
   Form,
@@ -30,6 +36,15 @@ export const NewPasswordForm = () => {
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
   const [isPending, startTransition] = useTransition();
+  const [rtoken, setRToken] = useState("");
+  const [refreshReCaptcha, setRefreshReCaptcha] = useState(false);
+  const [csrfToken, setCsrfToken] = useState<string>("");
+
+  // set reCAPTCHA token
+  const setTokenFunc = (getToken: string) => {
+    setRToken(getToken);
+  };
+
 
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
     resolver: zodResolver(NewPasswordSchema),
@@ -38,13 +53,17 @@ export const NewPasswordForm = () => {
     },
   });
 
-  const onSubmit = (values: z.infer<typeof NewPasswordSchema>) => {
+  const onSubmit = async (values: any) => {
     setError("");
     setSuccess("");
     console.log(values);
+    const recaptcha_token = token;
+    const csrftoken = await fetchCsrfToken();
+    setCsrfToken(csrftoken);
+
 
     startTransition(() => {
-      newPassword(values, token).then((data) => {
+      newPassword({...values, recaptcha_token}, token).then((data) => {
         setError(data?.error);
 
         setSuccess(data?.success);
@@ -85,6 +104,18 @@ export const NewPasswordForm = () => {
           <Button type="submit" className="w-full" disabled={isPending}>
             Reset password
           </Button>
+          <GoogleReCaptchaProvider
+            reCaptchaKey={
+              process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+                ? process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+                : ""
+            }
+          >
+            <GoogleReCaptcha
+              onVerify={setTokenFunc}
+              refreshReCaptcha={refreshReCaptcha}
+            />
+          </GoogleReCaptchaProvider>
         </form>
       </Form>
     </CardWrapper>
