@@ -16,12 +16,31 @@ import {
   generateVerificationToken,
 } from "@/lib/tokens";
 import { getTwoFactorConfirmationByUserId } from "../data/two-factor-confirmation";
+import { NextResponse } from "next/server";
 
-export const login = async (values: z.infer<typeof LoginSchema>) => {
+export const login = async (values: any) => {
+  const { recaptcha_token } = values;
   const validatedFields = LoginSchema.safeParse(values);
 
   if (!validatedFields.success) {
     return { error: "Invalid Fields" };
+  }
+
+  if (!recaptcha_token) {
+    return { error: "reCAPTCHA token not found! Refresh and try again" };
+  }
+  const recaptchaSecretKey = process.env.RECAPTCHA_SECRET_KEY;
+
+  // Verify reCAPTCHA token
+  const recaptchaResponse = await fetch(
+    `https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecretKey}&response=${recaptcha_token}`,
+    { method: "POST" }
+  );
+  const recaptchaResult = await recaptchaResponse.json();
+
+  console.log(recaptchaResult);
+  if (!recaptchaResult.success) {
+    return { error: recaptchaResult["error-codes"] };
   }
 
   const { email, password, code } = validatedFields.data;
