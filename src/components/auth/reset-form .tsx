@@ -1,6 +1,6 @@
 "use client";
 import { useForm } from "react-hook-form";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -35,6 +35,14 @@ export const ResetForm = () => {
   const [refreshReCaptcha, setRefreshReCaptcha] = useState(false);
   const [csrfToken, setCsrfToken] = useState<string>("");
 
+  
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = `https://www.google.com/recaptcha/api.js?render=explicit`;
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+
   // set reCAPTCHA token
   const setTokenFunc = (getToken: string) => {
     setToken(getToken);
@@ -54,9 +62,15 @@ export const ResetForm = () => {
     console.log(values);
 
     const recaptcha_token = token;
-    const csrftoken = await fetchCsrfToken();
-    setCsrfToken(csrftoken);
-
+    const data = await fetchCsrfToken();
+    if (data) {
+      const details = await data.json();
+      const csrftoken = details?.csrfToken;
+      setCsrfToken(csrftoken);
+    } else {
+      // Handle the case where data is null
+      console.error("Data is null");
+    }
 
     startTransition(() => {
       reset({...values, recaptcha_token}).then((data) => {

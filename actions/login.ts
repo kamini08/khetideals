@@ -19,8 +19,8 @@ import { getTwoFactorConfirmationByUserId } from "../data/two-factor-confirmatio
 import { NextResponse } from "next/server";
 
 export const login = async (values: any) => {
-  const { recaptcha_token } = values;
-  const validatedFields = LoginSchema.safeParse(values);
+  const { recaptcha_token, ...value } = values;
+  const validatedFields = LoginSchema.safeParse(value);
 
   if (!validatedFields.success) {
     return { error: "Invalid Fields" };

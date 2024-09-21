@@ -25,6 +25,8 @@ export const NewVerificationForm = () => {
       return;
     }
 
+    
+
 
     newVerification(token)
       .then((data) => {

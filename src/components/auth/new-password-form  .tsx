@@ -1,6 +1,6 @@
 "use client";
 import { useForm } from "react-hook-form";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSearchParams } from "next/navigation";
@@ -52,14 +52,28 @@ export const NewPasswordForm = () => {
       password: "",
     },
   });
+  
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = `https://www.google.com/recaptcha/api.js?render=explicit`;
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
 
   const onSubmit = async (values: any) => {
     setError("");
     setSuccess("");
     console.log(values);
     const recaptcha_token = token;
-    const csrftoken = await fetchCsrfToken();
-    setCsrfToken(csrftoken);
+    const data = await fetchCsrfToken();
+    if (data) {
+      const details = await data.json();
+      const csrftoken = details?.csrfToken;
+      setCsrfToken(csrftoken);
+    } else {
+      // Handle the case where data is null
+      console.error("Data is null");
+    }
 
 
     startTransition(() => {

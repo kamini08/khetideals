@@ -6,8 +6,8 @@ import { generatePasswordResetToken } from "@/lib/tokens";
 import { getUserByEmail } from "../data/user";
 
 export const reset = async (values: any) => {
-  const { recaptcha_token } = values;
-  const validatedFields = ResetSchema.safeParse(values);
+  const { recaptcha_token, ...value } = values;
+  const validatedFields = ResetSchema.safeParse(value);
 
   if (!validatedFields.success) {
     return { error: "Invalid email!" };

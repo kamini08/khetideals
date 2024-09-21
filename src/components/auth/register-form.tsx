@@ -55,6 +55,14 @@ export const RegisterForm = () => {
       longitude: "",
     },
   });
+  
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = `https://www.google.com/recaptcha/api.js?render=explicit`;
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+
   useEffect(() => {
     const onLocationFound = (position: GeolocationPosition) => {
       const { latitude, longitude } = position.coords;
@@ -82,9 +90,15 @@ export const RegisterForm = () => {
     setSuccess("");
 
     const recaptcha_token = token;
-    const csrftoken = await fetchCsrfToken();
-    setCsrfToken(csrftoken);
-
+   const data = await fetchCsrfToken();
+    if (data) {
+      const details = await data.json();
+      const csrftoken = details?.csrfToken;
+      setCsrfToken(csrftoken);
+    } else {
+      // Handle the case where data is null
+      console.error("Data is null");
+    }
 
     startTransition(() => {
       register({...values, recaptcha_token}).then((data) => {
