@@ -15,8 +15,8 @@ export const newPassword = async (
   if (!token) {
     return { error: "Missing token" };
   }
-  const {recaptcha_token} = values;
-  const validatedFields = NewPasswordSchema.safeParse(values);
+  const { recaptcha_token, ...value } = values;
+  const validatedFields = NewPasswordSchema.safeParse(value);
 
   if (!validatedFields.success) {
     return { error: "Invalid Fields" };

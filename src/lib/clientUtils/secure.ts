@@ -26,7 +26,15 @@ export const getErrorMessage = (error: unknown): string => {
         }
 
         const data = await response.json();
-        return data.csrfToken;
+        console.log(data);
+
+        return NextResponse.json({
+          csrfToken: data.csrfToken,
+          },
+          {
+            status: 200,
+          }
+        );
     } catch (error) {
         console.error('Error fetching CSRF token:', error);
         return null;

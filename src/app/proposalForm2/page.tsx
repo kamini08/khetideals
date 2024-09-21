@@ -60,13 +60,19 @@ export default function ContractProposalForm() {
     try {
       data.recaptcha_token = token;
 
-      const csrftoken = await fetchCsrfToken();
-      setCsrfToken(csrftoken);
+      // const res = await fetchCsrfToken();
+      // if (res) {
+      //   const details = await res.json();
+      //   const csrftoken = details?.csrfToken;
+      //   setCsrfToken(csrftoken);
+      // } else {
+      //   // Handle the case where data is null
+      //   console.error("Data is null");
+      // }
       const response = await fetch("/api/contract/createContract2", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-CSRF-Token": csrfToken,
         },
         body: JSON.stringify(data),
       });

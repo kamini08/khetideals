@@ -69,18 +69,18 @@ export async function POST(request: Request) {
         });
       }
 
-      const sessionId = getSessionIdFromRequest(request);
-      const csrfToken = createCSRFToken(sessionId);
+      // const sessionId = getSessionIdFromRequest(request);
+      // const csrfToken = createCSRFToken(sessionId);
     
-      // Verify the CSRF token
-      if (!verifyCSRFToken(sessionId, csrfToken)) {
-        return NextResponse.json(
-          { message: "Invalid CSRF token" },
-          {
-            status: 403,
-          }
-        );
-      }
+      // // Verify the CSRF token
+      // if (!verifyCSRFToken(sessionId, csrfToken)) {
+      //   return NextResponse.json(
+      //     { message: "Invalid CSRF token" },
+      //     {
+      //       status: 403,
+      //     }
+      //   );
+      // }
     
       // Generate a unique contract ID
       const contractId = `CONTRACT-${Date.now()}`;

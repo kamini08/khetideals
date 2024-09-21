@@ -26,13 +26,19 @@ export default function Contract() {
     try {
       data.recaptcha_token = token;
 
-      const csrftoken = await fetchCsrfToken();
-      setCsrfToken(csrftoken);
+    //   const res = await fetchCsrfToken();
+    // if (res) {
+    //   const details = await res.json();
+    //   const csrftoken = details?.csrfToken;
+    //   setCsrfToken(csrftoken);
+    // } else {
+    //   // Handle the case where data is null
+    //   console.error("Data is null");
+    // }
       const response = await fetch("/api/contract/createContract", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "X-CSRF-Token": csrfToken,
         },
         body: JSON.stringify(data),
       });
@@ -51,7 +57,7 @@ export default function Contract() {
   };
   useEffect(() => {
     const script = document.createElement("script");
-    script.src = `https://www.google.com/recaptcha/api.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`;
+    script.src = `https://www.google.com/recaptcha/api.js?render=explicit&onload=onloadCallback`;
     script.async = true;
     document.body.appendChild(script);
   }, []);

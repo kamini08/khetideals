@@ -9,8 +9,8 @@ import { generateVerificationToken } from "@/lib/tokens";
 import { sendVerificationEmail } from "../src/lib/mail";
 import { getAllCoordinates } from "../data/user";
 export const register = async (values: any) => {
-  const { recaptcha_token } = values;
-  const validatedFields = RegisterSchema.safeParse(values);
+  const { recaptcha_token, ...value } = values;
+  const validatedFields = RegisterSchema.safeParse(value);
 
   if (!validatedFields.success) {
     return { error: "Invalid Fields" };
