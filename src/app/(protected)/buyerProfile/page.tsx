@@ -50,8 +50,9 @@ const BuyerProfile = () => {
       if (!response.ok) {
         throw new Error("Error signing contract");
       }
-    } catch (error) {
-      console.error("Error signing contract:", error);
+      toast.success("Contract signed successfully!");
+    } catch (error: any) {
+      toast.error("Error signing contract:", error);
     } finally {
     }
   };
@@ -73,11 +74,9 @@ const BuyerProfile = () => {
         console.error(res);
         return;
       }
-      console.log(res);
-      console.log(res.presignedUrl);
+
       const presignedUrl = res.presignedUrl;
 
-      console.log(presignedUrl);
       if (presignedUrl) {
         // Create a temporary link to trigger the download
         const link = document.createElement("a");
