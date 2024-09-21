@@ -56,7 +56,7 @@ export const ResetForm = () => {
     console.log(values);
 
     grecaptcha.enterprise.ready(async () => {
-      const token = await grecaptcha.enterprise.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, {action: 'LOGIN'});
+      const token = await grecaptcha.enterprise.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY);
       setTokenFunc(token);
     });
 

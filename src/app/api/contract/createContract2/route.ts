@@ -38,9 +38,6 @@ export async function POST(request: Request) {
 
       const recaptchaToken = recaptcha_token;
            
-  if (!recaptcha_token) {
-    return { error: "reCAPTCHA token not found! Try again" };
-  }
 
   const details = {
     "event": {
@@ -65,7 +62,7 @@ export async function POST(request: Request) {
       if (!recaptchaToken) {
         return NextResponse.json(
           {
-            message: "reCAPTCHA token not found! Refresh and try again",
+            message: "reCAPTCHA token not found! Try again",
             error: "reCAPTCHA token not found!",
           },
           {
