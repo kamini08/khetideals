@@ -19,5 +19,6 @@ export function verifyCSRFToken(sessionId: string, token: string): boolean {
 
 export function getSessionIdFromRequest(req: Request): string {
   const cookies = cookie.parse(req.headers.get('Cookie') || '');
+  console.log(cookies);
   return cookies['session-id'] || 'anonymous'; 
 }

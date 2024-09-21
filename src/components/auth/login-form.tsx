@@ -67,15 +67,17 @@ export const LoginForm = () => {
     setSuccess("");
 
     const recaptcha_token = token;
-    const data = await fetchCsrfToken();
-    if (data) {
-      const details = await data.json();
-      const csrftoken = details?.csrfToken;
-      setCsrfToken(csrftoken);
-    } else {
-      // Handle the case where data is null
-      console.error("Data is null");
-    }
+    // const data = await fetchCsrfToken();
+    // if (data) {
+    //   const details = await data.json();
+    //   const csrftoken = details?.csrfToken;
+    //   setCsrfToken(csrftoken);
+    // } else {
+    //   // Handle the case where data is null
+    //   console.error("Data is null");
+    // }
+
+
 
     startTransition(() => {
       login({ ...values, recaptcha_token })

@@ -26,6 +26,7 @@ export const getErrorMessage = (error: unknown): string => {
         }
 
         const data = await response.json();
+        console.log(data);
 
         return NextResponse.json({
           csrfToken: data.csrfToken,
