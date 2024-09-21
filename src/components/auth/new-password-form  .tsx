@@ -58,7 +58,14 @@ export const NewPasswordForm = () => {
     setError("");
     setSuccess("");
     console.log(values);
+    
+    grecaptcha.enterprise.ready(async () => {
+      const token = await grecaptcha.enterprise.execute(process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY, {action: 'LOGIN'});
+      setTokenFunc(token);
+    });
+
     const recaptcha_token = token;
+
     // const data = await fetchCsrfToken();
     // if (data) {
     //   const details = await data.json();
@@ -112,7 +119,7 @@ export const NewPasswordForm = () => {
           <Button type="submit" className="w-full" disabled={isPending}>
             Reset password
           </Button>
-          <GoogleReCaptchaProvider
+          {/* <GoogleReCaptchaProvider
             reCaptchaKey={
               process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
                 ? process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY
@@ -123,7 +130,7 @@ export const NewPasswordForm = () => {
               onVerify={setTokenFunc}
               refreshReCaptcha={refreshReCaptcha}
             />
-          </GoogleReCaptchaProvider>
+          </GoogleReCaptchaProvider> */}
         </form>
       </Form>
     </CardWrapper>

@@ -8,6 +8,7 @@ import "@/components/styles/p1c.css";
 import BDash from "../components/BDash";
 import Link from "next/link";
 import Contract from "@/models/contractmodel";
+import { toast } from "react-toastify";
 
 const BuyerProfile = () => {
   const [formData, setFormData] = useState({
@@ -86,8 +87,8 @@ const BuyerProfile = () => {
         link.click();
         document.body.removeChild(link); // Clean up
       }
-    } catch (error) {
-      console.error("Error downloading PDF:", error);
+    } catch (error: any) {
+      toast.error("Error downloading PDF:", error);
     } finally {
       setDLoading(false);
     }
@@ -102,9 +103,9 @@ const BuyerProfile = () => {
 
       const res = await response.json();
 
-      console.log(res.message);
-    } catch (error) {
-      console.error("Error cancelling contract:", error);
+      toast.success(res.message);
+    } catch (error: any) {
+      toast.error("Error cancelling contract:", error);
     } finally {
       setCLoading(false);
     }

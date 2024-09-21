@@ -27,7 +27,7 @@ export const login = async (values: any) => {
   }
 
   if (!recaptcha_token) {
-    return { error: "reCAPTCHA token not found! Refresh and try again" };
+    return { error: "reCAPTCHA token not found! Try again" };
   }
 
   const data = {
