@@ -56,12 +56,7 @@ export const RegisterForm = () => {
     },
   });
   
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = `https://www.google.com/recaptcha/api.js?render=explicit`;
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
+
 
   useEffect(() => {
     const onLocationFound = (position: GeolocationPosition) => {

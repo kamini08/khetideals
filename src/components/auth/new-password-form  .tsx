@@ -52,13 +52,7 @@ export const NewPasswordForm = () => {
       password: "",
     },
   });
-  
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = `https://www.google.com/recaptcha/api.js?render=explicit`;
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
+
 
   const onSubmit = async (values: any) => {
     setError("");

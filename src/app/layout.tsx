@@ -45,14 +45,21 @@ export default async function RootLayout({
         {/* // > */}
         {/* <GoogleTranslate /> */}
 
-        
         {children}
         <ToastContainer />
-        { <script
-          src="//code.tidio.co/z3kklhq0ur8kvth5ooe9dufkol3etwa9.js"
-          async
-        ></script> }
-       
+        {
+          <>
+            <script
+              src="//code.tidio.co/z3kklhq0ur8kvth5ooe9dufkol3etwa9.js"
+              async
+            ></script>
+
+            <script
+              src={`https://www.google.com/recaptcha/enterprise.js?render=${process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}`}
+            ></script>
+          </>
+        }
+
         {/* <Footer /> */}
         {/* </div> */}
         {/* </NextThemesProvider> */}

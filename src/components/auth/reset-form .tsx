@@ -36,12 +36,6 @@ export const ResetForm = () => {
   const [csrfToken, setCsrfToken] = useState<string>("");
 
   
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = `https://www.google.com/recaptcha/api.js?render=explicit`;
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
 
   // set reCAPTCHA token
   const setTokenFunc = (getToken: string) => {

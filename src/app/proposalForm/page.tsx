@@ -55,12 +55,7 @@ export default function Contract() {
       alert("Error creating contract");
     }
   };
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = `https://www.google.com/recaptcha/api.js?render=explicit&onload=onloadCallback`;
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
+
   
  
   const {
