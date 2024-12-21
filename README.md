@@ -34,7 +34,7 @@ KhetiDeals is a comprehensive platform designed to connect farmers, buyers, shar
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/khetideals.git
+   git clone https://github.com/kamini08/khetideals.git
    ```
 2. Navigate to the project directory:
    ```bash
@@ -84,9 +84,11 @@ Contributions are welcome! Please follow these steps:
    git push origin feature-name
    ```
 5. Open a pull request.
+   
+For more details visit [contrubuting.md](https://github.com/kamini08/khetideals/blob/main/contributing.md)
 
 ## License
-This project is licensed under the MIT License. See the LICENSE file for details.
+The project is licensed under the [MIT License](https://github.com/kamini08/khetideals/blob/main/LICENSE).
 
 ## Contact
 For any inquiries or feedback, please contact us at [email](bhoomiagrawal1212@gmail.com).
